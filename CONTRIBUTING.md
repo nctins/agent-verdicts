@@ -14,6 +14,16 @@ improvements are welcome.
 - **Out of scope**: contributor reputation, cross-project search, hard
   deletes, and inferring stance from text.
 
+## Branches
+
+- `develop` is the default branch and collects finished work. Branch from it
+  (`feat/<name>` or `fix/<name>`) and open your pull request against
+  `develop`.
+- `main` only receives `develop` when a release is prepared; releases are
+  tagged from `main`.
+- Both branches are protected: changes go through pull requests, and
+  force-pushes are rejected.
+
 ## Development setup
 
 Everything runs in Docker; you do not need Go or Node installed locally.
