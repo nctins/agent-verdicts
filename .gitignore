@@ -1,0 +1,38 @@
+# OS
+.DS_Store
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Claude Code local overrides
+.claude/settings.local.json
+
+# Runtime data / local build output (Foundation Plan Execution Environment)
+/data/
+/agentverdicts
+
+# Air build output (docker/api/air.toml tmp_dir, bind-mounted apps/api/)
+/apps/api/tmp/
+
+# UI (Next.js)
+/apps/ui/node_modules/
+/apps/ui/.next/
+/apps/ui/out/
+/apps/ui/test-results/
+/apps/ui/playwright-report/
+/apps/ui/next-env.d.ts
+/apps/ui/*.tsbuildinfo
+/dist/
+
+# some context
+.notes
+
+# Old Air build output at the repo root (pre-rebuild dev setup)
+/tmp/
+
+# Private development docs (specs, plans, reports, eval harness): a separate
+# git repo, never published
+/.internal/
+CLAUDE.local.md

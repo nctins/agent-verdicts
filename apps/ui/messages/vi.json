@@ -1,0 +1,1321 @@
+{
+  "nav": {
+    "skip_link": "Bỏ qua, đến nội dung chính",
+    "projects": "Tất cả project",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "account": "Tài khoản",
+    "admin": "Quản trị",
+    "dashboard": "Tổng quan",
+    "actors": "Actors",
+    "manage_projects": "Projects",
+    "search_settings": "Tìm kiếm",
+    "help": "Hướng dẫn",
+    "menu": "Menu",
+    "language": "Chọn ngôn ngữ",
+    "locale_vi": "Tiếng Việt",
+    "locale_en": "English",
+    "theme_to_light": "Chuyển sang giao diện sáng",
+    "theme_to_dark": "Chuyển sang giao diện tối",
+    "section_projects": "Projects",
+    "section_more": "Khác",
+    "open_menu": "Mở menu",
+    "toggle": "Mở/thu gọn {label}",
+    "policies": "Policy",
+    "roles": "Role",
+    "audit": "Nhật ký",
+    "group_access": "Truy cập",
+    "group_projects": "Projects",
+    "group_system": "Hệ thống",
+    "back_to_app": "Về ứng dụng",
+    "admin_console": "Bảng quản trị",
+    "command": "Tìm nhanh",
+    "command_hint": "Tìm trang, actor, project…",
+    "has_conflicts": "Có Conflict",
+    "account_menu": "Tài khoản: {name}"
+  },
+  "project": {
+    "list_heading": "Projects",
+    "intro": "Chọn một project để xem các contribution và trust state của chúng.",
+    "prefix": "Project",
+    "subtitle": "Các claim trong project, mới nhất trước, kèm trạng thái tin cậy hiện tại.",
+    "more": "Xem thêm",
+    "balance": "{favorable} Support, {unfavorable} Oppose",
+    "card": {
+      "actor": "actor",
+      "created": "tạo lúc"
+    },
+    "tab": {
+      "review": "Cần xem xét",
+      "label": "Lọc theo trạng thái",
+      "questions": "Questions",
+      "overview": "Tổng quan",
+      "claims": "Claims",
+      "settings": "Cài đặt"
+    },
+    "error_title": "Không mở được project",
+    "contribute": "Đóng góp",
+    "ask": "Tạo question",
+    "contribution_count": "{count} contribution",
+    "open_question_count": "{count} question đang mở",
+    "counts": "{favorable} Support, {unfavorable} Oppose, {neutral} Neutral",
+    "connect": {
+      "button": "Kết nối agent",
+      "title": "Kết nối agent vào project này",
+      "intro": "Mỗi project có một endpoint MCP riêng. Agent cấu hình bằng URL của project {id} sẽ chỉ làm việc trong project đó.",
+      "url": "URL MCP",
+      "config": "Cấu hình client MCP (JSON)",
+      "cli": "Lệnh Claude Code",
+      "token_note": "Thay phần giữ chỗ token bằng token của agent. Token do quản trị viên cấp.",
+      "rules": "Quy tắc cho agent (docs/instructions/agent-verdicts.md)",
+      "rules_note": "Đưa quy tắc này vào agent: đặt trong .claude/rules/, hoặc chép vào CLAUDE.md, AGENTS.md hay system prompt."
+    },
+    "archived_notice": "Project này đã được lưu trữ: chỉ đọc, không thêm hay sửa được nữa.",
+    "reads": {
+      "heading": "Dữ liệu lượt đọc của agent",
+      "days_label": "Số ngày giữ chi tiết (30–3650)",
+      "save": "Lưu",
+      "invalid": "Nhập số ngày từ 30 đến 3650.",
+      "estimate": "Ước tính dung lượng chi tiết: {label}, {count, number} dòng mỗi ngày.",
+      "note": "Tăng thời gian giữ chỉ có tác dụng với dữ liệu từ nay về sau. Giảm thì phần cũ hơn được gộp theo tháng trong vòng một ngày.",
+      "saved": "Đã lưu thời gian giữ chi tiết."
+    },
+    "compose_claim": "Thêm claim",
+    "compose_more": "Chọn loại contribution",
+    "more_actions": "Thao tác khác",
+    "copy_link": "Sao chép link",
+    "id": "ID project",
+    "show_more": "Xem thêm",
+    "show_less": "Thu gọn",
+    "updated": "cập nhật",
+    "answers": "{count, plural, other {# answer}}",
+    "bulk": {
+      "select": "Chọn {label}",
+      "label": "Thao tác hàng loạt",
+      "selected": "Đã chọn {count}",
+      "clear": "Bỏ chọn",
+      "hide_title": "Ẩn {count} contribution?",
+      "hidden_done": "Đã ẩn {count} contribution.",
+      "unhidden_done": "Đã bỏ ẩn {count} contribution.",
+      "failed": "{count} contribution không đổi được."
+    },
+    "overview": {
+      "see_all": "Xem tất cả",
+      "reads_title": "Lượt đọc của agent (30 ngày)",
+      "reads_settings": "Cài đặt",
+      "reads_total": "lượt đọc",
+      "never_read": "claim chưa ai đọc",
+      "empty_title": "Project còn trống",
+      "empty_body": "Bắt đầu bằng một claim hoặc question trên web, hoặc kết nối agent để nó đóng góp qua MCP.",
+      "conflicts": "Conflict cần phân xử",
+      "no_conflicts": "Không có claim nào đang Conflict.",
+      "waiting": "Question đang chờ trả lời",
+      "no_waiting": "Mọi question đều đã có answer.",
+      "recent": "Hoạt động gần đây"
+    },
+    "settings": {
+      "general": "Thông tin chung",
+      "general_hint": "Tên, mô tả và số supporter cần để một claim thành Favorable.",
+      "danger": "Vùng nguy hiểm",
+      "unarchive_hint": "Project đang được lưu trữ. Bỏ lưu trữ để mọi người đóng góp lại được.",
+      "archive_hint": "Lưu trữ thì project chỉ còn đọc được và không hiện ở trang chủ. Bỏ lưu trữ được bất cứ lúc nào."
+    }
+  },
+  "contribution": {
+    "meta": {
+      "actor": "Actor",
+      "created": "Tạo lúc",
+      "kind": "Loại"
+    },
+    "evidence_heading": "Bằng chứng",
+    "balance": {
+      "favorable": "{count} Support",
+      "unfavorable": "{count} Oppose",
+      "neutral": "{count} Neutral"
+    },
+    "login_to_respond": "để đánh giá hoặc phản biện claim này.",
+    "answer_to": "Trả lời cho question:",
+    "answers_heading": "Answers",
+    "history": "Reply không còn được tính ({count})",
+    "signal": {
+      "challenge": "Challenge",
+      "assessment": "Assessment"
+    },
+    "create": {
+      "heading": "Thêm claim",
+      "kind": "Loại",
+      "title": "Tiêu đề",
+      "body": "Nội dung (không bắt buộc)",
+      "error_required": "Vui lòng nhập tiêu đề.",
+      "error_generic": "Không thể tạo contribution. Vui lòng thử lại.",
+      "heading_claim": "Thêm claim",
+      "heading_question": "Tạo question",
+      "title_hint": "1–200 ký tự.",
+      "error_title_too_long": "Tiêu đề tối đa 200 ký tự.",
+      "error_body_too_long": "Nội dung tối đa 65 536 byte.",
+      "created": "Đã đăng.",
+      "submit_claim": "Đăng claim",
+      "submit_question": "Đăng question",
+      "similar": "Có thể đã có:",
+      "supersedes": "Claim mới sẽ thay thế: {label}"
+    },
+    "challenge": {
+      "heading": "Challenge claim này",
+      "content": "Nội dung",
+      "stance": "Stance",
+      "submit": "Gửi challenge",
+      "error_required": "Vui lòng nhập nội dung.",
+      "error_generic": "Không thể gửi challenge. Vui lòng thử lại.",
+      "compose": "Viết challenge…"
+    },
+    "assessment": {
+      "heading": "Assess claim này",
+      "reason": "Lý do (không bắt buộc)",
+      "submit": "Tạo assessment",
+      "error_generic": "Không thể tạo assessment. Vui lòng thử lại."
+    },
+    "answer": {
+      "heading": "Trả lời",
+      "submit": "Gửi answer",
+      "open": "Viết answer…"
+    },
+    "stance_group": "Assessment của bạn",
+    "challenge_open": "Challenge",
+    "challenge_created": "Đã gửi challenge.",
+    "answer_created": "Đã gửi answer.",
+    "answer_login": "Đăng nhập để trả lời",
+    "breadcrumb": "Đường dẫn",
+    "no_signals": "Chưa có reply nào. Hãy là người đầu tiên.",
+    "summary": "Tóm tắt",
+    "replies": "{count, plural, =0 {Reply} other {# reply}}",
+    "no_reason": "Không kèm lý do.",
+    "no_body": "Không có nội dung thêm.",
+    "login": "Đăng nhập",
+    "confirm": {
+      "picked": "Bạn chọn: {stance}.",
+      "replaces": "Assessment trước ({stance}) của bạn sẽ được thay.",
+      "reason": "Lý do (không bắt buộc)",
+      "submit": "Xác nhận: {stance}",
+      "saved": "Đã ghi nhận assessment.",
+      "withdraw": "Rút lại assessment",
+      "withdraw_hint": "Bạn có thể rút lại assessment này: nó sẽ không còn được tính và không khôi phục được."
+    },
+    "why": {
+      "superseded": "Đã thay",
+      "withdrawn": "Đã rút lại",
+      "hidden": "Đã ẩn",
+      "actor_disabled": "Người gửi bị vô hiệu hoá"
+    },
+    "withdraw": "Rút lại",
+    "withdraw_title": "Rút lại reply này?",
+    "withdraw_body": "Reply sẽ không còn được tính và không khôi phục được. Muốn nêu lại ý kiến, hãy gửi một reply mới.",
+    "withdraw_confirm": "Xác nhận rút lại",
+    "withdrawn_done": "Đã rút lại.",
+    "hide": "Ẩn",
+    "unhide": "Bỏ ẩn",
+    "hidden": "Đã ẩn",
+    "hidden_notice": "Bài này đã bị ẩn: chỉ tác giả và người kiểm duyệt còn xem được.",
+    "hidden_reason": "Lý do ẩn: {label}",
+    "hide_title": "Ẩn nội dung này?",
+    "hide_body": "Nội dung bị ẩn không còn được tính và người đọc khác không thấy nữa. Có thể bỏ ẩn sau.",
+    "hide_reason_label": "Lý do (tuỳ chọn)",
+    "supersede": "Thay bằng claim mới",
+    "supersede_undo": "Hoàn tác thay thế",
+    "superseded": "Đã thay thế",
+    "superseded_by": "Đã được thay bằng:",
+    "supporters": "{done}/{total} supporter",
+    "reply": {
+      "open": "Trả lời",
+      "label": "Nội dung trả lời",
+      "submit": "Gửi trả lời",
+      "done": "Đã gửi trả lời.",
+      "error_required": "Vui lòng nhập nội dung trả lời."
+    },
+    "self_support": "Tác giả · không tính",
+    "nav": {
+      "label": "Duyệt danh sách",
+      "back": "Về danh sách",
+      "prev": "Trước",
+      "next": "Sau"
+    },
+    "supporters_label": "Supporter",
+    "reads_30d": "Lượt đọc 30 ngày",
+    "actions": "Thao tác",
+    "hidden_done": "Đã ẩn contribution.",
+    "unhidden_done": "Đã bỏ ẩn contribution.",
+    "supersede_undone": "Đã hoàn tác thay thế.",
+    "status_label": "Trạng thái"
+  },
+  "stance": {
+    "favorable": "Support",
+    "unfavorable": "Oppose",
+    "neutral": "Neutral"
+  },
+  "state": {
+    "Favorable": "Favorable",
+    "Unfavorable": "Unfavorable",
+    "Conflict": "Conflict",
+    "InsufficientEvidence": "Insufficient evidence"
+  },
+  "kind": {
+    "claim": "Claim",
+    "question": "Question"
+  },
+  "question_status": {
+    "open": "Open",
+    "answered": "Answered",
+    "resolved": "Resolved"
+  },
+  "search": {
+    "label": "Tìm trong project",
+    "placeholder": "Tìm claim, question… (phím /)",
+    "submit": "Tìm",
+    "actor_label": "Người tạo",
+    "actor_any": "Tất cả",
+    "actor_mine": "Chỉ của tôi",
+    "sort_label": "Sắp xếp",
+    "sort_newest": "Mới nhất",
+    "sort_debated": "Tranh luận nhiều nhất",
+    "sort_least": "Ít bằng chứng nhất",
+    "sort_active": "Hoạt động gần đây",
+    "result": "{count} claim khớp bộ lọc.",
+    "clear": "Xoá bộ lọc",
+    "degraded": "Tìm kiếm đang chạy ở chế độ rút gọn (chỉ từ khoá) vì dịch vụ vector hoặc xếp hạng lại không phản hồi.",
+    "ask_this": "Tạo question từ nội dung này",
+    "no_results": "Không có kết quả phù hợp.",
+    "clear_search": "Xoá tìm kiếm",
+    "results_label": "Gợi ý",
+    "searching": "Đang tìm…",
+    "state_label": "Trạng thái",
+    "state_any": "Tất cả",
+    "status_label": "Tình trạng",
+    "include_superseded": "Hiện cả claim đã thay thế",
+    "result_count": "{count, plural, other {# kết quả}} cho «{label}»",
+    "remove_filter": "Bỏ lọc {label}",
+    "add_filter": "Lọc",
+    "clear_filters": "Xoá lọc",
+    "display": "Hiển thị"
+  },
+  "manage": {
+    "dashboard": {
+      "heading": "Tổng quan",
+      "sub": "Toàn bộ project, contribution và actor trong hệ thống.",
+      "projects": "Projects",
+      "contributions": "Contributions",
+      "humans": "người",
+      "agents": "agent",
+      "open_questions": "Question đang mở",
+      "disabled": "({count} actor đang bị vô hiệu hoá)",
+      "recent": "Contribution mới nhất",
+      "col_state": "Trạng thái",
+      "col_claim": "Claim"
+    },
+    "credential": {
+      "secret_title": "Hãy lưu lại thông tin xác thực này ngay",
+      "secret_warning": "Thông tin xác thực này chỉ hiển thị đúng một lần và không thể lấy lại được nữa — hãy lưu lại ngay.",
+      "button": {
+        "issue": "Cấp credential mới",
+        "revoke": "Thu hồi"
+      },
+      "list": {
+        "empty": "Actor này chưa có thông tin xác thực nào.",
+        "label": {
+          "created": "tạo lúc"
+        },
+        "status": {
+          "live": "Còn hiệu lực",
+          "revoked_at": "Đã thu hồi lúc",
+          "revoked": "Đã thu hồi"
+        }
+      },
+      "label_field": "Nhãn (tuỳ chọn)",
+      "expiry_field": "Hạn dùng",
+      "expiry": {
+        "30": "30 ngày",
+        "90": "90 ngày",
+        "365": "365 ngày",
+        "never": "Không hết hạn"
+      },
+      "col": {
+        "label": "Nhãn",
+        "expires": "Hết hạn",
+        "last_used": "Dùng lần cuối"
+      },
+      "never_expires": "Không hết hạn",
+      "never_used": "Chưa dùng",
+      "expired": "Đã hết hạn",
+      "expires_soon": "Sắp hết hạn",
+      "first_expiry": "Token đầu tiên của agent hết hạn sau 90 ngày; sau đó có thể cấp token mới trên trang của actor."
+    },
+    "project": {
+      "heading": "Tạo project",
+      "intro": "Tạo một project mới theo ID. Contribution luôn thuộc về một project.",
+      "label": {
+        "project_id": "ID project"
+      },
+      "button": {
+        "create": "Tạo project"
+      },
+      "error": {
+        "required": "Vui lòng nhập ID project.",
+        "already_exists": "Đã tồn tại một project với ID này.",
+        "generic": "Không thể tạo project. Vui lòng thử lại."
+      },
+      "hint": {
+        "project_id": "Dùng chữ thường, số và dấu gạch ngang, ví dụ team-backend. Không đổi được sau khi tạo."
+      }
+    },
+    "actor": {
+      "heading": "Thêm actor",
+      "intro": "Người dùng đăng nhập bằng tên và mật khẩu; agent kết nối bằng token qua MCP.",
+      "label": {
+        "name": "Tên hiển thị",
+        "actor_type": "Loại actor",
+        "password": "Mật khẩu ban đầu",
+        "must_change": "Yêu cầu đổi mật khẩu khi đăng nhập lần đầu"
+      },
+      "hint": {
+        "name": "Tên dùng để nhận diện actor trong danh sách và bằng chứng. Không cần duy nhất, tối đa 64 ký tự.",
+        "username": "Bắt buộc với người dùng — họ đăng nhập bằng tên này. Agent dùng token nên bỏ trống phần đăng nhập.",
+        "reset": "Đặt lại sẽ đăng xuất mọi phiên đang mở của người này. Có thể đổi tên đăng nhập ở đây.",
+        "first_login": "Actor này chưa có tên đăng nhập. Đặt tên để họ đăng nhập bằng mật khẩu thay vì token.",
+        "credentials": "Token để agent kết nối qua MCP.",
+        "disable": "Chặn mọi đường vào: mật khẩu, token, MCP và các phiên đang mở. Dữ liệu và lịch sử contribution được giữ nguyên.",
+        "enable": "Actor này đang bị chặn. Kích hoạt lại để mật khẩu và token còn hiệu lực dùng được như cũ.",
+        "self_disable": "Bạn không thể tự vô hiệu hoá tài khoản đang dùng.",
+        "password": "Để trống để hệ thống tự tạo một mật khẩu khó đoán. Nếu tự đặt: 10–128 ký tự.",
+        "legacy_tokens": "Token cũ cấp trước khi người dùng chuyển sang đăng nhập bằng mật khẩu. Vẫn dùng được qua MCP — thu hồi nếu không còn cần."
+      },
+      "error": {
+        "name_required": "Vui lòng nhập tên hiển thị.",
+        "name_too_long": "Tên hiển thị tối đa 64 ký tự.",
+        "invalid_type": "Vui lòng chọn loại actor (Human hoặc Agent).",
+        "generic": "Không thể tạo actor. Vui lòng thử lại.",
+        "username_invalid": "Tên đăng nhập cần 3–32 ký tự: chữ thường, số, dấu chấm, gạch dưới hoặc gạch ngang.",
+        "username_taken": "Tên đăng nhập này đã có người dùng.",
+        "self_disable": "Bạn không thể tự vô hiệu hoá tài khoản của mình.",
+        "last_admin": "Đây là quản trị viên cuối cùng đang hoạt động nên không thể vô hiệu hoá.",
+        "name_taken": "Tên này đã có actor khác dùng. Hãy chọn tên khác."
+      },
+      "result": {
+        "label": {
+          "name": "Tên",
+          "actor_id": "ID actor",
+          "actor_type": "Loại"
+        },
+        "heading": "Đã tạo actor",
+        "value": {
+          "yes": "Có",
+          "no": "Không"
+        },
+        "link": {
+          "back": "Về danh sách actor",
+          "manage": "Mở trang actor"
+        }
+      },
+      "option": {
+        "human": "Human",
+        "agent": "Agent"
+      },
+      "button": {
+        "create": "Tạo actor",
+        "save": "Lưu thay đổi",
+        "reset_password": "Đặt lại mật khẩu",
+        "create_login": "Tạo tên đăng nhập và mật khẩu",
+        "disable": "Vô hiệu hoá actor",
+        "enable": "Kích hoạt lại"
+      },
+      "list": {
+        "heading": "Actors",
+        "empty": "Chưa có actor nào.",
+        "col": {
+          "name": "Tên",
+          "type": "Loại",
+          "id": "ID",
+          "created": "Tạo lúc"
+        },
+        "link": {
+          "credentials": "Thông tin xác thực",
+          "manage": "Quản lý"
+        },
+        "unnamed": "Chưa đặt tên"
+      },
+      "status": {
+        "disabled": "Đã vô hiệu hoá"
+      },
+      "section": {
+        "profile": "Thông tin",
+        "login": "Đăng nhập console",
+        "credentials": "Token MCP",
+        "access": "Quyền truy cập"
+      },
+      "notice": {
+        "profile": "Đã lưu thông tin.",
+        "disabled": "Đã vô hiệu hoá actor.",
+        "enabled": "Đã kích hoạt lại actor."
+      },
+      "password": {
+        "new_title": "Gửi thông tin đăng nhập cho người dùng",
+        "new_warning": "Mật khẩu chỉ hiện một lần ở đây. Sao chép tin nhắn bên dưới và gửi cho họ."
+      },
+      "disable_title": "Vô hiệu hoá actor này?",
+      "disable_body": "{label} sẽ mất mọi đường vào ngay: mật khẩu, token, MCP và các phiên đang mở. Có thể kích hoạt lại sau.",
+      "disable_confirm": "Vô hiệu hoá"
+    },
+    "access": {
+      "policies_heading": "Policy",
+      "policies_sub": "Policy là một tập action có tên. Policy có sẵn (managed) không sửa được.",
+      "roles_heading": "Role",
+      "roles_sub": "Role là một tập policy có tên. Gán role cho actor ở trang Actor.",
+      "col_name": "Tên",
+      "col_actions": "Action",
+      "col_policies": "Policy",
+      "managed": "Có sẵn",
+      "name": "Tên",
+      "actions": "Action",
+      "policies": "Policy",
+      "new_policy": "Policy mới",
+      "new_role": "Role mới",
+      "edit": "Sửa",
+      "delete": "Xoá",
+      "save": "Lưu",
+      "cancel": "Huỷ",
+      "remove": "Gỡ",
+      "saved": "Đã lưu.",
+      "deleted": "Đã xoá.",
+      "removed": "Đã gỡ.",
+      "name_required": "Nhập tên.",
+      "pick_one": "Chọn ít nhất một mục.",
+      "in_use": "Đang được dùng; gỡ khỏi role hoặc phân quyền trước.",
+      "actor": "Actor",
+      "role": "Role",
+      "scope": "Phạm vi",
+      "scope_all": "Tất cả project (kể cả project tạo sau)",
+      "scope_some": "Chọn project",
+      "pick_role": "Chọn role",
+      "all_projects": "Tất cả project",
+      "actor_assignments": "Quyền",
+      "actor_no_assignments": "Chưa có role: actor này chưa xem được gì.",
+      "last_admin": "Admin cuối cùng không thể mất quyền quản trị.",
+      "action": {
+        "contribution:Read": "Đọc contribution",
+        "contribution:Create": "Đăng claim và question",
+        "signal:Create": "Đánh giá và phản biện",
+        "member:Manage": "Gán role trong project",
+        "project:Create": "Tạo project",
+        "actor:Manage": "Quản lý actor và token",
+        "settings:Manage": "Cài đặt tìm kiếm",
+        "policy:Manage": "Quản lý policy và role",
+        "*": "Mọi quyền",
+        "content:Moderate": "Ẩn và hiện nội dung"
+      },
+      "covered": "Đã có {label}, bao gồm mọi quyền của role này. Gán thêm cũng không đổi gì.",
+      "redundant": "thừa: {label} đã bao gồm",
+      "find_project": "Tìm project…",
+      "picked": "Đã chọn {count} project",
+      "col_roles": "Role"
+    },
+    "people": {
+      "heading": "Actors",
+      "sub": "Người và agent, cùng quyền của từng người. Mở một actor để sửa role.",
+      "add": "Thêm actor",
+      "dialog_title": "Thêm actor",
+      "details": "Thông tin",
+      "initial_access": "Quyền ban đầu",
+      "later": "Để sau (chưa có quyền)",
+      "create": "Tạo",
+      "close": "Đóng",
+      "assign_failed_title": "Đã tạo actor, nhưng chưa gán được role",
+      "retry": "Thử lại",
+      "col_access": "Quyền",
+      "col_status": "Trạng thái",
+      "no_access": "Chưa có quyền",
+      "all_projects": "tất cả project",
+      "filter": "Lọc theo tên",
+      "only_no_access": "Chỉ actor chưa có quyền",
+      "any_project": "Mọi project",
+      "active": "Đang hoạt động",
+      "add_role": "Gán role",
+      "manager_note": "Bạn chỉ quản lý role trên project của mình.",
+      "search": "Tìm theo tên",
+      "search_hint": "Mặc định hiện thành viên các project của bạn. Gõ ít nhất 2 ký tự để tìm người khác và thêm vào project.",
+      "more": "Hiện thêm",
+      "shown": "Đang hiện {count, number} / {total, number}"
+    },
+    "audit": {
+      "heading": "Nhật ký quản trị",
+      "sub": "Ai đã làm gì: actor, token, quyền, project và cài đặt. Mới nhất ở trên.",
+      "filter_actor": "Người thực hiện",
+      "filter_project": "Project",
+      "any": "Tất cả",
+      "empty": "Chưa có sự kiện nào.",
+      "more": "Xem thêm",
+      "cli": "CLI",
+      "recent": "Hoạt động gần đây",
+      "see_all": "Xem toàn bộ nhật ký của actor này",
+      "col": {
+        "time": "Thời gian",
+        "who": "Người thực hiện",
+        "action": "Thao tác",
+        "target": "Đối tượng",
+        "project": "Project"
+      },
+      "action": {
+        "actor": {
+          "create": "Tạo actor",
+          "rename": "Đổi tên actor",
+          "disable": "Vô hiệu hoá actor",
+          "enable": "Kích hoạt lại actor",
+          "password_reset": "Đặt lại mật khẩu"
+        },
+        "credential": {
+          "issue": "Cấp token",
+          "revoke": "Thu hồi token"
+        },
+        "assignment": {
+          "create": "Gán role",
+          "delete": "Gỡ role"
+        },
+        "role": {
+          "create": "Tạo role",
+          "update": "Sửa role",
+          "delete": "Xoá role"
+        },
+        "policy": {
+          "create": "Tạo policy",
+          "update": "Sửa policy",
+          "delete": "Xoá policy"
+        },
+        "project": {
+          "create": "Tạo project",
+          "update": "Sửa project",
+          "reads_retention": "Đổi thời gian giữ lượt đọc"
+        },
+        "settings": {
+          "search": {
+            "update": "Đổi cài đặt tìm kiếm",
+            "reindex": "Tính lại vector tìm kiếm"
+          }
+        },
+        "setup": {
+          "complete": "Hoàn tất thiết lập"
+        },
+        "content": {
+          "hide": "Ẩn nội dung",
+          "unhide": "Hiện lại nội dung"
+        }
+      },
+      "target": {
+        "actor": "actor",
+        "assignment": "phân quyền",
+        "contribution": "contribution",
+        "credential": "token",
+        "policy": "policy",
+        "project": "project",
+        "role": "role",
+        "settings": "cài đặt",
+        "signal": "reply"
+      },
+      "field": {
+        "actions": "action",
+        "contribution_id": "contribution",
+        "credential_id": "token",
+        "detail_days": "số ngày giữ chi tiết",
+        "embedding_model": "model embedding",
+        "expires_at": "hết hạn",
+        "fields": "trường đã đổi",
+        "from": "từ",
+        "label": "nhãn",
+        "must_change": "phải đổi mật khẩu",
+        "policy_ids": "policy",
+        "reason": "lý do",
+        "rerank_model": "model rerank",
+        "title": "tiêu đề",
+        "to": "thành",
+        "type": "loại",
+        "username": "tên đăng nhập"
+      },
+      "yes": "có",
+      "no": "không"
+    }
+  },
+  "empty": {
+    "no_projects_title": "Chưa có project nào",
+    "no_projects_hint": "Quản trị viên tạo project trong mục Quản trị.",
+    "create_first_project": "Tạo project đầu tiên",
+    "no_contributions_title": "Chưa có contribution nào",
+    "no_contributions_hint": "Project này chưa có contribution nào.",
+    "no_match_title": "Không có claim nào khớp",
+    "no_match_hint": "Thử từ khoá khác, bật tìm trong bằng chứng, hoặc xoá bộ lọc.",
+    "no_evidence": "Chưa có bằng chứng",
+    "no_answers": "Chưa có answer nào.",
+    "no_recent": "Chưa có claim nào trong hệ thống.",
+    "projects": "Chưa có project nào",
+    "review": "Không có claim nào cần xem xét.",
+    "search": "Không có kết quả cho tìm kiếm này.",
+    "questions": "Chưa có question nào.",
+    "no_access_hint": "Bạn chưa được gán role trên project nào. Hãy nhờ quản trị viên cấp quyền.",
+    "filtered": "Không có contribution nào khớp bộ lọc.",
+    "claims": "Project này chưa có claim nào."
+  },
+  "errors": {
+    "invalid_argument": "Dữ liệu không hợp lệ.",
+    "unauthenticated": "Bạn cần đăng nhập.",
+    "forbidden": "Không có quyền thực hiện thao tác này.",
+    "not_found": "Không tìm thấy.",
+    "conflict": "Dữ liệu đã thay đổi hoặc bị trùng, hãy thử lại.",
+    "too_many_requests": "Quá nhiều yêu cầu, hãy thử lại sau giây lát.",
+    "upstream_failed": "Dịch vụ phía sau đang lỗi, hãy thử lại sau.",
+    "internal": "Có lỗi phía máy chủ.",
+    "network": "Không kết nối được máy chủ.",
+    "back_home": "Về danh sách project",
+    "invalid": "Dữ liệu không hợp lệ:",
+    "network_retrying": "Không kết nối được máy chủ, đang thử lại…",
+    "project_archived": "Project đã được lưu trữ, chỉ đọc."
+  },
+  "help": {
+    "title": "Hướng dẫn",
+    "subtitle": "Cách đọc trust state, đóng góp ý kiến, kết nối agent và quản trị.",
+    "filter": "Tìm trong hướng dẫn…",
+    "no_match": "Không có trang nào khớp.",
+    "breadcrumb": "Vị trí",
+    "pager": "Trang trước và sau",
+    "prev": "Trước",
+    "next": "Tiếp",
+    "on_this_page": "Trên trang này",
+    "quickstart": "Bắt đầu nhanh",
+    "faq": "Câu hỏi thường gặp",
+    "open_help": "Xem hướng dẫn: {label}",
+    "anchor": "Link tới mục {label}",
+    "callout": {
+      "note": "Lưu ý",
+      "tip": "Mẹo",
+      "warning": "Cảnh báo"
+    },
+    "group_start": "Bắt đầu",
+    "group_daily": "Dùng hằng ngày",
+    "group_projects": "Projects",
+    "group_agents": "Agent và AI",
+    "group_admin": "Quản trị",
+    "group_reference": "Tham khảo",
+    "pages": {
+      "overview": {
+        "title": "Agent Verdicts là gì?",
+        "menu": "Giới thiệu",
+        "summary": "Agent Verdicts là gì và hoạt động thế nào, trong một hình."
+      },
+      "concepts": {
+        "title": "Khái niệm",
+        "menu": "Khái niệm",
+        "summary": "Project, claim, question, assessment, challenge và actor là gì."
+      },
+      "states": {
+        "title": "Trust state",
+        "menu": "Trust state",
+        "summary": "Bốn trạng thái của một claim và cách hệ thống suy ra chúng."
+      },
+      "stance": {
+        "title": "Support, Oppose và challenge",
+        "menu": "Stance và challenge",
+        "summary": "Đánh giá một claim, viết challenge, trả lời và rút lại."
+      },
+      "questions": {
+        "title": "Question và answer",
+        "menu": "Questions",
+        "summary": "Tạo question, trả lời, và khi nào question được giải quyết."
+      },
+      "search": {
+        "title": "Tìm kiếm",
+        "menu": "Tìm kiếm",
+        "summary": "Tìm trong project, xem toàn bộ kết quả, biến điều đang tìm thành question."
+      },
+      "filters": {
+        "title": "Tab và bộ lọc",
+        "menu": "Tab và bộ lọc",
+        "summary": "Các tab của project, bộ lọc chip, sắp xếp và chia sẻ đúng danh sách đang xem."
+      },
+      "shortcuts": {
+        "title": "Phím tắt và tìm nhanh",
+        "menu": "Phím tắt",
+        "summary": "Bảng lệnh ⌘K và các phím tắt để làm việc không cần chuột."
+      },
+      "account": {
+        "title": "Tài khoản",
+        "menu": "Tài khoản",
+        "summary": "Đăng nhập, đổi mật khẩu, mật khẩu tạm và phiên đăng nhập."
+      },
+      "projects": {
+        "title": "Quản lý project",
+        "menu": "Quản lý project",
+        "summary": "Tab Cài đặt: thông tin, ngưỡng support, lượt đọc, lưu trữ; ẩn nội dung hàng loạt."
+      },
+      "mcp": {
+        "title": "Kết nối agent (MCP)",
+        "menu": "Kết nối agent",
+        "summary": "Cho AI agent làm việc trong một project qua MCP: địa chỉ, token, 8 công cụ."
+      },
+      "ai": {
+        "title": "Tìm kiếm AI (tuỳ chọn)",
+        "menu": "Tìm kiếm AI",
+        "summary": "Bật tìm theo ngữ nghĩa và xếp hạng lại bằng dịch vụ embedding và rerank."
+      },
+      "setup": {
+        "title": "Thiết lập lần đầu",
+        "menu": "Thiết lập lần đầu",
+        "summary": "Tạo quản trị viên đầu tiên, project đầu tiên và mời người dùng."
+      },
+      "actors": {
+        "title": "Actor và token",
+        "menu": "Actor và token",
+        "summary": "Thêm người và agent, cấp và thu hồi token, đặt lại mật khẩu, vô hiệu hoá."
+      },
+      "access": {
+        "title": "Phân quyền",
+        "menu": "Phân quyền",
+        "summary": "Role, policy và action; gán quyền trên mọi project hoặc từng project."
+      },
+      "audit": {
+        "title": "Nhật ký",
+        "menu": "Nhật ký",
+        "summary": "Ai đã làm gì trong phần quản trị, lọc và chia sẻ một sự kiện."
+      },
+      "glossary": {
+        "title": "Thuật ngữ",
+        "menu": "Thuật ngữ",
+        "summary": "Bảng đối chiếu thuật ngữ với tên trong API và MCP."
+      }
+    },
+    "states": {
+      "Favorable": "Chỉ có Support.",
+      "Unfavorable": "Chỉ có Oppose.",
+      "Conflict": "Có cả Support lẫn Oppose: cần người xem lại.",
+      "InsufficientEvidence": "Chưa ai đánh giá, mọi ý kiến đều Neutral, hoặc chưa đủ supporter."
+    },
+    "questions": {
+      "open": "Chưa có answer.",
+      "answered": "Đã có answer, nhưng chưa answer nào Favorable.",
+      "resolved": "Có ít nhất một answer Favorable."
+    },
+    "flow": {
+      "post": "Đăng claim",
+      "post_d": "Người hoặc agent đưa ra một khẳng định cần kiểm chứng.",
+      "weigh": "Assessment, challenge",
+      "weigh_d": "Mỗi ý kiến mang một stance: Support, Oppose hoặc Neutral.",
+      "state": "Trust state",
+      "state_d": "Hệ thống tự suy ra từ các stance, không chấm điểm ai.",
+      "label": "Từ claim tới trạng thái"
+    },
+    "qflow": {
+      "ask": "Tạo question",
+      "ask_d": "Chưa có trả lời.",
+      "answer": "Trả lời",
+      "answer_d": "Answer là một claim, được đánh giá như mọi claim.",
+      "resolve": "Answer Favorable",
+      "resolve_d": "Question được giải quyết.",
+      "label": "Vòng đời question"
+    },
+    "mflow": {
+      "agent": "AI agent",
+      "agent_d": "Gọi 8 công cụ MCP.",
+      "mcp": "MCP + token",
+      "mcp_d": "Token do quản trị viên cấp.",
+      "app": "Agent Verdicts",
+      "app_d": "Chung dữ liệu với giao diện web.",
+      "human": "Người dùng",
+      "human_d": "Đọc, đánh giá trên trình duyệt.",
+      "label": "Agent kết nối thế nào"
+    },
+    "matrix": {
+      "label": "Trạng thái suy ra từ bằng chứng",
+      "has_fav": "Có Support",
+      "no_fav": "Không có Support",
+      "has_unfav": "Có Oppose",
+      "no_unfav": "Không có Oppose"
+    },
+    "diag": {
+      "access": {
+        "label": "Role gồm policy, policy gồm action; role được gán cho actor trên project",
+        "role": "Role",
+        "policy": "Policy",
+        "actions": "Action",
+        "assignment": "Gán cho actor",
+        "can": "Trên payments: đọc, đăng, đánh giá, ẩn nội dung, gán role.",
+        "cannot": "Không thấy project nào khác, không quản lý actor hay cài đặt hệ thống.",
+        "caption": "Ví dụ: role manager trên một project. Gán trên tất cả project thì các quyền này áp dụng ở mọi project."
+      },
+      "count": {
+        "label": "Ví dụ trạng thái thay đổi theo từng reply",
+        "setup": "Project đặt số supporter tối thiểu là 2.",
+        "author": "Tác giả",
+        "a": "An",
+        "b": "Bình",
+        "c": "Chi",
+        "supporters": "{done}/{total} supporter",
+        "act": {
+          "post": "đăng claim",
+          "self": "tự ủng hộ (không tính)",
+          "support": "ủng hộ",
+          "oppose": "phản đối",
+          "withdraw": "rút lại phản đối"
+        },
+        "caption": "Tự ủng hộ không được tính; đủ 2 supporter mới thành Favorable; một Oppose là đủ để thành Conflict."
+      },
+      "seq": {
+        "label": "Trình tự khi agent chưa tìm thấy answer",
+        "agent": "Agent",
+        "people": "Người dùng",
+        "m": {
+          "search": "search",
+          "nothing": "không có kết quả phù hợp",
+          "ask": "create_contribution (question)",
+          "answer": "trả lời question trên web",
+          "support": "ủng hộ answer",
+          "read": "reference_contribution",
+          "trusted": "answer Favorable",
+          "assess": "create_assessment (đã kiểm chứng)"
+        },
+        "caption": "Mũi tên liền: yêu cầu. Mũi tên đứt: kết quả trả về."
+      },
+      "life": {
+        "label": "Thay thế, ẩn và lưu trữ thay đổi những gì",
+        "yes": "Có",
+        "no": "Không",
+        "some": "Một phần",
+        "col": {
+          "listed": "Trong danh sách, tìm kiếm",
+          "counted": "Trong số liệu project",
+          "seen": "Ai mở được",
+          "writable": "Còn đánh giá được"
+        },
+        "row": {
+          "normal": "Bình thường",
+          "superseded": "Bị thay thế",
+          "hidden": "Bị ẩn",
+          "archived": "Project lưu trữ"
+        },
+        "note": {
+          "normal": {
+            "seen": "Ai đọc được project"
+          },
+          "superseded": {
+            "listed": "Chỉ khi bật Hiện cả claim đã thay thế",
+            "seen": "Có link tới bản mới",
+            "writable": "Nên reply bản mới"
+          },
+          "hidden": {
+            "listed": "Người kiểm duyệt; tác giả qua Chỉ của tôi",
+            "seen": "Người kiểm duyệt và tác giả",
+            "writable": "Chỉ người kiểm duyệt"
+          },
+          "archived": {
+            "writable": "Chỉ đọc, cả qua MCP"
+          }
+        },
+        "caption": "Không có gì bị xoá: mọi thay đổi đều đảo ngược được."
+      },
+      "story": {
+        "label": "Một claim đi qua bốn bước",
+        "claim": "Timeout gọi ngân hàng là 30 giây",
+        "posted": "ghi lại khi đọc code",
+        "s1": "Ghi lại",
+        "s1_d": "Người hoặc agent ghi lại điều mình biết, hay hỏi điều chưa biết.",
+        "s2": "Kiểm chứng",
+        "s2_d": "Người khác ủng hộ hoặc phản đối, kèm lý do và bằng chứng.",
+        "p1": "An",
+        "p2": "Bình",
+        "p3": "Chi",
+        "r1": "đã kiểm tra cấu hình",
+        "r2": "đúng theo tài liệu",
+        "r3": "thấy log 10 giây",
+        "s3": "Kết luận",
+        "s3_d": "Agent Verdicts cho biết nên tin tới đâu: Favorable, Unfavorable hay còn Conflict.",
+        "s3_note": "Bot kiểm tra lại và rút phản đối: còn lại toàn Support.",
+        "s4": "Dùng lại",
+        "s4_d": "Ai cần thì tra cứu và dùng kiến thức đã được kiểm chứng.",
+        "u1": "tra cứu trước khi sửa code",
+        "u2": "xem lại các Conflict mỗi tuần",
+        "loop": "Kiến thức mới lại được ghi lại và kiểm chứng: vòng lặp tiếp tục."
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "button": {
+        "submit": "Đăng nhập"
+      },
+      "heading": "Đăng nhập",
+      "label": {
+        "username": "Tên đăng nhập",
+        "password": "Mật khẩu"
+      },
+      "password_hint": "Quên mật khẩu? Nhờ quản trị viên đặt lại trong mục Actor.",
+      "error": {
+        "invalid_password": "Tên đăng nhập hoặc mật khẩu không đúng.",
+        "locked": "Quá nhiều lần thử sai. Thử lại sau ít phút hoặc nhờ quản trị viên đặt lại mật khẩu.",
+        "temporary": "Hệ thống đang bận, chưa kiểm tra được mật khẩu. Thử lại sau giây lát."
+      }
+    },
+    "account": {
+      "heading": "Tài khoản của bạn",
+      "username": "Tên đăng nhập",
+      "no_username": "Chưa có",
+      "admin": "quản trị viên",
+      "change_password": "Đổi mật khẩu",
+      "current_password": "Mật khẩu hiện tại",
+      "new_password": "Mật khẩu mới",
+      "confirm_password": "Nhập lại mật khẩu mới",
+      "password_hint": "Từ 10 đến 128 ký tự. Một câu dài dễ nhớ an toàn hơn chuỗi ngắn phức tạp.",
+      "save_password": "Đổi mật khẩu",
+      "saved": "Đã đổi mật khẩu. Các phiên đăng nhập khác đã bị đăng xuất.",
+      "no_username_hint": "Tài khoản này chưa có tên đăng nhập nên chỉ đăng nhập được bằng token. Nhờ quản trị viên đặt tên đăng nhập trong mục Actor.",
+      "error": {
+        "mismatch": "Hai lần nhập mật khẩu mới không khớp.",
+        "current_wrong": "Mật khẩu hiện tại không đúng.",
+        "too_short": "Mật khẩu mới cần ít nhất 10 ký tự.",
+        "too_long": "Mật khẩu mới tối đa 128 ký tự.",
+        "generic": "Không đổi được mật khẩu. Thử lại."
+      },
+      "must_change": {
+        "title": "Hãy đặt mật khẩu của riêng bạn",
+        "hint": "Bạn đang dùng mật khẩu tạm do quản trị viên cấp. Đổi mật khẩu bên dưới để tiếp tục dùng hệ thống."
+      }
+    },
+    "login_message": {
+      "label": "Tin nhắn gửi người dùng",
+      "copy": "Sao chép",
+      "copied": "Đã sao chép",
+      "body": "Đăng nhập Agent Verdicts tại: {url}\nTên đăng nhập: {username}\nMật khẩu: {password}",
+      "must_change": "Bạn sẽ được yêu cầu đặt mật khẩu mới ở lần đăng nhập đầu tiên."
+    },
+    "setup": {
+      "heading": "Tạo tài khoản quản trị",
+      "intro": "Hệ thống chưa có quản trị viên. Tạo tài khoản đầu tiên để bắt đầu.",
+      "label": {
+        "code": "Mã thiết lập",
+        "name": "Tên hiển thị",
+        "username": "Tên đăng nhập",
+        "password": "Mật khẩu (tối thiểu 10 ký tự)"
+      },
+      "hint": {
+        "code": "6 ký tự in trong log của server khi khởi động (dòng “first-run setup”).",
+        "command": "Mã nằm trong log: docker compose logs api"
+      },
+      "submit": "Tạo tài khoản và đăng nhập",
+      "error": {
+        "code": "Mã thiết lập không đúng. Xem lại log của server."
+      }
+    },
+    "shell": {
+      "tagline": "Nơi agent và con người đưa ra claim, phản biện lẫn nhau và cùng đi tới kết luận đáng tin."
+    }
+  },
+  "settings": {
+    "heading": "Cài đặt tìm kiếm",
+    "intro": "Dịch vụ embedding và xếp hạng lại (tuỳ chọn). Để trống URL để tắt. Thay đổi có hiệu lực ngay.",
+    "emb": {
+      "heading": "Embedding"
+    },
+    "rer": {
+      "heading": "Xếp hạng lại (rerank)"
+    },
+    "label": {
+      "model": "Model",
+      "api_key": "API key",
+      "delete_key": "Xoá key"
+    },
+    "hint": {
+      "url": "Ví dụ http://embed:80 (TEI) hoặc http://ollama:11434/v1 (Ollama). Máy chủ sẽ gọi tới địa chỉ này.",
+      "api_key": "Để trống để giữ key hiện tại."
+    },
+    "button": {
+      "test": "Kiểm tra kết nối",
+      "save": "Lưu",
+      "reindex": "Tính lại vector"
+    },
+    "status": {
+      "pipeline": "Đang dùng:",
+      "embedded": "{done} / {total} đoạn đã có vector",
+      "reindexing": "đang tính lại vector",
+      "line": "Đang dùng: {pipeline} · {done}/{total} đã có vector",
+      "progress": "Tiến độ tính lại vector"
+    },
+    "test_ok": "Kết nối thành công.",
+    "saved": "Đã lưu cài đặt.",
+    "reindex_started": "Đã bắt đầu tính lại vector.",
+    "error": {
+      "generic": "Không thể lưu cài đặt. Vui lòng thử lại."
+    },
+    "enable_hint": "Bật embedding để tìm theo nghĩa. Xem hướng dẫn: ",
+    "enable_link": "Hướng dẫn tìm kiếm AI",
+    "warning": {
+      "api_key_unreadable": "Không đọc được API key của {provider}. Hãy nhập lại key.",
+      "unknown": "Cảnh báo: {code}"
+    }
+  },
+  "common": {
+    "close": "Đóng",
+    "cancel": "Huỷ",
+    "markdown_hint": "Hỗ trợ Markdown cơ bản"
+  },
+  "admin": {
+    "once": {
+      "warning": "Chỉ hiện một lần, không thể xem lại sau này. Hãy sao chép ngay.",
+      "copy": "Sao chép",
+      "copied": "Đã sao chép",
+      "copy_failed": "Không tự sao chép được — văn bản đã được chọn sẵn, hãy sao chép thủ công.",
+      "done": "Xong"
+    },
+    "col": {
+      "username": "Tên đăng nhập",
+      "login": "Đăng nhập",
+      "disabled": "Vô hiệu hoá",
+      "token_id": "ID token",
+      "revoked": "Thu hồi"
+    },
+    "field": {
+      "username": "Tên đăng nhập",
+      "password": "Mật khẩu",
+      "must_change": "Phải đổi ở lần đăng nhập đầu",
+      "new_username": "Tên đăng nhập mới (tuỳ chọn)",
+      "new_password": "Mật khẩu mới (tuỳ chọn)"
+    },
+    "overview": {
+      "states": "Claim theo trạng thái",
+      "open_questions": "Question đang mở"
+    },
+    "actor": {
+      "type_human": "Người",
+      "type_agent": "Agent",
+      "self": "Đây là tài khoản của bạn.",
+      "rename": "Tên hiển thị",
+      "back": "Actors",
+      "none": "Chưa có tên đăng nhập",
+      "not_found": "Không tìm thấy actor.",
+      "token_title": "Token của Agent",
+      "password_title": "Mật khẩu mới",
+      "created_token": "Token của Agent mới",
+      "created_password": "Mật khẩu của người mới"
+    },
+    "revoke": {
+      "title": "Thu hồi token này?",
+      "body": "Agent đang dùng token {id} sẽ mất quyền truy cập ngay. Không thể hoàn tác.",
+      "confirm": "Thu hồi token"
+    },
+    "project": {
+      "id": "ID project",
+      "hint": "Chữ thường, số, gạch ngang và gạch dưới; 1–64 ký tự, bắt đầu bằng chữ hoặc số, ví dụ team-backend. Không đổi được sau khi tạo.",
+      "required": "Nhập ID project.",
+      "col_contributions": "Contributions",
+      "col_open": "Question mở",
+      "col_created": "Ngày tạo",
+      "list": "Projects",
+      "created": "Đã tạo project.",
+      "invalid": "ID project chỉ gồm chữ thường, số, gạch ngang và gạch dưới (tối đa 64 ký tự, bắt đầu bằng chữ hoặc số).",
+      "name": "Tên hiển thị",
+      "name_hint": "Tuỳ chọn, tối đa 100 ký tự. Để trống thì dùng ID.",
+      "description": "Mô tả",
+      "description_hint": "Tuỳ chọn, tối đa 500 ký tự. Agent kết nối vào project này sẽ đọc mô tả như chỉ dẫn.",
+      "col_name": "Project",
+      "col_actions": "Thao tác",
+      "edit": "Sửa",
+      "edit_title": "Sửa project {id}",
+      "save": "Lưu",
+      "cancel": "Huỷ",
+      "updated": "Đã cập nhật project.",
+      "name_required": "Nhập tên hiển thị.",
+      "invalid_fields": "Tên (tối đa 100 ký tự) hoặc mô tả (tối đa 500 ký tự) không hợp lệ.",
+      "archive": "Lưu trữ",
+      "unarchive": "Bỏ lưu trữ",
+      "archived_heading": "Đã lưu trữ",
+      "archived_hint": "Các project này chỉ đọc và không hiện ở trang chủ.",
+      "archived_done": "Đã lưu trữ project.",
+      "unarchived": "Đã bỏ lưu trữ project.",
+      "min_favorable": "Số supporter tối thiểu",
+      "min_favorable_hint": "Số người khác nhau cần ủng hộ để một claim thành Favorable (1–10; 1 là một supporter đã đủ). Đổi ngưỡng có hiệu lực ngay với mọi claim của project.",
+      "min_favorable_invalid": "Số supporter tối thiểu phải từ 1 đến 10.",
+      "list_sub": "Mọi project, kể cả project đã lưu trữ. Mở một project để xem nội dung."
+    }
+  },
+  "home": {
+    "col_project": "Project",
+    "col_claims": "Contributions",
+    "col_open": "Question mở",
+    "col_conflict": "Conflict",
+    "activity": "Hoạt động",
+    "no_activity": "chưa có",
+    "col_activity": "Hoạt động",
+    "search": "Tìm project",
+    "sort_activity": "Hoạt động gần nhất",
+    "sort_name": "Tên",
+    "sort_contributions": "Nhiều contribution nhất",
+    "sort_conflicts": "Nhiều Conflict nhất",
+    "view": "Kiểu hiển thị",
+    "view_cards": "Dạng thẻ",
+    "view_table": "Dạng bảng",
+    "no_match": "Không có project nào khớp."
+  },
+  "topics": {
+    "topic": "Chủ đề",
+    "state": "Trạng thái",
+    "votes": "Stance",
+    "activity": "Hoạt động"
+  },
+  "sources": {
+    "heading": "Nguồn",
+    "label": "Nguồn (mỗi dòng một mục, không bắt buộc)",
+    "hint": "Tối đa 10 mục, mỗi mục tối đa 500 ký tự: đường dẫn, mã commit hoặc tệp.",
+    "error_too_many": "Tối đa 10 nguồn.",
+    "error_too_long": "Mỗi nguồn tối đa 500 ký tự.",
+    "add": "Thêm nguồn"
+  },
+  "kit": {
+    "copy": "Sao chép",
+    "copied": "Đã sao chép",
+    "cancel": "Huỷ",
+    "type_to_confirm": "Gõ {label} để xác nhận",
+    "actor_type": {
+      "Human": "Người",
+      "Agent": "Agent"
+    },
+    "table": {
+      "search": "Tìm…",
+      "any": "tất cả",
+      "clear": "Xoá lọc",
+      "bulk": "Thao tác hàng loạt",
+      "selected": "Đã chọn {count}",
+      "clear_selection": "Bỏ chọn",
+      "no_match": "Không có dòng nào khớp bộ lọc.",
+      "select_page": "Chọn mọi dòng trên trang",
+      "select_row": "Chọn dòng",
+      "actions": "Thao tác",
+      "range": "{from}–{to} / {total}",
+      "page": "Trang {page}/{pages}",
+      "prev": "Trước",
+      "next": "Sau"
+    }
+  },
+  "palette": {
+    "pages": "Trang quản trị",
+    "actors": "Actors",
+    "projects": "Projects",
+    "none": "Không tìm thấy.",
+    "here": "Trong project này",
+    "new_claim": "Thêm claim",
+    "new_question": "Tạo question",
+    "contributions": "Contributions"
+  },
+  "admin_ui": {
+    "assign_many": "{count} actor đã chọn",
+    "actors": {
+      "col_active": "Hoạt động gần nhất",
+      "col_token": "Token",
+      "never": "Chưa từng",
+      "disabled_n": "Đã vô hiệu hoá {count} actor.",
+      "enabled_n": "Đã kích hoạt lại {count} actor.",
+      "disable": "Vô hiệu hoá",
+      "enable": "Kích hoạt lại",
+      "token_attention": "sắp hết hạn",
+      "open": "Mở"
+    },
+    "undo": "Hoàn tác",
+    "yes": "có",
+    "no": "không",
+    "actor": {
+      "rename_title": "Đổi tên actor",
+      "rename": "Đổi tên",
+      "danger": "Vùng nguy hiểm",
+      "effective": "Quyền thực tế",
+      "effective_hint": "Actor làm được gì trên từng project, gộp từ mọi role đang có.",
+      "system": "Toàn hệ thống",
+      "created": "Tạo {label}",
+      "tab_access": "Quyền",
+      "tab_login": "Đăng nhập & token",
+      "tab_activity": "Hoạt động",
+      "no_tokens_human": "Người dùng đăng nhập bằng mật khẩu; tài khoản này không có token MCP nào."
+    },
+    "projects": {
+      "new": "Project mới",
+      "create_hint": "Project là không gian riêng: chỉ ai được gán role trên project mới đọc được.",
+      "url_preview": "Địa chỉ:",
+      "col_states": "Trạng thái claim",
+      "status": "Trạng thái",
+      "active": "Đang hoạt động",
+      "archive_title": "Lưu trữ project {id}?"
+    },
+    "matrix": {
+      "used_by": "{count} đang dùng",
+      "desc": {
+        "contribution:Read": "Xem claim, question và reply trong project.",
+        "contribution:Create": "Đăng claim và question mới.",
+        "signal:Create": "Đánh giá, phản biện và rút lại reply của mình.",
+        "content:Moderate": "Ẩn hoặc hiện lại nội dung của người khác.",
+        "member:Manage": "Gán và gỡ role của người khác trên project.",
+        "project:Create": "Tạo project mới (toàn hệ thống).",
+        "actor:Manage": "Tạo, sửa, vô hiệu hoá actor; cấp và thu hồi token (toàn hệ thống).",
+        "settings:Manage": "Đổi cài đặt tìm kiếm (toàn hệ thống).",
+        "policy:Manage": "Tạo và sửa policy, role (toàn hệ thống)."
+      }
+    },
+    "audit": {
+      "export": "Xuất CSV",
+      "exporting": "Đang xuất…",
+      "filter_action": "Thao tác",
+      "from": "Từ ngày",
+      "to": "Đến ngày",
+      "utc_note": "Lọc theo ngày tính theo giờ UTC.",
+      "event_id": "Mã sự kiện",
+      "action_key": "Mã thao tác",
+      "target_id": "Mã đối tượng",
+      "exact_time": "Thời điểm",
+      "permalink": "Link tới sự kiện này",
+      "field": {
+        "name": "tên",
+        "description": "mô tả",
+        "min_favorable": "ngưỡng support",
+        "archived": "lưu trữ",
+        "username": "tên đăng nhập",
+        "disabled": "vô hiệu hoá",
+        "type": "loại"
+      }
+    },
+    "search": {
+      "status": "Trạng thái",
+      "coverage": "{count}% contribution đã có vector",
+      "test_ok_at": "Kiểm tra kết nối thành công lúc {label}.",
+      "test_failed_at": "Kiểm tra kết nối thất bại lúc {label}.",
+      "save_hint": "Mọi thay đổi cần một lần kiểm tra kết nối thành công trước khi lưu, trừ khi tắt cả hai dịch vụ."
+    },
+    "dashboard": {
+      "attention": "Cần chú ý",
+      "attention_hint": "Những việc nên xem trước.",
+      "all_clear": "Không có gì cần xử lý.",
+      "health": "Sức khoẻ project",
+      "health_hint": "Project nhiều Conflict nhất ở trên cùng.",
+      "recent_admin": "Hoạt động quản trị gần đây",
+      "att": {
+        "tokens": "{count, number} token hết hạn trong 7 ngày",
+        "tokens_hint": "Cấp token mới trước khi agent mất kết nối.",
+        "no_access": "{count, number} actor chưa có quyền",
+        "no_access_hint": "Họ chưa đọc được project nào.",
+        "conflicts": "{count, number} claim Conflict mới trong 7 ngày",
+        "conflicts_hint": "Có Support lẫn Oppose: cần người xem xét.",
+        "stale": "{count, number} question mở quá 14 ngày",
+        "stale_hint": "Chưa ai trả lời được."
+      },
+      "see_audit": "Xem toàn bộ nhật ký"
+    }
+  },
+  "shortcuts": {
+    "title": "Phím tắt",
+    "move": "Chọn dòng sau / trước",
+    "open": "Mở dòng đang chọn",
+    "compose": "Thêm claim",
+    "search": "Tìm trong project",
+    "prev_next": "Contribution trước / sau (trang chi tiết)",
+    "palette": "Bảng lệnh",
+    "help": "Xem phím tắt"
+  },
+  "pages_hint": {
+    "projects": "Ai thấy gì ở đây, và mỗi mục làm gì."
+  }
+}

@@ -1,0 +1,1321 @@
+{
+  "nav": {
+    "skip_link": "Skip to content",
+    "projects": "All projects",
+    "login": "Login",
+    "logout": "Logout",
+    "account": "Account",
+    "admin": "Admin",
+    "dashboard": "Overview",
+    "actors": "Actors",
+    "manage_projects": "Projects",
+    "search_settings": "Search",
+    "help": "Guide",
+    "menu": "Menu",
+    "language": "Language switcher",
+    "locale_vi": "Tiếng Việt",
+    "locale_en": "English",
+    "theme_to_light": "Switch to light theme",
+    "theme_to_dark": "Switch to dark theme",
+    "section_projects": "Projects",
+    "section_more": "More",
+    "open_menu": "Open menu",
+    "toggle": "Expand or collapse {label}",
+    "policies": "Policies",
+    "roles": "Roles",
+    "audit": "Audit log",
+    "group_access": "Access",
+    "group_projects": "Projects",
+    "group_system": "System",
+    "back_to_app": "Back to the app",
+    "admin_console": "Admin console",
+    "command": "Quick find",
+    "command_hint": "Find a page, actor, project…",
+    "has_conflicts": "Has conflicts",
+    "account_menu": "Account: {name}"
+  },
+  "project": {
+    "list_heading": "Projects",
+    "intro": "Pick a project to view its contributions and trust signals.",
+    "prefix": "Project",
+    "subtitle": "Claims in this project, newest first, with their current trust state.",
+    "more": "Show more",
+    "balance": "{favorable} support, {unfavorable} dispute",
+    "card": {
+      "actor": "actor",
+      "created": "created"
+    },
+    "tab": {
+      "review": "Needs review",
+      "label": "Filter by state",
+      "questions": "Questions",
+      "overview": "Overview",
+      "claims": "Claims",
+      "settings": "Settings"
+    },
+    "error_title": "Could not open project",
+    "contribute": "Contribute",
+    "ask": "Ask a question",
+    "contribution_count": "{count} contributions",
+    "open_question_count": "{count} open questions",
+    "counts": "{favorable} support, {unfavorable} oppose, {neutral} neutral",
+    "connect": {
+      "button": "Connect agent",
+      "title": "Connect an agent to this project",
+      "intro": "Each project has its own MCP endpoint. An agent configured with the URL of project {id} works only inside that project.",
+      "url": "MCP URL",
+      "config": "MCP client config (JSON)",
+      "cli": "Claude Code command",
+      "token_note": "Replace the token placeholder with the agent's token. Tokens are issued by an administrator.",
+      "rules": "Agent rules (docs/instructions/agent-verdicts.md)",
+      "rules_note": "Load these rules into the agent: put them in .claude/rules/, or copy them into CLAUDE.md, AGENTS.md or a system prompt."
+    },
+    "archived_notice": "This project is archived: read-only, nothing can be added or changed.",
+    "reads": {
+      "heading": "Agent read data",
+      "days_label": "Days of detail to keep (30–3650)",
+      "save": "Save",
+      "invalid": "Enter a number of days from 30 to 3650.",
+      "estimate": "Estimated detail size: {label}, {count, number} rows a day.",
+      "note": "Raising the retention only keeps more from now on. Lowering it rolls older detail into monthly totals within a day.",
+      "saved": "Detail retention saved."
+    },
+    "compose_claim": "Add a claim",
+    "compose_more": "Choose what to contribute",
+    "more_actions": "More actions",
+    "copy_link": "Copy link",
+    "id": "Project ID",
+    "show_more": "Show more",
+    "show_less": "Show less",
+    "updated": "updated",
+    "answers": "{count, plural, one {# answer} other {# answers}}",
+    "bulk": {
+      "select": "Select {label}",
+      "label": "Bulk actions",
+      "selected": "{count} selected",
+      "clear": "Clear selection",
+      "hide_title": "Hide {count, plural, one {# contribution} other {# contributions}}?",
+      "hidden_done": "Hid {count, plural, one {# contribution} other {# contributions}}.",
+      "unhidden_done": "Unhid {count, plural, one {# contribution} other {# contributions}}.",
+      "failed": "{count, plural, one {# contribution} other {# contributions}} could not be changed."
+    },
+    "overview": {
+      "see_all": "See all",
+      "reads_title": "Agent reads (30 days)",
+      "reads_settings": "Settings",
+      "reads_total": "reads",
+      "never_read": "claims nobody read",
+      "empty_title": "This project is empty",
+      "empty_body": "Start with a claim or a question on the web, or connect an agent to contribute over MCP.",
+      "conflicts": "Conflicts to settle",
+      "no_conflicts": "No claim is in conflict.",
+      "waiting": "Questions waiting for an answer",
+      "no_waiting": "Every question has an answer.",
+      "recent": "Recent activity"
+    },
+    "settings": {
+      "general": "General",
+      "general_hint": "Name, description and how many supporters a claim needs to become Favorable.",
+      "danger": "Danger zone",
+      "unarchive_hint": "This project is archived. Unarchive it so people can contribute again.",
+      "archive_hint": "Once archived, the project is read-only and leaves the home page. You can unarchive it at any time."
+    }
+  },
+  "contribution": {
+    "meta": {
+      "actor": "Actor",
+      "created": "Created",
+      "kind": "Kind"
+    },
+    "evidence_heading": "Evidence",
+    "balance": {
+      "favorable": "{count} support",
+      "unfavorable": "{count} dispute",
+      "neutral": "{count} neutral"
+    },
+    "login_to_respond": "to assess or challenge this claim.",
+    "answer_to": "Answer to:",
+    "answers_heading": "Answers",
+    "history": "Replies that no longer count ({count})",
+    "signal": {
+      "challenge": "Challenge",
+      "assessment": "Assessment"
+    },
+    "create": {
+      "heading": "Add a claim",
+      "kind": "Kind",
+      "title": "Title",
+      "body": "Body (optional)",
+      "error_required": "Please enter a title.",
+      "error_generic": "Could not create the contribution. Please try again.",
+      "heading_claim": "Add a claim",
+      "heading_question": "Ask a question",
+      "title_hint": "1–200 characters.",
+      "error_title_too_long": "The title is at most 200 characters.",
+      "error_body_too_long": "The body is at most 65,536 bytes.",
+      "created": "Posted.",
+      "submit_claim": "Post claim",
+      "submit_question": "Post question",
+      "similar": "Possibly already here:",
+      "supersedes": "The new claim will replace: {label}"
+    },
+    "challenge": {
+      "heading": "Challenge this claim",
+      "content": "Content",
+      "stance": "Stance",
+      "submit": "Post challenge",
+      "error_required": "Enter some content.",
+      "error_generic": "Could not post the challenge. Please try again.",
+      "compose": "Write a challenge…"
+    },
+    "assessment": {
+      "heading": "Assess this claim",
+      "reason": "Reason (optional)",
+      "submit": "Create assessment",
+      "error_generic": "Could not create the assessment. Please try again."
+    },
+    "answer": {
+      "heading": "Answer",
+      "submit": "Post answer",
+      "open": "Write an answer…"
+    },
+    "stance_group": "Your assessment",
+    "challenge_open": "Challenge",
+    "challenge_created": "Challenge posted.",
+    "answer_created": "Answer posted.",
+    "answer_login": "Log in to answer",
+    "breadcrumb": "Breadcrumb",
+    "no_signals": "Nobody has weighed in yet. Be the first.",
+    "summary": "Summary",
+    "replies": "{count, plural, =0 {Replies} one {# reply} other {# replies}}",
+    "no_reason": "No reason given.",
+    "no_body": "No further details.",
+    "login": "Log in",
+    "confirm": {
+      "picked": "You picked: {stance}.",
+      "replaces": "Your earlier assessment ({stance}) will be replaced.",
+      "reason": "Reason (optional)",
+      "submit": "Confirm: {stance}",
+      "saved": "Assessment recorded.",
+      "withdraw": "Withdraw assessment",
+      "withdraw_hint": "You can withdraw this assessment: it will stop counting and cannot be restored."
+    },
+    "why": {
+      "superseded": "Replaced",
+      "withdrawn": "Withdrawn",
+      "hidden": "Hidden",
+      "actor_disabled": "Sender disabled"
+    },
+    "withdraw": "Withdraw",
+    "withdraw_title": "Withdraw this reply?",
+    "withdraw_body": "It will stop counting and cannot be restored. To say it again, send a new reply.",
+    "withdraw_confirm": "Confirm withdrawal",
+    "withdrawn_done": "Withdrawn.",
+    "hide": "Hide",
+    "unhide": "Unhide",
+    "hidden": "Hidden",
+    "hidden_notice": "This post is hidden: only its author and moderators can still see it.",
+    "hidden_reason": "Reason for hiding: {label}",
+    "hide_title": "Hide this content?",
+    "hide_body": "Hidden content stops counting and other readers no longer see it. It can be unhidden later.",
+    "hide_reason_label": "Reason (optional)",
+    "supersede": "Replace with a new claim",
+    "supersede_undo": "Undo replacement",
+    "superseded": "Superseded",
+    "superseded_by": "Replaced by:",
+    "supporters": "{done}/{total} supporters",
+    "reply": {
+      "open": "Reply",
+      "label": "Your reply",
+      "submit": "Post reply",
+      "done": "Reply posted.",
+      "error_required": "Please write a reply."
+    },
+    "self_support": "Author · not counted",
+    "nav": {
+      "label": "Browse the list",
+      "back": "Back to list",
+      "prev": "Previous",
+      "next": "Next"
+    },
+    "supporters_label": "Supporters",
+    "reads_30d": "Reads, 30 days",
+    "actions": "Actions",
+    "hidden_done": "Contribution hidden.",
+    "unhidden_done": "Contribution unhidden.",
+    "supersede_undone": "Supersession undone.",
+    "status_label": "Status"
+  },
+  "stance": {
+    "favorable": "Support",
+    "unfavorable": "Oppose",
+    "neutral": "Neutral"
+  },
+  "state": {
+    "Favorable": "Favorable",
+    "Unfavorable": "Unfavorable",
+    "Conflict": "Conflict",
+    "InsufficientEvidence": "Insufficient evidence"
+  },
+  "kind": {
+    "claim": "Claim",
+    "question": "Question"
+  },
+  "question_status": {
+    "open": "Open",
+    "answered": "Answered",
+    "resolved": "Resolved"
+  },
+  "search": {
+    "label": "Search this project",
+    "placeholder": "Search claims and questions… (press /)",
+    "submit": "Search",
+    "actor_label": "Author",
+    "actor_any": "Anyone",
+    "actor_mine": "Only mine",
+    "sort_label": "Sort",
+    "sort_newest": "Newest",
+    "sort_debated": "Most debated",
+    "sort_least": "Least evidence",
+    "sort_active": "Recent activity",
+    "result": "Matching claims: {count}.",
+    "clear": "Clear filters",
+    "degraded": "Search is running in reduced mode (keywords only) because the vector or rerank service did not respond.",
+    "ask_this": "Ask this as a question",
+    "no_results": "No matching results.",
+    "clear_search": "Clear search",
+    "results_label": "Suggestions",
+    "searching": "Searching…",
+    "state_label": "State",
+    "state_any": "Any",
+    "status_label": "Status",
+    "include_superseded": "Include superseded claims",
+    "result_count": "{count, plural, one {# result} other {# results}} for “{label}”",
+    "remove_filter": "Remove filter {label}",
+    "add_filter": "Filter",
+    "clear_filters": "Clear filters",
+    "display": "Display"
+  },
+  "manage": {
+    "dashboard": {
+      "heading": "Overview",
+      "sub": "Every project, contribution and actor in this instance.",
+      "projects": "Projects",
+      "contributions": "Contributions",
+      "humans": "people",
+      "agents": "agents",
+      "open_questions": "Open questions",
+      "disabled": "({count} actors disabled)",
+      "recent": "Latest contributions",
+      "col_state": "State",
+      "col_claim": "Claim"
+    },
+    "credential": {
+      "secret_title": "Save this credential now",
+      "secret_warning": "This credential is shown exactly once and cannot be retrieved again — store it now.",
+      "button": {
+        "issue": "Issue new credential",
+        "revoke": "Revoke"
+      },
+      "list": {
+        "empty": "No credentials for this actor yet.",
+        "label": {
+          "created": "created"
+        },
+        "status": {
+          "live": "Live",
+          "revoked_at": "Revoked",
+          "revoked": "Revoked"
+        }
+      },
+      "label_field": "Label (optional)",
+      "expiry_field": "Expires",
+      "expiry": {
+        "30": "30 days",
+        "90": "90 days",
+        "365": "365 days",
+        "never": "Never expires"
+      },
+      "col": {
+        "label": "Label",
+        "expires": "Expires",
+        "last_used": "Last used"
+      },
+      "never_expires": "Never expires",
+      "never_used": "Never used",
+      "expired": "Expired",
+      "expires_soon": "Expires soon",
+      "first_expiry": "The agent's first token expires after 90 days; you can issue a new one on the actor's page."
+    },
+    "project": {
+      "heading": "Create project",
+      "intro": "Create a new Project by ID. Contributions are scoped to a Project.",
+      "label": {
+        "project_id": "Project ID"
+      },
+      "button": {
+        "create": "Create project"
+      },
+      "error": {
+        "required": "Enter a project ID.",
+        "already_exists": "A project with this ID already exists.",
+        "generic": "Could not create the project. Please try again."
+      },
+      "hint": {
+        "project_id": "Use lowercase letters, digits and hyphens, e.g. team-backend. It cannot be changed later."
+      }
+    },
+    "actor": {
+      "heading": "Add actor",
+      "intro": "People log in with a username and password; agents connect with a token over MCP.",
+      "label": {
+        "name": "Display name",
+        "actor_type": "Actor type",
+        "password": "Initial password",
+        "must_change": "Ask them to change it at first login"
+      },
+      "hint": {
+        "name": "Shown wherever this actor appears. Need not be unique; up to 64 characters.",
+        "username": "Required for people — they log in with this name. Agents use tokens, so leave the login fields empty.",
+        "reset": "Resetting logs this person out everywhere. You can change the username here.",
+        "first_login": "This actor has no username yet. Set one so they can log in with a password instead of a token.",
+        "credentials": "Tokens let an agent connect over MCP.",
+        "disable": "Blocks every way in: password, tokens, MCP and open sessions. Their data and contribution history stay.",
+        "enable": "This actor is blocked. Re-enable to let their existing password and live tokens work again.",
+        "self_disable": "You can't disable the account you're using.",
+        "password": "Leave empty to have a strong one generated. If you choose one: 10–128 characters.",
+        "legacy_tokens": "Tokens issued before people moved to password login. They still work over MCP — revoke any you no longer need."
+      },
+      "error": {
+        "name_required": "Enter a display name.",
+        "name_too_long": "Display name must be at most 64 characters.",
+        "invalid_type": "Choose an actor type (Human or Agent).",
+        "generic": "Could not create the actor. Please try again.",
+        "username_invalid": "Usernames are 3–32 characters: lowercase letters, digits, dots, underscores or hyphens.",
+        "username_taken": "That username is already taken.",
+        "self_disable": "You can't disable your own account.",
+        "last_admin": "This is the last active admin, so it cannot be disabled.",
+        "name_taken": "Another actor already uses this name. Choose a different name."
+      },
+      "result": {
+        "label": {
+          "name": "Name",
+          "actor_id": "Actor ID",
+          "actor_type": "Type"
+        },
+        "heading": "Actor created",
+        "value": {
+          "yes": "Yes",
+          "no": "No"
+        },
+        "link": {
+          "back": "Back to actors",
+          "manage": "Open actor page"
+        }
+      },
+      "option": {
+        "human": "Human",
+        "agent": "Agent"
+      },
+      "button": {
+        "create": "Create actor",
+        "save": "Save changes",
+        "reset_password": "Reset password",
+        "create_login": "Create username and password",
+        "disable": "Disable actor",
+        "enable": "Re-enable"
+      },
+      "list": {
+        "heading": "Actors",
+        "empty": "No actors yet.",
+        "col": {
+          "name": "Name",
+          "type": "Type",
+          "id": "ID",
+          "created": "Created"
+        },
+        "link": {
+          "credentials": "Credentials",
+          "manage": "Manage"
+        },
+        "unnamed": "Unnamed"
+      },
+      "status": {
+        "disabled": "Disabled"
+      },
+      "section": {
+        "profile": "Profile",
+        "login": "Console login",
+        "credentials": "MCP tokens",
+        "access": "Access"
+      },
+      "notice": {
+        "profile": "Profile saved.",
+        "disabled": "Actor disabled.",
+        "enabled": "Actor re-enabled."
+      },
+      "password": {
+        "new_title": "Send the login details to the user",
+        "new_warning": "The password is shown only once, here. Copy the message below and send it to them."
+      },
+      "disable_title": "Disable this actor?",
+      "disable_body": "{label} loses every way in at once: password, tokens, MCP and open sessions. You can enable them again later.",
+      "disable_confirm": "Disable"
+    },
+    "access": {
+      "policies_heading": "Policies",
+      "policies_sub": "A policy is a named set of actions. Managed policies are built in and cannot be changed.",
+      "roles_heading": "Roles",
+      "roles_sub": "A role is a named set of policies. Give roles to actors on the Actors page.",
+      "col_name": "Name",
+      "col_actions": "Actions",
+      "col_policies": "Policies",
+      "managed": "Managed",
+      "name": "Name",
+      "actions": "Actions",
+      "policies": "Policies",
+      "new_policy": "New policy",
+      "new_role": "New role",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "remove": "Remove",
+      "saved": "Saved.",
+      "deleted": "Deleted.",
+      "removed": "Removed.",
+      "name_required": "Enter a name.",
+      "pick_one": "Pick at least one.",
+      "in_use": "Still in use; remove it from roles or assignments first.",
+      "actor": "Actor",
+      "role": "Role",
+      "scope": "Scope",
+      "scope_all": "Every project (including new ones)",
+      "scope_some": "Chosen projects",
+      "pick_role": "Choose a role",
+      "all_projects": "Every project",
+      "actor_assignments": "Access",
+      "actor_no_assignments": "No role: this actor can see nothing yet.",
+      "last_admin": "The last admin cannot lose admin rights.",
+      "action": {
+        "contribution:Read": "Read contributions",
+        "contribution:Create": "Post claims and questions",
+        "signal:Create": "Challenge and assess",
+        "member:Manage": "Give roles on the project",
+        "project:Create": "Create projects",
+        "actor:Manage": "Manage actors and tokens",
+        "settings:Manage": "Search settings",
+        "policy:Manage": "Manage policies and roles",
+        "*": "Everything",
+        "content:Moderate": "Hide and unhide content"
+      },
+      "covered": "Already has {label}, which holds every action of this role. Adding it changes nothing.",
+      "redundant": "redundant: {label} already covers it",
+      "find_project": "Find a project…",
+      "picked": "{count} projects picked",
+      "col_roles": "Roles"
+    },
+    "people": {
+      "heading": "Actors",
+      "sub": "People and agents, and what each may do. Open one to change their roles.",
+      "add": "Add actor",
+      "dialog_title": "Add actor",
+      "details": "Details",
+      "initial_access": "Initial access",
+      "later": "Decide later (no access yet)",
+      "create": "Create",
+      "close": "Close",
+      "assign_failed_title": "The actor was created, but the role could not be given",
+      "retry": "Try again",
+      "col_access": "Access",
+      "col_status": "Status",
+      "no_access": "No access",
+      "all_projects": "every project",
+      "filter": "Filter by name",
+      "only_no_access": "Only actors without access",
+      "any_project": "Any project",
+      "active": "Active",
+      "add_role": "Give a role",
+      "manager_note": "You manage roles on your projects only.",
+      "search": "Search by name",
+      "search_hint": "Shows the members of your projects by default. Type at least 2 characters to find someone else to add to a project.",
+      "more": "Show more",
+      "shown": "Showing {count, number} of {total, number}"
+    },
+    "audit": {
+      "heading": "Audit log",
+      "sub": "Who did what: actors, tokens, access, projects and settings. Newest first.",
+      "filter_actor": "Done by",
+      "filter_project": "Project",
+      "any": "All",
+      "empty": "No events yet.",
+      "more": "Load more",
+      "cli": "CLI",
+      "recent": "Recent activity",
+      "see_all": "See this actor's full audit log",
+      "col": {
+        "time": "Time",
+        "who": "Done by",
+        "action": "Action",
+        "target": "Target",
+        "project": "Project"
+      },
+      "action": {
+        "actor": {
+          "create": "Actor created",
+          "rename": "Actor renamed",
+          "disable": "Actor disabled",
+          "enable": "Actor enabled",
+          "password_reset": "Password reset"
+        },
+        "credential": {
+          "issue": "Token issued",
+          "revoke": "Token revoked"
+        },
+        "assignment": {
+          "create": "Role assigned",
+          "delete": "Role removed"
+        },
+        "role": {
+          "create": "Role created",
+          "update": "Role updated",
+          "delete": "Role deleted"
+        },
+        "policy": {
+          "create": "Policy created",
+          "update": "Policy updated",
+          "delete": "Policy deleted"
+        },
+        "project": {
+          "create": "Project created",
+          "update": "Project updated",
+          "reads_retention": "Change read retention"
+        },
+        "settings": {
+          "search": {
+            "update": "Search settings changed",
+            "reindex": "Search reindex started"
+          }
+        },
+        "setup": {
+          "complete": "Setup completed"
+        },
+        "content": {
+          "hide": "Content hidden",
+          "unhide": "Content unhidden"
+        }
+      },
+      "target": {
+        "actor": "actor",
+        "assignment": "assignment",
+        "contribution": "contribution",
+        "credential": "token",
+        "policy": "policy",
+        "project": "project",
+        "role": "role",
+        "settings": "settings",
+        "signal": "signal"
+      },
+      "field": {
+        "actions": "actions",
+        "contribution_id": "contribution",
+        "credential_id": "token",
+        "detail_days": "detail days",
+        "embedding_model": "embedding model",
+        "expires_at": "expires",
+        "fields": "changed fields",
+        "from": "from",
+        "label": "label",
+        "must_change": "must change password",
+        "policy_ids": "policies",
+        "reason": "reason",
+        "rerank_model": "rerank model",
+        "title": "title",
+        "to": "to",
+        "type": "type",
+        "username": "username"
+      },
+      "yes": "yes",
+      "no": "no"
+    }
+  },
+  "empty": {
+    "no_projects_title": "No projects yet",
+    "no_projects_hint": "An admin creates projects under Manage.",
+    "create_first_project": "Create the first project",
+    "no_contributions_title": "No contributions yet",
+    "no_contributions_hint": "This project doesn't have any contributions.",
+    "no_match_title": "No claims match",
+    "no_match_hint": "Try other words, search evidence too, or clear the filters.",
+    "no_evidence": "No evidence yet",
+    "no_answers": "No answers yet.",
+    "no_recent": "No claims yet.",
+    "projects": "No projects yet",
+    "review": "Nothing needs review.",
+    "search": "Nothing matches this search.",
+    "questions": "No questions yet.",
+    "no_access_hint": "You have no role on any project yet. Ask an admin to give you one.",
+    "filtered": "No contribution matches the filters.",
+    "claims": "This project has no claims yet."
+  },
+  "errors": {
+    "invalid_argument": "Invalid input.",
+    "unauthenticated": "You need to log in.",
+    "forbidden": "You are not allowed to do this.",
+    "not_found": "Not found.",
+    "conflict": "The data changed or already exists, try again.",
+    "too_many_requests": "Too many requests, try again in a moment.",
+    "upstream_failed": "An upstream service failed, try again later.",
+    "internal": "Something went wrong on the server.",
+    "network": "Cannot reach the server.",
+    "back_home": "Back to projects",
+    "invalid": "Invalid input:",
+    "network_retrying": "Cannot reach the server, retrying…",
+    "project_archived": "This project is archived and read-only."
+  },
+  "help": {
+    "title": "Guide",
+    "subtitle": "How to read trust states, contribute, connect agents and administer.",
+    "filter": "Search the guide…",
+    "no_match": "No page matches.",
+    "breadcrumb": "Location",
+    "pager": "Previous and next page",
+    "prev": "Previous",
+    "next": "Next",
+    "on_this_page": "On this page",
+    "quickstart": "Quick start",
+    "faq": "Frequent questions",
+    "open_help": "Open the guide: {label}",
+    "anchor": "Link to {label}",
+    "callout": {
+      "note": "Note",
+      "tip": "Tip",
+      "warning": "Warning"
+    },
+    "group_start": "Getting started",
+    "group_daily": "Everyday use",
+    "group_projects": "Projects",
+    "group_agents": "Agents and AI",
+    "group_admin": "Administration",
+    "group_reference": "Reference",
+    "pages": {
+      "overview": {
+        "title": "What is Agent Verdicts?",
+        "menu": "Introduction",
+        "summary": "What Agent Verdicts is and how it works, in one picture."
+      },
+      "concepts": {
+        "title": "Concepts",
+        "menu": "Concepts",
+        "summary": "What projects, claims, questions, assessments, challenges and actors are."
+      },
+      "states": {
+        "title": "Trust states",
+        "menu": "Trust states",
+        "summary": "The four states of a claim and how they are worked out."
+      },
+      "stance": {
+        "title": "Support, oppose, challenge",
+        "menu": "Taking a stance",
+        "summary": "Assess a claim, write a challenge, reply and withdraw."
+      },
+      "questions": {
+        "title": "Questions and answers",
+        "menu": "Questions",
+        "summary": "Ask a question, answer it, and when it counts as resolved."
+      },
+      "search": {
+        "title": "Search",
+        "menu": "Search",
+        "summary": "Search a project, see every result, turn a search into a question."
+      },
+      "filters": {
+        "title": "Tabs and filters",
+        "menu": "Tabs and filters",
+        "summary": "A project's tabs, filter chips, sorting and sharing the exact list you see."
+      },
+      "shortcuts": {
+        "title": "Shortcuts and quick search",
+        "menu": "Shortcuts",
+        "summary": "The ⌘K palette and keys to work without the mouse."
+      },
+      "account": {
+        "title": "Account",
+        "menu": "Account",
+        "summary": "Signing in, changing your password, temporary passwords and sessions."
+      },
+      "projects": {
+        "title": "Managing a project",
+        "menu": "Managing a project",
+        "summary": "The Settings tab: details, support threshold, reads, archiving; hiding content in bulk."
+      },
+      "mcp": {
+        "title": "Connecting an agent (MCP)",
+        "menu": "Connect an agent",
+        "summary": "Let an AI agent work in a project over MCP: address, token, 8 tools."
+      },
+      "ai": {
+        "title": "AI search (optional)",
+        "menu": "AI search",
+        "summary": "Turn on semantic search and reranking with embedding and rerank services."
+      },
+      "setup": {
+        "title": "First-run setup",
+        "menu": "First-run setup",
+        "summary": "Create the first admin and the first project, and invite people."
+      },
+      "actors": {
+        "title": "Actors and tokens",
+        "menu": "Actors and tokens",
+        "summary": "Add people and agents, issue and revoke tokens, reset passwords, disable."
+      },
+      "access": {
+        "title": "Access control",
+        "menu": "Access control",
+        "summary": "Roles, policies and actions; granting on every project or on one."
+      },
+      "audit": {
+        "title": "Audit log",
+        "menu": "Audit log",
+        "summary": "Who did what in the admin console; filter it and share one event."
+      },
+      "glossary": {
+        "title": "Glossary",
+        "menu": "Glossary",
+        "summary": "The terms side by side with their names in the API and MCP."
+      }
+    },
+    "states": {
+      "Favorable": "Only supporting evidence.",
+      "Unfavorable": "Only opposing evidence.",
+      "Conflict": "Both support and opposition: needs a closer look.",
+      "InsufficientEvidence": "Nobody has weighed in, or every opinion is neutral."
+    },
+    "questions": {
+      "open": "No answers yet.",
+      "answered": "Has answers, but none is Favorable yet.",
+      "resolved": "At least one answer is Favorable."
+    },
+    "flow": {
+      "post": "Post a claim",
+      "post_d": "A person or an agent states something to be checked.",
+      "weigh": "Assess, challenge",
+      "weigh_d": "Every opinion carries a stance: support, oppose or neutral.",
+      "state": "Trust state",
+      "state_d": "Derived from the stances; nobody gets a score.",
+      "label": "From claim to state"
+    },
+    "qflow": {
+      "ask": "Ask a question",
+      "ask_d": "No answer yet.",
+      "answer": "Answer",
+      "answer_d": "An answer is a claim, assessed like any claim.",
+      "resolve": "A Favorable answer",
+      "resolve_d": "The question is resolved.",
+      "label": "A question's life"
+    },
+    "mflow": {
+      "agent": "AI agent",
+      "agent_d": "Calls the 8 MCP tools.",
+      "mcp": "MCP + token",
+      "mcp_d": "An admin issues the token.",
+      "app": "Agent Verdicts",
+      "app_d": "Same data as the web UI.",
+      "human": "People",
+      "human_d": "Read and assess in the browser.",
+      "label": "How an agent connects"
+    },
+    "matrix": {
+      "label": "The state follows from the evidence",
+      "has_fav": "Some support",
+      "no_fav": "No support",
+      "has_unfav": "Some opposition",
+      "no_unfav": "No opposition"
+    },
+    "diag": {
+      "access": {
+        "label": "A role holds policies, a policy holds actions; a role is given to an actor on projects",
+        "role": "Role",
+        "policy": "Policy",
+        "actions": "Actions",
+        "assignment": "Given to an actor",
+        "can": "On payments: read, post, assess, hide content, give roles.",
+        "cannot": "Sees no other project, manages no actors or system settings.",
+        "caption": "Example: the manager role on one project. Given on every project, the same rights apply everywhere."
+      },
+      "count": {
+        "label": "Example: the state after each reply",
+        "setup": "The project's minimum number of supporters is 2.",
+        "author": "The author",
+        "a": "Ann",
+        "b": "Ben",
+        "c": "Cat",
+        "supporters": "{done}/{total} supporters",
+        "act": {
+          "post": "posts the claim",
+          "self": "supports it (does not count)",
+          "support": "supports",
+          "oppose": "opposes",
+          "withdraw": "withdraws the opposition"
+        },
+        "caption": "Self-support does not count; two supporters make it Favorable; one opposition is enough for Conflict."
+      },
+      "seq": {
+        "label": "The sequence when an agent finds no answer",
+        "agent": "Agent",
+        "people": "People",
+        "m": {
+          "search": "search",
+          "nothing": "no good match",
+          "ask": "create_contribution (question)",
+          "answer": "answer the question on the web",
+          "support": "support the answer",
+          "read": "reference_contribution",
+          "trusted": "a Favorable answer",
+          "assess": "create_assessment (verified)"
+        },
+        "caption": "Solid arrow: a request. Dashed arrow: what comes back."
+      },
+      "life": {
+        "label": "What replacing, hiding and archiving change",
+        "yes": "Yes",
+        "no": "No",
+        "some": "Partly",
+        "col": {
+          "listed": "In lists and search",
+          "counted": "In project numbers",
+          "seen": "Who can open it",
+          "writable": "Can still be assessed"
+        },
+        "row": {
+          "normal": "Normal",
+          "superseded": "Replaced",
+          "hidden": "Hidden",
+          "archived": "Archived project"
+        },
+        "note": {
+          "normal": {
+            "seen": "Anyone who can read the project"
+          },
+          "superseded": {
+            "listed": "Only with Include superseded claims",
+            "seen": "Links to the new one",
+            "writable": "Better reply to the new one"
+          },
+          "hidden": {
+            "listed": "Moderators; the author under Only mine",
+            "seen": "Moderators and the author",
+            "writable": "Moderators only"
+          },
+          "archived": {
+            "writable": "Read-only, over MCP too"
+          }
+        },
+        "caption": "Nothing is deleted: every change can be undone."
+      },
+      "story": {
+        "label": "One claim goes through four steps",
+        "claim": "The bank call times out after 30 seconds",
+        "posted": "noted while reading the code",
+        "s1": "Record",
+        "s1_d": "A person or an agent writes down what they know, or asks what they do not.",
+        "s2": "Check",
+        "s2_d": "Others support or oppose it, with reasons and evidence.",
+        "p1": "Ann",
+        "p2": "Ben",
+        "p3": "Cat",
+        "r1": "checked the config",
+        "r2": "matches the docs",
+        "r3": "saw 10 seconds in the logs",
+        "s3": "Verdict",
+        "s3_d": "Agent Verdicts shows how far to trust it: Favorable, Unfavorable or still in Conflict.",
+        "s3_note": "Bot checks again and withdraws: only support is left.",
+        "s4": "Reuse",
+        "s4_d": "Whoever needs it looks it up and uses knowledge that was checked.",
+        "u1": "looks it up before changing code",
+        "u2": "reviews the conflicts every week",
+        "loop": "New knowledge is recorded and checked in turn: the loop goes on."
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "button": {
+        "submit": "Login"
+      },
+      "heading": "Log in",
+      "label": {
+        "username": "Username",
+        "password": "Password"
+      },
+      "password_hint": "Forgot your password? Ask an admin to reset it under Actors.",
+      "error": {
+        "invalid_password": "Username or password is incorrect.",
+        "locked": "Too many failed attempts. Try again in a few minutes or ask an admin to reset your password.",
+        "temporary": "The server is busy and couldn't check your password. Try again in a moment."
+      }
+    },
+    "account": {
+      "heading": "Your account",
+      "username": "Username",
+      "no_username": "None",
+      "admin": "admin",
+      "change_password": "Change password",
+      "current_password": "Current password",
+      "new_password": "New password",
+      "confirm_password": "Repeat new password",
+      "password_hint": "10 to 128 characters. A long memorable phrase beats a short complex one.",
+      "save_password": "Change password",
+      "saved": "Password changed. Your other sessions have been logged out.",
+      "no_username_hint": "This account has no username, so it can only log in with a token. Ask an admin to set a username under Actors.",
+      "error": {
+        "mismatch": "The two new passwords don't match.",
+        "current_wrong": "Current password is incorrect.",
+        "too_short": "New password needs at least 10 characters.",
+        "too_long": "New password can be at most 128 characters.",
+        "generic": "Could not change the password. Try again."
+      },
+      "must_change": {
+        "title": "Set your own password",
+        "hint": "You're using a temporary password from an admin. Change it below to keep using the system."
+      }
+    },
+    "login_message": {
+      "label": "Message for the user",
+      "copy": "Copy",
+      "copied": "Copied",
+      "body": "Log in to Agent Verdicts at: {url}\nUsername: {username}\nPassword: {password}",
+      "must_change": "You'll be asked to set a new password the first time you log in."
+    },
+    "setup": {
+      "heading": "Create the admin account",
+      "intro": "There is no admin yet. Create the first account to get started.",
+      "label": {
+        "code": "Setup code",
+        "name": "Display name",
+        "username": "Username",
+        "password": "Password (at least 10 characters)"
+      },
+      "hint": {
+        "code": "Six characters printed in the server log at startup (the “first-run setup” line).",
+        "command": "The code is in the log: docker compose logs api"
+      },
+      "submit": "Create account and log in",
+      "error": {
+        "code": "That setup code is wrong. Check the server log."
+      }
+    },
+    "shell": {
+      "tagline": "Where agents and people make claims, challenge them and reach verdicts you can trust."
+    }
+  },
+  "settings": {
+    "heading": "Search settings",
+    "intro": "Optional embedding and rerank services. Leave the URL empty to turn one off. Changes apply at once.",
+    "emb": {
+      "heading": "Embedding"
+    },
+    "rer": {
+      "heading": "Rerank"
+    },
+    "label": {
+      "model": "Model",
+      "api_key": "API key",
+      "delete_key": "Delete key"
+    },
+    "hint": {
+      "url": "For example http://embed:80 (TEI) or http://ollama:11434/v1 (Ollama). The server will call this address.",
+      "api_key": "Leave empty to keep the current key."
+    },
+    "button": {
+      "test": "Test connection",
+      "save": "Save",
+      "reindex": "Recompute vectors"
+    },
+    "status": {
+      "pipeline": "Pipeline:",
+      "embedded": "{done} / {total} chunks embedded",
+      "reindexing": "recomputing vectors",
+      "line": "In use: {pipeline} · {done}/{total} have vectors",
+      "progress": "Vector recomputation progress"
+    },
+    "test_ok": "Connection OK.",
+    "saved": "Settings saved.",
+    "reindex_started": "Vector recomputation started.",
+    "error": {
+      "generic": "Could not save the settings. Please try again."
+    },
+    "enable_hint": "Turn on embedding for semantic search. See the guide: ",
+    "enable_link": "AI search guide",
+    "warning": {
+      "api_key_unreadable": "The {provider} API key cannot be read. Enter it again.",
+      "unknown": "Warning: {code}"
+    }
+  },
+  "common": {
+    "close": "Close",
+    "cancel": "Cancel",
+    "markdown_hint": "Basic Markdown supported"
+  },
+  "admin": {
+    "once": {
+      "warning": "Shown only once — it cannot be retrieved later. Copy it now.",
+      "copy": "Copy",
+      "copied": "Copied",
+      "copy_failed": "Could not copy automatically — the text is selected, copy it by hand.",
+      "done": "Done"
+    },
+    "col": {
+      "username": "Username",
+      "login": "Login",
+      "disabled": "Disabled",
+      "token_id": "Token ID",
+      "revoked": "Revoked"
+    },
+    "field": {
+      "username": "Username",
+      "password": "Password",
+      "must_change": "Must change at first login",
+      "new_username": "New username (optional)",
+      "new_password": "New password (optional)"
+    },
+    "overview": {
+      "states": "Claims by state",
+      "open_questions": "Open questions"
+    },
+    "actor": {
+      "type_human": "Human",
+      "type_agent": "Agent",
+      "self": "This is your account.",
+      "rename": "Display name",
+      "back": "Actors",
+      "none": "No username",
+      "not_found": "Actor not found.",
+      "token_title": "Agent token",
+      "password_title": "New password",
+      "created_token": "Token for the new agent",
+      "created_password": "Password for the new person"
+    },
+    "revoke": {
+      "title": "Revoke this token?",
+      "body": "The Agent using token {id} loses access at once. This cannot be undone.",
+      "confirm": "Revoke token"
+    },
+    "project": {
+      "id": "Project ID",
+      "hint": "Lowercase letters, digits, hyphens and underscores; 1–64 characters, starting with a letter or digit, e.g. team-backend. Cannot be changed after creation.",
+      "required": "Enter a project ID.",
+      "col_contributions": "Contributions",
+      "col_open": "Open questions",
+      "col_created": "Created",
+      "list": "Projects",
+      "created": "Project created.",
+      "invalid": "A project ID uses only lowercase letters, digits, hyphens and underscores (up to 64 characters, starting with a letter or digit).",
+      "name": "Display name",
+      "name_hint": "Optional, up to 100 characters. Defaults to the ID.",
+      "description": "Description",
+      "description_hint": "Optional, up to 500 characters. Agents connected to this project read it as instructions.",
+      "col_name": "Project",
+      "col_actions": "Actions",
+      "edit": "Edit",
+      "edit_title": "Edit project {id}",
+      "save": "Save",
+      "cancel": "Cancel",
+      "updated": "Project updated.",
+      "name_required": "Enter a display name.",
+      "invalid_fields": "The name (up to 100 characters) or description (up to 500 characters) is not valid.",
+      "archive": "Archive",
+      "unarchive": "Unarchive",
+      "archived_heading": "Archived",
+      "archived_hint": "These projects are read-only and not on the home page.",
+      "archived_done": "Project archived.",
+      "unarchived": "Project unarchived.",
+      "min_favorable": "Minimum number of supporters",
+      "min_favorable_hint": "How many different people must support a claim for it to be Favorable (1-10; 1 means a single supporter is enough). A change applies at once to every claim in the project.",
+      "min_favorable_invalid": "The minimum number of supporters must be between 1 and 10.",
+      "list_sub": "Every project, archived ones included. Open a project to see its content."
+    }
+  },
+  "home": {
+    "col_project": "Project",
+    "col_claims": "Posts",
+    "col_open": "Open questions",
+    "col_conflict": "Conflicts",
+    "activity": "Active",
+    "no_activity": "never",
+    "col_activity": "Activity",
+    "search": "Search projects",
+    "sort_activity": "Recent activity",
+    "sort_name": "Name",
+    "sort_contributions": "Most posts",
+    "sort_conflicts": "Most conflicts",
+    "view": "Layout",
+    "view_cards": "Cards",
+    "view_table": "Table",
+    "no_match": "No project matches."
+  },
+  "topics": {
+    "topic": "Topic",
+    "state": "State",
+    "votes": "Votes",
+    "activity": "Activity"
+  },
+  "sources": {
+    "heading": "Sources",
+    "label": "Sources (one per line, optional)",
+    "hint": "Up to 10 items, each up to 500 characters: a link, commit id or file path.",
+    "error_too_many": "At most 10 sources.",
+    "error_too_long": "Each source is at most 500 characters.",
+    "add": "Add sources"
+  },
+  "kit": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "cancel": "Cancel",
+    "type_to_confirm": "Type {label} to confirm",
+    "actor_type": {
+      "Human": "Person",
+      "Agent": "Agent"
+    },
+    "table": {
+      "search": "Search…",
+      "any": "all",
+      "clear": "Clear filters",
+      "bulk": "Bulk actions",
+      "selected": "{count} selected",
+      "clear_selection": "Clear selection",
+      "no_match": "No rows match the filters.",
+      "select_page": "Select every row on the page",
+      "select_row": "Select row",
+      "actions": "Actions",
+      "range": "{from}–{to} of {total}",
+      "page": "Page {page} of {pages}",
+      "prev": "Previous",
+      "next": "Next"
+    }
+  },
+  "palette": {
+    "pages": "Admin pages",
+    "actors": "Actors",
+    "projects": "Projects",
+    "none": "Nothing found.",
+    "here": "In this project",
+    "new_claim": "Add a claim",
+    "new_question": "Ask a question",
+    "contributions": "Contributions"
+  },
+  "admin_ui": {
+    "assign_many": "{count} actors selected",
+    "actors": {
+      "col_active": "Last active",
+      "col_token": "Token",
+      "never": "Never",
+      "disabled_n": "Disabled {count} actors.",
+      "enabled_n": "Re-enabled {count} actors.",
+      "disable": "Disable",
+      "enable": "Re-enable",
+      "token_attention": "expiring soon",
+      "open": "Open"
+    },
+    "undo": "Undo",
+    "yes": "yes",
+    "no": "no",
+    "actor": {
+      "rename_title": "Rename actor",
+      "rename": "Rename",
+      "danger": "Danger zone",
+      "effective": "Effective access",
+      "effective_hint": "What this actor can do in each project, across all of its roles.",
+      "system": "Instance-wide",
+      "created": "Created {label}",
+      "tab_access": "Access",
+      "tab_login": "Sign-in & tokens",
+      "tab_activity": "Activity",
+      "no_tokens_human": "People sign in with a password; this account has no MCP tokens."
+    },
+    "projects": {
+      "new": "New project",
+      "create_hint": "A project is a private space: only actors with a role on it can read it.",
+      "url_preview": "Address:",
+      "col_states": "Claim states",
+      "status": "Status",
+      "active": "Active",
+      "archive_title": "Archive project {id}?"
+    },
+    "matrix": {
+      "used_by": "{count} using it",
+      "desc": {
+        "contribution:Read": "See claims, questions and signals in the project.",
+        "contribution:Create": "Post new claims and questions.",
+        "signal:Create": "Assess, challenge and withdraw their own signals.",
+        "content:Moderate": "Hide or unhide other people's content.",
+        "member:Manage": "Give and remove other people's roles on the project.",
+        "project:Create": "Create new projects (instance-wide).",
+        "actor:Manage": "Create, edit and disable actors; issue and revoke tokens (instance-wide).",
+        "settings:Manage": "Change search settings (instance-wide).",
+        "policy:Manage": "Create and edit policies and roles (instance-wide)."
+      }
+    },
+    "audit": {
+      "export": "Export CSV",
+      "exporting": "Exporting…",
+      "filter_action": "Action",
+      "from": "From",
+      "to": "To",
+      "utc_note": "Day filters use UTC.",
+      "event_id": "Event id",
+      "action_key": "Action key",
+      "target_id": "Target id",
+      "exact_time": "Time",
+      "permalink": "Link to this event",
+      "field": {
+        "name": "name",
+        "description": "description",
+        "min_favorable": "support threshold",
+        "archived": "archived",
+        "username": "username",
+        "disabled": "disabled",
+        "type": "type"
+      }
+    },
+    "search": {
+      "status": "Status",
+      "coverage": "{count}% of contributions have a vector",
+      "test_ok_at": "Connection test passed at {label}.",
+      "test_failed_at": "Connection test failed at {label}.",
+      "save_hint": "Every change needs a passing connection test before saving, unless both services are turned off."
+    },
+    "dashboard": {
+      "attention": "Needs attention",
+      "attention_hint": "What to look at first.",
+      "all_clear": "Nothing needs attention.",
+      "health": "Project health",
+      "health_hint": "Projects with the most conflicts first.",
+      "recent_admin": "Recent admin activity",
+      "att": {
+        "tokens": "{count, number} tokens expire within 7 days",
+        "tokens_hint": "Issue new ones before agents lose access.",
+        "no_access": "{count, number} actors have no access",
+        "no_access_hint": "They cannot read any project yet.",
+        "conflicts": "{count, number} claims in conflict changed in 7 days",
+        "conflicts_hint": "Supported and disputed: needs someone to look.",
+        "stale": "{count, number} questions open for more than 14 days",
+        "stale_hint": "Nobody has answered them yet."
+      },
+      "see_audit": "See the whole audit log"
+    }
+  },
+  "shortcuts": {
+    "title": "Keyboard shortcuts",
+    "move": "Next / previous row",
+    "open": "Open the selected row",
+    "compose": "Add a claim",
+    "search": "Search the project",
+    "prev_next": "Previous / next contribution (detail page)",
+    "palette": "Command palette",
+    "help": "Show shortcuts"
+  },
+  "pages_hint": {
+    "projects": "Who sees what here, and what each block does."
+  }
+}

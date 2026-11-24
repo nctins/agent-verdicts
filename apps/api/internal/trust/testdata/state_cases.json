@@ -1,0 +1,21 @@
+{
+  "state": [
+    {"min_favorable": 1, "counts": {"favorable": 0, "unfavorable": 0, "neutral": 0, "favorable_actors": 0}, "want": "InsufficientEvidence"},
+    {"min_favorable": 1, "counts": {"favorable": 0, "unfavorable": 0, "neutral": 5, "favorable_actors": 0}, "want": "InsufficientEvidence"},
+    {"min_favorable": 1, "counts": {"favorable": 1, "unfavorable": 0, "neutral": 0, "favorable_actors": 1}, "want": "Favorable"},
+    {"min_favorable": 1, "counts": {"favorable": 0, "unfavorable": 2, "neutral": 0, "favorable_actors": 0}, "want": "Unfavorable"},
+    {"min_favorable": 1, "counts": {"favorable": 1, "unfavorable": 1, "neutral": 0, "favorable_actors": 1}, "want": "Conflict"},
+    {"min_favorable": 1, "counts": {"favorable": 1, "unfavorable": 1, "neutral": 3, "favorable_actors": 1}, "want": "Conflict"},
+    {"min_favorable": 1, "counts": {"favorable": 3, "unfavorable": 0, "neutral": 9, "favorable_actors": 2}, "want": "Favorable"},
+    {"min_favorable": 1, "counts": {"favorable": 0, "unfavorable": 1, "neutral": 1, "favorable_actors": 0}, "want": "Unfavorable"},
+    {"min_favorable": 2, "counts": {"favorable": 1, "unfavorable": 0, "neutral": 0, "favorable_actors": 1}, "want": "InsufficientEvidence"},
+    {"min_favorable": 2, "counts": {"favorable": 3, "unfavorable": 0, "neutral": 0, "favorable_actors": 1}, "want": "InsufficientEvidence"},
+    {"min_favorable": 2, "counts": {"favorable": 2, "unfavorable": 0, "neutral": 0, "favorable_actors": 2}, "want": "Favorable"},
+    {"min_favorable": 2, "counts": {"favorable": 0, "unfavorable": 0, "neutral": 4, "favorable_actors": 0}, "want": "InsufficientEvidence"},
+    {"min_favorable": 3, "counts": {"favorable": 1, "unfavorable": 1, "neutral": 0, "favorable_actors": 1}, "want": "Conflict"},
+    {"min_favorable": 3, "counts": {"favorable": 0, "unfavorable": 1, "neutral": 0, "favorable_actors": 0}, "want": "Unfavorable"},
+    {"min_favorable": 10, "counts": {"favorable": 9, "unfavorable": 0, "neutral": 0, "favorable_actors": 9}, "want": "InsufficientEvidence"},
+    {"min_favorable": 10, "counts": {"favorable": 10, "unfavorable": 0, "neutral": 0, "favorable_actors": 10}, "want": "Favorable"}
+  ],
+  "rank": ["Favorable", "Conflict", "InsufficientEvidence", "Unfavorable"]
+}

@@ -1,0 +1,1648 @@
+openapi: 3.1.0
+info:
+  title: Agent Verdicts API
+  version: 0.1.0-beta
+  description: |
+    JSON API behind the web UI (spec 2026-11-12-backend-rebuild, section 8).
+    Source of truth for shapes is the implementation in
+    `internal/adapter/httpapi`; `contract_test.go` holds the handlers to this
+    file (routes in both directions, plus every request and response of a
+    scenario that touches every route).
+
+    Authentication: a browser logs in with `POST /session` and then carries
+    the `av_session` cookie. Every non-GET request except `POST /session` and
+    `POST /setup` also carries `X-CSRF-Token` (from `GET /session`). Those two
+    session-less POSTs require an `Origin` header whose host equals the request
+    host (403 otherwise).
+
+    Access control (spec 2026-11-14-access-control): every route except
+    `GET/POST /session` and `POST /setup` needs a session. What a caller may
+    do comes from role assignments (actor + role + every project or one); a
+    project the caller cannot read answers 404 as if it did not exist; a
+    missing action is 403.
+
+    Responses are never cacheable (`Cache-Control: no-store`). Timestamps are
+    RFC 3339 UTC. Unknown JSON fields in a request body are rejected with 400.
+servers:
+  - url: /api/v1
+
+tags:
+  - {name: session}
+  - {name: contributions}
+  - {name: admin}
+
+paths:
+  /session:
+    get:
+      tags: [session]
+      operationId: getSession
+      summary: Who the cookie belongs to (public)
+      responses:
+        "200": {description: The current session or an anonymous one, content: {application/json: {schema: {$ref: "#/components/schemas/Session"}}}}
+        "500": {$ref: "#/components/responses/Internal"}
+    post:
+      tags: [session]
+      operationId: login
+      summary: Log in with username and password
+      description: Five recent failures for a username give 429 without the password being checked.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [username, password]
+              properties:
+                username: {type: string}
+                password: {type: string}
+      responses:
+        "200":
+          description: Logged in; sets the session cookie
+          headers: {Set-Cookie: {$ref: "#/components/headers/SetCookie"}}
+          content: {application/json: {schema: {$ref: "#/components/schemas/Session"}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "429": {$ref: "#/components/responses/TooManyRequests"}
+        "500": {$ref: "#/components/responses/Internal"}
+    delete:
+      tags: [session]
+      operationId: logout
+      summary: Log out; clears the session cookie
+      security: [{cookieAuth: [], csrfToken: []}]
+      responses:
+        "204": {description: Logged out, headers: {Set-Cookie: {$ref: "#/components/headers/SetCookie"}}}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /setup:
+    post:
+      tags: [session]
+      operationId: setup
+      summary: First-run setup - create the first admin and log in
+      description: Guarded by the one-time code the server prints to its log. 404 once setup is closed or was never open. 409 when the username or the name is taken.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [code, name, username, password]
+              properties:
+                code: {type: string}
+                name: {type: string, maxLength: 64}
+                username: {type: string, description: "3-32 characters of a-z, 0-9, '.', '_' or '-' (case-insensitive input)"}
+                password: {type: string, minLength: 10, maxLength: 128}
+      responses:
+        "201":
+          description: Admin created and logged in
+          headers: {Set-Cookie: {$ref: "#/components/headers/SetCookie"}}
+          content: {application/json: {schema: {$ref: "#/components/schemas/Session"}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "429": {$ref: "#/components/responses/TooManyRequests"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /account/password:
+    post:
+      tags: [session]
+      operationId: changePassword
+      summary: Change your own password (allowed while a temporary one is in place)
+      description: A wrong current password is a 400, not a login failure. Your other sessions end.
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [current_password, new_password]
+              properties:
+                current_password: {type: string}
+                new_password: {type: string, minLength: 10, maxLength: 128}
+      responses:
+        "204": {description: Changed}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects:
+    get:
+      tags: [contributions]
+      operationId: listProjects
+      summary: Every project the caller may read, with its counts, sorted by id; archived ones are included and flagged
+      security: [{cookieAuth: []}]
+      responses:
+        "200": {description: Projects, content: {application/json: {schema: {$ref: "#/components/schemas/ProjectList"}}}}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects/{p}/contributions:
+    parameters:
+      - {$ref: "#/components/parameters/Project"}
+    get:
+      tags: [contributions]
+      operationId: listContributions
+      summary: One page of a project's contributions (contribution:Read); an unknown project is 404
+      security: [{cookieAuth: []}]
+      parameters:
+        - {name: kind, in: query, schema: {$ref: "#/components/schemas/ContributionKind"}}
+        - name: state
+          in: query
+          description: Repeatable; matches any of the given states.
+          schema: {type: array, items: {$ref: "#/components/schemas/TrustState"}}
+        - name: question_status
+          in: query
+          description: Repeatable; questions only.
+          schema: {type: array, items: {$ref: "#/components/schemas/QuestionStatus"}}
+        - {name: actor, in: query, description: "Only this actor's contributions; `me` is the caller. When it names the caller, the caller's own hidden contributions are included, flagged `hidden`.", schema: {type: string}}
+        - {name: since, in: query, description: "RFC 3339 timestamp: only contributions whose updated_at is after it.", schema: {type: string, format: date-time}}
+        - {name: sort, in: query, description: "Default newest; active is updated_at descending.", schema: {type: string, enum: [newest, debated, least, active]}}
+        - {name: cursor, in: query, description: "A next_cursor from a previous page of the same sort.", schema: {type: string}}
+        - {name: limit, in: query, description: "Default 20.", schema: {type: integer}}
+        - {name: include_superseded, in: query, description: "Default false: claims a newer claim replaced are left out. The server also accepts 1 and 0.", schema: {type: boolean}}
+      responses:
+        "200": {description: A page, content: {application/json: {schema: {$ref: "#/components/schemas/ContributionPage"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "500": {$ref: "#/components/responses/Internal"}
+    post:
+      tags: [contributions]
+      operationId: createContribution
+      summary: Create a claim or question (contribution:Create); an unknown project is 404
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [kind, title]
+              properties:
+                kind: {$ref: "#/components/schemas/ContributionKind"}
+                title: {type: string, description: "1-200 characters after trimming"}
+                body: {type: string, description: "At most 65536 bytes; may be empty"}
+                answers_id: {type: string, description: "A claim only: the question it answers"}
+                sources: {type: array, maxItems: 10, items: {type: string, minLength: 1, maxLength: 500}, description: "Optional evidence: up to 10 items of 1-500 characters after trimming, no control characters (a URL, commit id or file path)"}
+                supersedes_id: {type: string, description: "A claim only: a claim of the same project this one replaces. The caller must be its author or hold content:Moderate; the old claim must not be superseded already (409). Set atomically with the insert."}
+      responses:
+        "201": {description: Created, content: {application/json: {schema: {$ref: "#/components/schemas/CreatedContribution"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects/{p}/contributions/{id}:
+    parameters:
+      - {$ref: "#/components/parameters/Project"}
+      - {$ref: "#/components/parameters/Id"}
+    get:
+      tags: [contributions]
+      operationId: getContribution
+      summary: One contribution in full with its signals (contribution:Read); a hidden one is 404 unless the caller holds content:Moderate or wrote it
+      security: [{cookieAuth: []}]
+      responses:
+        "200": {description: The contribution, content: {application/json: {schema: {$ref: "#/components/schemas/ContributionDetail"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects/{p}/contributions/{id}/signals:
+    parameters:
+      - {$ref: "#/components/parameters/Project"}
+      - {$ref: "#/components/parameters/Id"}
+    post:
+      tags: [contributions]
+      operationId: createSignal
+      summary: Challenge or assess a claim (signal:Create)
+      description: |
+        A new assessment replaces the same actor's earlier one; replaced_stance then holds the earlier stance.
+        A challenge is `unfavorable` or `neutral`; `favorable` is 400 ("to support a claim with an argument, use an assessment with a body").
+        With `reply_to` the signal is a reply: a challenge with stance `neutral` that answers a signal of the same claim.
+        Replying to a reply stores the root signal. A `reply_to` that names no active signal on this claim (unknown, on another claim, withdrawn, hidden from the caller) is 400.
+        Replies count as neutral signals, so they never change the state.
+        A favorable signal from the claim's own author is saved but not counted toward the state; the result then carries `not_counted: true`.
+        A signal on a claim that a newer claim replaced is still accepted; the result then carries `superseded_by` so the sender can move to the newer claim.
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [kind, stance]
+              properties:
+                kind: {type: string, enum: [challenge, assessment]}
+                stance: {$ref: "#/components/schemas/Stance"}
+                body: {type: string, description: "At most 65536 bytes; required (non-empty) for a challenge"}
+                reply_to: {type: string, description: "ID of the signal being answered; challenge with stance neutral only"}
+                sources: {type: array, maxItems: 10, items: {type: string, minLength: 1, maxLength: 500}, description: "Optional evidence: up to 10 items of 1-500 characters after trimming, no control characters (a URL, commit id or file path)"}
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [id, actor_id, actor_name, replaced_stance]
+                properties:
+                  id: {type: string}
+                  actor_id: {type: string}
+                  actor_name: {type: string}
+                  replaced_stance:
+                    description: Stance of the assessment this one replaced, else null
+                    oneOf:
+                      - {$ref: "#/components/schemas/Stance"}
+                      - {type: "null"}
+                  superseded_by:
+                    type: object
+                    description: Present when the claim has been replaced by a newer claim (omitted when that claim is hidden from the caller)
+                    additionalProperties: false
+                    required: [id, title]
+                    properties:
+                      id: {type: string}
+                      title: {type: string}
+                  not_counted:
+                    type: boolean
+                    enum: [true]
+                    description: "Present when the caller wrote the claim and this is a favorable signal: it is kept but does not count toward the trust state"
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects/{p}/contributions/{id}/signals/{sid}:
+    parameters:
+      - {$ref: "#/components/parameters/Project"}
+      - {$ref: "#/components/parameters/Id"}
+      - {$ref: "#/components/parameters/SignalId"}
+    delete:
+      tags: [contributions]
+      operationId: withdrawSignal
+      summary: Withdraw your own signal (signal:Create); it stops counting and cannot be restored
+      description: Withdrawing twice is a no-op. Only the signal's author may withdraw it (403 otherwise). The signal stays visible in `history` with `withdrawn`.
+      security: [{cookieAuth: [], csrfToken: []}]
+      responses:
+        "204": {description: Withdrawn}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects/{p}/contributions/{id}/signals/{sid}/hidden:
+    parameters:
+      - {$ref: "#/components/parameters/Project"}
+      - {$ref: "#/components/parameters/Id"}
+      - {$ref: "#/components/parameters/SignalId"}
+    put:
+      tags: [contributions]
+      operationId: setSignalHidden
+      summary: Hide or unhide a signal (content:Moderate)
+      description: A hidden signal is absent for callers without content:Moderate and does not count; moderators see it in `history` with `hidden` and, when one was given, `hidden_reason`.
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody: {$ref: "#/components/requestBodies/Hidden"}
+      responses:
+        "204": {description: Done}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects/{p}/contributions/{id}/hidden:
+    parameters:
+      - {$ref: "#/components/parameters/Project"}
+      - {$ref: "#/components/parameters/Id"}
+    put:
+      tags: [contributions]
+      operationId: setContributionHidden
+      summary: Hide or unhide a contribution (content:Moderate)
+      description: |
+        Without content:Moderate a hidden contribution is absent from lists and search and a direct read is 404. Hiding a question does not hide its answers.
+        Its author is the exception: they can still read it, and a list filtered by `actor` = themselves includes it, both with `hidden` and `hidden_reason`. Search never returns it to them.
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody: {$ref: "#/components/requestBodies/Hidden"}
+      responses:
+        "204": {description: Done}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects/{p}/contributions/{id}/supersession:
+    parameters:
+      - {$ref: "#/components/parameters/Project"}
+      - {$ref: "#/components/parameters/Id"}
+    delete:
+      tags: [contributions]
+      operationId: deleteSupersession
+      summary: Undo a supersession (the claim's author, or content:Moderate)
+      description: A claim that is not superseded is left alone (204).
+      security: [{cookieAuth: [], csrfToken: []}]
+      responses:
+        "204": {description: Undone}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects/{p}/reads:
+    parameters:
+      - {$ref: "#/components/parameters/Project"}
+    get:
+      tags: [contributions]
+      operationId: getReads
+      summary: How often agents read the project's contributions over MCP (member:Manage)
+      description: |
+        Counts successful observe_trust_signal and reference_contribution calls and contributions shown in search results; never the author's own reads, and never web reads. Days are UTC.
+        Days older than `detail_from` are rolled up into monthly totals: `daily` lists the days that still have detail, `monthly` the rolled-up months that overlap the range. No field names or counts actors.
+      security: [{cookieAuth: []}]
+      parameters:
+        - {name: from, in: query, description: "First day, YYYY-MM-DD; default 29 days before `to`", schema: {type: string, format: date}}
+        - {name: to, in: query, description: "Last day, YYYY-MM-DD; default today (UTC)", schema: {type: string, format: date}}
+      responses:
+        "200":
+          description: Read counts
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [from, to, detail_days, detail_from, daily, monthly, items, never_read]
+                properties:
+                  from: {type: string, format: date}
+                  to: {type: string, format: date}
+                  detail_days: {type: integer, minimum: 30, maximum: 3650, description: Days of daily detail the project keeps}
+                  detail_from: {type: string, format: date, description: Oldest day that keeps daily detail once the daily rollup has run}
+                  daily:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                      required: [day, observe, reference, search_hit]
+                      properties:
+                        day: {type: string, format: date}
+                        observe: {type: integer}
+                        reference: {type: integer}
+                        search_hit: {type: integer}
+                  monthly:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                      required: [month, observe, reference, search_hit]
+                      properties:
+                        month: {type: string, format: date, description: First day of the month}
+                        observe: {type: integer}
+                        reference: {type: integer}
+                        search_hit: {type: integer}
+                  items:
+                    type: array
+                    description: Every contribution read in the range, most observed first
+                    items:
+                      type: object
+                      additionalProperties: false
+                      required: [id, title, kind, state, superseded, observe, reference, search_hit]
+                      properties:
+                        id: {type: string}
+                        title: {type: string}
+                        kind: {type: string, enum: [claim, question]}
+                        state: {$ref: "#/components/schemas/NullableTrustState"}
+                        superseded: {type: boolean}
+                        observe: &readCount
+                          type: object
+                          additionalProperties: false
+                          required: [reads, readers]
+                          properties:
+                            reads: {type: integer}
+                            readers: {type: integer, description: "Distinct actors; where the range reaches rolled-up months this is an upper bound (monthly readers are added)"}
+                        reference: *readCount
+                        search_hit:
+                          type: object
+                          additionalProperties: false
+                          required: [reads]
+                          properties:
+                            reads: {type: integer}
+                  never_read: {type: integer, description: "Live claims (not superseded, not hidden) with no observe or reference in the range"}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects/{p}/reads/retention:
+    parameters:
+      - {$ref: "#/components/parameters/Project"}
+    put:
+      tags: [contributions]
+      operationId: setReadRetention
+      summary: How many days of daily read detail the project keeps (member:Manage)
+      description: Lowering it rolls the excess into monthly totals within a day; raising it only keeps more from now on.
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [detail_days]
+              properties:
+                detail_days: {type: integer, minimum: 30, maximum: 3650}
+      responses:
+        "200":
+          description: Stored, with the detail size it implies
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [detail_days, estimated_bytes, rows_per_day]
+                properties:
+                  detail_days: {type: integer}
+                  estimated_bytes: {type: integer, description: "rows_per_day × detail_days × 170 bytes"}
+                  rows_per_day: {type: number, description: "Daily rows written, averaged over the last 30 days"}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects/{p}/authors:
+    parameters:
+      - {$ref: "#/components/parameters/Project"}
+    get:
+      tags: [contributions]
+      operationId: listAuthors
+      summary: Everyone who wrote a contribution in the project (contribution:Read)
+      description: Sorted by name, then id. Authors whose only contributions are hidden from the caller are left out.
+      security: [{cookieAuth: []}]
+      responses:
+        "200":
+          description: Authors
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                      required: [id, name]
+                      properties:
+                        id: {type: string, description: "Usable as the `actor` filter of the list"}
+                        name: {type: string}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /projects/{p}/search:
+    parameters:
+      - {$ref: "#/components/parameters/Project"}
+    get:
+      tags: [contributions]
+      operationId: searchContributions
+      summary: Search a project's contributions (contribution:Read)
+      security: [{cookieAuth: []}]
+      description: |
+        degraded is true when a configured embedding or rerank step failed and the answer fell back to a simpler ranking.
+        Common Vietnamese function words (là, thì, của, bao nhiêu, …) are dropped from the lexical query unless nothing else is left.
+      parameters:
+        - {name: q, in: query, schema: {type: string}}
+        - {name: kind, in: query, schema: {$ref: "#/components/schemas/ContributionKind"}}
+        - name: state
+          in: query
+          description: Repeatable; claims in any of these states. Applied before the limit, so up to `limit` matching results come back. Same rules as on the list.
+          schema: {type: array, items: {$ref: "#/components/schemas/TrustState"}}
+        - name: question_status
+          in: query
+          description: Repeatable; questions with any of these statuses. Applied before the limit. With both parameters the result is the union of the two groups.
+          schema: {type: array, items: {$ref: "#/components/schemas/QuestionStatus"}}
+        - {name: limit, in: query, description: "Default 5, at most 20.", schema: {type: integer}}
+        - {name: rerank, in: query, description: "Default true. The server also accepts 1 and 0.", schema: {type: boolean}}
+        - {name: include_superseded, in: query, description: "Default false: claims a newer claim replaced are left out. The server also accepts 1 and 0.", schema: {type: boolean}}
+      responses:
+        "200":
+          description: Ranked results
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [results, degraded]
+                properties:
+                  results: {type: array, items: {$ref: "#/components/schemas/SearchItem"}}
+                  degraded: {type: boolean}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/overview:
+    get:
+      tags: [admin]
+      operationId: adminOverview
+      summary: Totals plus the newest contributions across projects (actor:Manage or member:Manage)
+      description: Over the projects the caller may read; for a caller without actor:Manage (a project manager), only over the projects it holds member:Manage on.
+      security: [{cookieAuth: []}]
+      responses:
+        "200":
+          description: Overview
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [project_count, contribution_count, open_question_count, states, recent, attention]
+                properties:
+                  attention:
+                    type: object
+                    description: What to look at, over the same projects as the totals
+                    additionalProperties: false
+                    required: [conflicts_7d, stale_questions]
+                    properties:
+                      conflicts_7d: {type: integer, description: Claims in Conflict that changed in the last 7 days}
+                      stale_questions: {type: integer, description: Questions still open 14 days after they were asked}
+                  project_count: {type: integer}
+                  contribution_count: {type: integer}
+                  open_question_count: {type: integer}
+                  states:
+                    type: object
+                    description: Claims per trust state; every state is present.
+                    additionalProperties: false
+                    required: [Favorable, Unfavorable, Conflict, InsufficientEvidence]
+                    properties:
+                      Favorable: {type: integer}
+                      Unfavorable: {type: integer}
+                      Conflict: {type: integer}
+                      InsufficientEvidence: {type: integer}
+                  recent:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: false
+                      required: [project_id, id, kind, title, state, created_at, updated_at, actor_name]
+                      properties:
+                        project_id: {type: string}
+                        id: &listItemId {type: string}
+                        kind: &listItemKind {$ref: "#/components/schemas/ContributionKind"}
+                        title: &listItemTitle {type: string}
+                        state: &listItemState {$ref: "#/components/schemas/NullableTrustState"}
+                        question_status: &listItemQStatus {$ref: "#/components/schemas/QuestionStatus"}
+                        answer_count: &listItemAnswers {type: integer, description: "Questions only: answers that are not hidden"}
+                        counts: &listItemCounts {description: "Claims only", $ref: "#/components/schemas/Counts"}
+                        created_at: &listItemCreated {type: string, format: date-time}
+                        updated_at: &listItemUpdated {type: string, format: date-time, description: Creation or the newest signal}
+                        actor_name: &listItemActorName {type: string}
+                        actor_type: &listItemActorType {$ref: "#/components/schemas/ActorType"}
+                        superseded: &listItemSuperseded {type: boolean, description: "Present (true) when a newer claim replaced it"}
+                        hidden: &listItemHidden {type: boolean, description: "Present (true) for a moderator when it is hidden"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/actors:
+    get:
+      tags: [admin]
+      operationId: listActors
+      summary: Actors with their login summary (actor:Manage or member:Manage)
+      description: |
+        With actor:Manage: every actor. With only member:Manage: without `q`, the actors holding an assignment on a project the caller manages (an assignment on every project counts only if the caller manages every project); with `q`, at most 20 actors whose name contains it, so a manager can find someone to add. Managers do not see login details.
+        `q` is matched against the name ignoring case and Vietnamese accents on both sides (`binh` finds `Bình`, `d` matches `đ`) and must have at least 2 characters after trimming (else 400). For actor:Manage it filters the full list without a cap.
+      security: [{cookieAuth: []}]
+      parameters:
+        - {name: q, in: query, description: "Name contains this text, ignoring case and accents; at least 2 characters after trimming.", schema: {type: string}}
+      responses:
+        "200":
+          description: Actors
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [items]
+                properties:
+                  items: {type: array, items: {$ref: "#/components/schemas/AdminActor"}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "500": {$ref: "#/components/responses/Internal"}
+    post:
+      tags: [admin]
+      operationId: createActor
+      summary: Create a Human (with a login) or an Agent (with a token)
+      description: The generated password or the token is returned once, only here. An Agent's first token expires after 90 days. Names are unique ignoring case; a taken name is 409.
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [type, name]
+              properties:
+                type: {$ref: "#/components/schemas/ActorType"}
+                name: {type: string, maxLength: 64}
+                username: {type: string, description: "Humans only, required for them"}
+                password: {type: string, description: "Humans only; omit or empty to generate one"}
+                must_change: {type: boolean, description: "Humans only: the password must be changed at first login"}
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [id, type, name, disabled, created_at, username, has_login, last_active_at, next_token_expiry]
+                properties:
+                  id: &actorId {type: string}
+                  type: &actorType {$ref: "#/components/schemas/ActorType"}
+                  name: &actorName {type: string}
+                  disabled: &actorDisabled {type: boolean}
+                  created_at: &actorCreated {type: string, format: date-time}
+                  username: &actorUsername {type: [string, "null"]}
+                  has_login: &actorHasLogin {type: boolean}
+                  last_active_at: &actorLastActive {type: [string, "null"], format: date-time, description: "Latest password login or token use; null when none, or for a caller without actor:Manage"}
+                  next_token_expiry: &actorNextExpiry {type: [string, "null"], format: date-time, description: "Earliest expiry of a live token; null when none, or for a caller without actor:Manage"}
+                  password: {type: string, description: "Humans only, when no password was given (and also when one was); shown once"}
+                  token: {type: string, description: "Agents only; shown once"}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/actors/{id}:
+    parameters:
+      - {$ref: "#/components/parameters/Id"}
+    get:
+      tags: [admin]
+      operationId: getActor
+      summary: One actor with its credentials
+      security: [{cookieAuth: []}]
+      responses:
+        "200": {description: The actor, content: {application/json: {schema: {$ref: "#/components/schemas/AdminActorDetail"}}}}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "500": {$ref: "#/components/responses/Internal"}
+    patch:
+      tags: [admin]
+      operationId: patchActor
+      summary: Rename, grant or remove admin, disable or re-enable an actor
+      description: Absent fields are unchanged. Only Humans can be admins; you cannot demote or disable yourself. Names are unique ignoring case; a taken name is 409.
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name: {type: string, maxLength: 64}
+                disabled: {type: boolean}
+      responses:
+        "200": {description: The updated actor, content: {application/json: {schema: {$ref: "#/components/schemas/AdminActorDetail"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/actors/{id}/password:
+    parameters:
+      - {$ref: "#/components/parameters/Id"}
+    post:
+      tags: [admin]
+      operationId: resetPassword
+      summary: Set or generate a Human's password
+      description: Returned once. Resetting your own password never forces a change and keeps your session.
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                username: {type: string, description: "Empty keeps the current username"}
+                password: {type: string, description: "Empty generates one"}
+                must_change: {type: boolean}
+      responses:
+        "200":
+          description: The new password
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [password]
+                properties:
+                  password: {type: string}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/actors/{id}/credentials:
+    parameters:
+      - {$ref: "#/components/parameters/Id"}
+    post:
+      tags: [admin]
+      operationId: issueCredential
+      summary: Issue an Agent a new token
+      description: |
+        The token is returned once. Humans get 400; they log in with a password.
+        The body is optional. `expires_in_days` is 30, 90, 365 or null (never
+        expires); when absent the token expires after **90 days**, after which
+        MCP answers 401 until a new token is issued.
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                label: {type: string, maxLength: 64, description: "A note shown next to the token; no control characters"}
+                expires_in_days: {type: [integer, "null"], enum: [30, 90, 365, null], description: "Absent = 90; null = never expires"}
+      responses:
+        "201":
+          description: Issued
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [id, token, label, expires_at]
+                properties:
+                  id: {type: string, description: Credential id (the part of the token before the dot)}
+                  token: {type: string}
+                  label: {type: string}
+                  expires_at: {type: [string, "null"], format: date-time, description: "Null: never expires"}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/credentials/{id}:
+    parameters:
+      - {$ref: "#/components/parameters/Id"}
+    delete:
+      tags: [admin]
+      operationId: revokeCredential
+      summary: Revoke a credential (revoking twice is a no-op)
+      security: [{cookieAuth: [], csrfToken: []}]
+      responses:
+        "204": {description: Revoked}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/audit:
+    get:
+      tags: [admin]
+      operationId: listAudit
+      summary: The log of administrative operations, newest first
+      description: |
+        actor:Manage sees every event. A caller with only member:Manage sees
+        just the `assignment.*` and `content.*` events of the projects it
+        manages. `detail` never holds a password, token, secret or hash.
+      security: [{cookieAuth: []}]
+      parameters:
+        - {name: actor, in: query, description: "Only events by this actor id", schema: {type: string}}
+        - {name: project, in: query, description: "Only events of this project", schema: {type: string}}
+        - {name: action, in: query, description: "Only this exact action, e.g. credential.issue", schema: {type: string}}
+        - {name: from, in: query, description: "Only events on or after this UTC day (YYYY-MM-DD)", schema: {type: string, format: date}}
+        - {name: to, in: query, description: "Only events on or before this UTC day (YYYY-MM-DD)", schema: {type: string, format: date}}
+        - {name: cursor, in: query, description: "A next_cursor from a previous page.", schema: {type: string}}
+        - {name: limit, in: query, description: "Default 20, at most 100.", schema: {type: integer}}
+      responses:
+        "200":
+          description: A page
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [items, next_cursor]
+                properties:
+                  items: {type: array, items: {$ref: "#/components/schemas/AuditEvent"}}
+                  next_cursor: {type: [string, "null"], description: "Null on the last page"}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/projects:
+    get:
+      tags: [admin]
+      operationId: adminListProjects
+      summary: Every project with its counts, sorted by id (same body as GET /projects)
+      security: [{cookieAuth: []}]
+      responses:
+        "200": {description: Projects, content: {application/json: {schema: {$ref: "#/components/schemas/ProjectList"}}}}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "500": {$ref: "#/components/responses/Internal"}
+    post:
+      tags: [admin]
+      operationId: createProject
+      summary: Create a project
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [id]
+              properties:
+                id: {type: string, pattern: "^[a-z0-9][a-z0-9_-]{0,63}$", description: "Slug; immutable"}
+                name: {type: string, description: "1-100 characters, no control characters; trimmed; defaults to the id"}
+                description: {type: string, description: "At most 500 characters, no control characters except newline"}
+      responses:
+        "201": {description: Created, content: {application/json: {schema: {$ref: "#/components/schemas/ProjectMeta"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/projects/{id}:
+    parameters:
+      - {$ref: "#/components/parameters/Id"}
+    patch:
+      tags: [admin]
+      operationId: updateProject
+      summary: Change a project's name, description, trust threshold and/or archived state (project:Create); an absent field is kept
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                name: {type: string, description: "1-100 characters, no control characters; trimmed"}
+                description: {type: string, description: "At most 500 characters, no control characters except newline"}
+                min_favorable: {type: integer, minimum: 1, maximum: 10, description: "Different supporters (counts.favorable_actors) a claim needs to be Favorable; takes effect at once for every claim of the project"}
+                archived: {type: boolean, description: "true archives the project: still readable, every write over the API and MCP is 409 `project is archived`, and project lists flag it `archived`"}
+      responses:
+        "200": {description: Updated, content: {application/json: {schema: {$ref: "#/components/schemas/ProjectMeta"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/policies:
+    get:
+      tags: [admin]
+      operationId: listPolicies
+      summary: Every policie, managed first (policy:Manage or member:Manage)
+      security: [{cookieAuth: []}]
+      responses:
+        "200":
+          description: List
+          content: {application/json: {schema: {type: object, additionalProperties: false, required: [items], properties: {items: {type: array, items: {$ref: "#/components/schemas/Policy"}}}}}}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "500": {$ref: "#/components/responses/Internal"}
+    post:
+      tags: [admin]
+      operationId: createPolicy
+      summary: Create a custom policie (policy:Manage)
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/PolicyInput"}}}}
+      responses:
+        "201": {description: Created, content: {application/json: {schema: {$ref: "#/components/schemas/Policy"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/policies/{id}:
+    parameters:
+      - {$ref: "#/components/parameters/Id"}
+    put:
+      tags: [admin]
+      operationId: updatePolicy
+      summary: Replace a custom policie's name and contents (policy:Manage; managed ones are 403)
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/PolicyInput"}}}}
+      responses:
+        "200": {description: Updated, content: {application/json: {schema: {$ref: "#/components/schemas/Policy"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+    delete:
+      tags: [admin]
+      operationId: deletePolicy
+      summary: Delete a custom policie (409 while in use)
+      security: [{cookieAuth: [], csrfToken: []}]
+      responses:
+        "204": {description: Deleted}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/roles:
+    get:
+      tags: [admin]
+      operationId: listRoles
+      summary: Every role, managed first (policy:Manage or member:Manage)
+      security: [{cookieAuth: []}]
+      responses:
+        "200":
+          description: List
+          content: {application/json: {schema: {type: object, additionalProperties: false, required: [items], properties: {items: {type: array, items: {$ref: "#/components/schemas/Role"}}}}}}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "500": {$ref: "#/components/responses/Internal"}
+    post:
+      tags: [admin]
+      operationId: createRole
+      summary: Create a custom role (policy:Manage)
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/RoleInput"}}}}
+      responses:
+        "201": {description: Created, content: {application/json: {schema: {$ref: "#/components/schemas/Role"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/roles/{id}:
+    parameters:
+      - {$ref: "#/components/parameters/Id"}
+    put:
+      tags: [admin]
+      operationId: updateRole
+      summary: Replace a custom role's name and contents (policy:Manage; managed ones are 403)
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody: {required: true, content: {application/json: {schema: {$ref: "#/components/schemas/RoleInput"}}}}
+      responses:
+        "200": {description: Updated, content: {application/json: {schema: {$ref: "#/components/schemas/Role"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+    delete:
+      tags: [admin]
+      operationId: deleteRole
+      summary: Delete a custom role (409 while in use)
+      security: [{cookieAuth: [], csrfToken: []}]
+      responses:
+        "204": {description: Deleted}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/assignments:
+    get:
+      tags: [admin]
+      operationId: listAssignments
+      summary: The assignments the caller may manage (member:Manage on their scope)
+      security: [{cookieAuth: []}]
+      parameters:
+        - {name: actor, in: query, schema: {type: string}}
+        - {name: project, in: query, schema: {type: string}, description: "Assignments on this project (not those on every project)"}
+      responses:
+        "200":
+          description: List
+          content: {application/json: {schema: {type: object, additionalProperties: false, required: [items], properties: {items: {type: array, items: {$ref: "#/components/schemas/Assignment"}}}}}}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "500": {$ref: "#/components/responses/Internal"}
+    post:
+      tags: [admin]
+      operationId: createAssignment
+      summary: Give an actor a role on every project (project_id null) or one; the caller needs member:Manage and every action of the role there
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [actor_id, role_id, project_id]
+              properties:
+                actor_id: {type: string}
+                role_id: {type: string}
+                project_id: {type: [string, "null"]}
+      responses:
+        "201": {description: Created, content: {application/json: {schema: {$ref: "#/components/schemas/Assignment"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/assignments/{id}:
+    parameters:
+      - {$ref: "#/components/parameters/Id"}
+    delete:
+      tags: [admin]
+      operationId: deleteAssignment
+      summary: Take a role away (checked like giving it; 409 for the last admin)
+      security: [{cookieAuth: [], csrfToken: []}]
+      responses:
+        "204": {description: Deleted}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "404": {$ref: "#/components/responses/NotFound"}
+        "409": {$ref: "#/components/responses/Conflict"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/settings/search:
+    get:
+      tags: [admin]
+      operationId: getSearchSettings
+      summary: Embedding and rerank providers plus pipeline status (no API keys, only the last 4 characters)
+      security: [{cookieAuth: []}]
+      responses:
+        "200": {description: Settings, content: {application/json: {schema: {$ref: "#/components/schemas/Settings"}}}}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "500": {$ref: "#/components/responses/Internal"}
+    put:
+      tags: [admin]
+      operationId: putSearchSettings
+      summary: Test the providers, then save them
+      description: |
+        Nothing is saved when a provider test fails (502). Per provider,
+        `api_key` absent or "" keeps the stored key, null deletes it, a
+        string sets it.
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: "#/components/schemas/SettingsInput"}}}
+      responses:
+        "200": {description: Saved settings, content: {application/json: {schema: {$ref: "#/components/schemas/Settings"}}}}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "502": {$ref: "#/components/responses/UpstreamFailed"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/settings/search/test:
+    post:
+      tags: [admin]
+      operationId: testSearchSettings
+      summary: Test the providers without saving anything
+      security: [{cookieAuth: [], csrfToken: []}]
+      requestBody:
+        required: true
+        content: {application/json: {schema: {$ref: "#/components/schemas/SettingsInput"}}}
+      responses:
+        "204": {description: Both providers answered}
+        "400": {$ref: "#/components/responses/BadRequest"}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "502": {$ref: "#/components/responses/UpstreamFailed"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+  /admin/settings/search/reindex:
+    post:
+      tags: [admin]
+      operationId: reindexSearch
+      summary: Re-embed everything in the background
+      security: [{cookieAuth: [], csrfToken: []}]
+      responses:
+        "202":
+          description: Started
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [reindexing]
+                properties:
+                  reindexing: {type: boolean}
+        "401": {$ref: "#/components/responses/Unauthenticated"}
+        "403": {$ref: "#/components/responses/Forbidden"}
+        "500": {$ref: "#/components/responses/Internal"}
+
+components:
+  securitySchemes:
+    cookieAuth: {type: apiKey, in: cookie, name: av_session}
+    csrfToken:
+      type: apiKey
+      in: header
+      name: X-CSRF-Token
+      description: The csrf_token of GET /session; required on every non-GET request that needs a session.
+
+  headers:
+    SetCookie:
+      description: Sets (or, on logout, clears) the HttpOnly, SameSite=Lax av_session cookie.
+      schema: {type: string}
+
+  parameters:
+    Project: {name: p, in: path, required: true, description: "Project id, a slug", schema: {type: string, pattern: "^[a-z0-9][a-z0-9_-]{0,63}$"}}
+    Id: {name: id, in: path, required: true, schema: {type: string, minLength: 1}}
+    SignalId: {name: sid, in: path, required: true, schema: {type: string, minLength: 1}}
+
+  requestBodies:
+    Hidden:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            required: [hidden]
+            properties:
+              hidden: {type: boolean}
+              reason: {type: string, maxLength: 500, description: "Optional, why it is hidden (trimmed; at most 500 characters). Kept only with hidden true; unhiding clears it. Hiding again without a reason keeps the stored one."}
+
+  responses:
+    BadRequest: {description: "invalid_argument: malformed or invalid input", content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}}
+    Unauthenticated: {description: "unauthenticated: no live session, or wrong credentials", content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}}
+    Forbidden: {description: "forbidden: a missing action, missing CSRF token, cross-origin request, or a temporary password must be changed first", content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}}
+    NotFound: {description: "not_found", content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}}
+    Conflict: {description: "conflict: already exists, still in use, the last admin would lose admin rights, the claim is already superseded, or the project is archived (`project is archived`)", content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}}
+    TooManyRequests: {description: "too_many_requests: too many failed attempts", content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}}
+    UpstreamFailed: {description: "upstream_failed: a search provider rejected or failed the test; nothing was saved", content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}}
+    Internal: {description: "internal: message is always 'internal error'", content: {application/json: {schema: {$ref: "#/components/schemas/Error"}}}}
+
+  schemas:
+    Error:
+      type: object
+      additionalProperties: false
+      required: [code, message]
+      properties:
+        code: {type: string, enum: [invalid_argument, unauthenticated, forbidden, not_found, conflict, too_many_requests, upstream_failed, internal]}
+        message: {type: string}
+
+    TrustState: {type: string, enum: [Favorable, Unfavorable, Conflict, InsufficientEvidence]}
+    NullableTrustState:
+      description: Null for questions
+      oneOf:
+        - {$ref: "#/components/schemas/TrustState"}
+        - {type: "null"}
+    ContributionKind: {type: string, enum: [claim, question]}
+    QuestionStatus: {type: string, enum: [open, answered, resolved], description: "Questions only"}
+    Stance: {type: string, enum: [favorable, unfavorable, neutral]}
+    ActorType: {type: string, enum: [Human, Agent]}
+
+    Actor:
+      type: object
+      additionalProperties: false
+      required: [id, name, type]
+      properties:
+        id: {type: string}
+        name: {type: string}
+        type: {$ref: "#/components/schemas/ActorType"}
+
+    Action:
+      type: string
+      enum: ["contribution:Read", "contribution:Create", "signal:Create", "content:Moderate", "member:Manage", "project:Create", "actor:Manage", "settings:Manage", "policy:Manage", "*"]
+      description: '"*" (every action) appears only in the managed AdministratorAccess policy'
+    Access:
+      description: What the caller may do, for showing controls; the server checks every request.
+      type: object
+      additionalProperties: false
+      required: [all, projects]
+      properties:
+        all: {type: array, items: {$ref: "#/components/schemas/Action"}, description: "Actions on every project; [\"*\"] for an admin"}
+        projects: {type: object, additionalProperties: {type: array, items: {$ref: "#/components/schemas/Action"}}, description: "Extra actions per project id"}
+    Policy:
+      type: object
+      additionalProperties: false
+      required: [id, name, managed, actions, created_at]
+      properties:
+        id: {type: string}
+        name: {type: string}
+        managed: {type: boolean, description: "Built in and read-only"}
+        actions: {type: array, items: {$ref: "#/components/schemas/Action"}}
+        created_at: {type: string, format: date-time}
+    PolicyInput:
+      type: object
+      additionalProperties: false
+      required: [name, actions]
+      properties:
+        name: {type: string, maxLength: 64}
+        actions: {type: array, minItems: 1, items: {$ref: "#/components/schemas/Action"}, description: "Never \"*\"; each must be held by the caller on every project"}
+    Role:
+      type: object
+      additionalProperties: false
+      required: [id, name, managed, policy_ids, actions, created_at]
+      properties:
+        id: {type: string}
+        name: {type: string}
+        managed: {type: boolean, description: "Built in and read-only"}
+        policy_ids: {type: array, items: {type: string}}
+        actions: {type: array, items: {$ref: "#/components/schemas/Action"}, description: "Union of the policies' actions"}
+        created_at: {type: string, format: date-time}
+    RoleInput:
+      type: object
+      additionalProperties: false
+      required: [name, policy_ids]
+      properties:
+        name: {type: string, maxLength: 64}
+        policy_ids: {type: array, minItems: 1, items: {type: string}, description: "Never AdministratorAccess"}
+    Assignment:
+      type: object
+      additionalProperties: false
+      required: [id, actor_id, actor_name, role_id, role_name, project_id, created_at]
+      properties:
+        id: {type: string}
+        actor_id: {type: string}
+        actor_name: {type: string}
+        role_id: {type: string}
+        role_name: {type: string}
+        project_id: {type: [string, "null"], description: "Null = every project, including ones created later"}
+        created_at: {type: string, format: date-time}
+
+    Session:
+      type: object
+      additionalProperties: false
+      required: [authenticated, actor, csrf_token, must_change_password, setup_required]
+      properties:
+        authenticated: {type: boolean}
+        actor:
+          oneOf: [{$ref: "#/components/schemas/Actor"}, {type: "null"}]
+        csrf_token: {type: [string, "null"], description: "Null when anonymous"}
+        must_change_password: {type: boolean}
+        setup_required: {type: boolean, description: "First-run setup is still open (POST /setup)"}
+        access: {$ref: "#/components/schemas/Access"}
+
+    Created:
+      type: object
+      additionalProperties: false
+      required: [id, actor_id, actor_name]
+      properties:
+        id: {type: string}
+        actor_id: {type: string}
+        actor_name: {type: string}
+
+    CreatedContribution:
+      description: The new contribution plus up to 3 existing ones with a similar title, searched (lexically) before it was saved. The question it answers (`answers_id`) and the claim it replaces (`supersedes_id`) are never listed.
+      type: object
+      additionalProperties: false
+      required: [id, actor_id, actor_name, similar]
+      properties:
+        id: {type: string}
+        actor_id: {type: string}
+        actor_name: {type: string}
+        similar: {type: array, maxItems: 3, items: {$ref: "#/components/schemas/SearchItem"}}
+
+    ProjectList:
+      type: object
+      additionalProperties: false
+      required: [items]
+      properties:
+        items: {type: array, items: {$ref: "#/components/schemas/Project"}}
+    ProjectMeta:
+      type: object
+      additionalProperties: false
+      required: [id, name, description, min_favorable, created_at, archived]
+      properties:
+        id: {type: string}
+        name: {type: string}
+        description: {type: string}
+        min_favorable: {type: integer, minimum: 1, maximum: 10}
+        created_at: {type: string, format: date-time}
+        archived: {type: boolean}
+    Project:
+      type: object
+      additionalProperties: false
+      required: [id, name, description, min_favorable, contribution_count, open_question_count, last_activity_at, states, created_at, archived]
+      properties:
+        id: {type: string}
+        name: {type: string}
+        description: {type: string}
+        min_favorable: {type: integer, minimum: 1, maximum: 10}
+        contribution_count: {type: integer}
+        open_question_count: {type: integer}
+        last_activity_at: {type: [string, "null"], format: date-time, description: "Newest updated_at (creation or newest signal) of the project's contributions that are not hidden, superseded ones included; null when there are none"}
+        states:
+          type: object
+          description: Claims per trust state; every state is present.
+          additionalProperties: false
+          required: [Favorable, Unfavorable, Conflict, InsufficientEvidence]
+          properties:
+            Favorable: {type: integer}
+            Unfavorable: {type: integer}
+            Conflict: {type: integer}
+            InsufficientEvidence: {type: integer}
+        created_at: {type: string, format: date-time}
+        archived: {type: boolean}
+
+    ContributionItem:
+      description: One row of a contribution list.
+      type: object
+      additionalProperties: false
+      required: [id, kind, title, state, created_at, updated_at, actor_name, actor_id]
+      properties:
+        id: *listItemId
+        kind: *listItemKind
+        title: *listItemTitle
+        state: *listItemState
+        question_status: *listItemQStatus
+        answer_count: *listItemAnswers
+        counts: *listItemCounts
+        created_at: *listItemCreated
+        updated_at: *listItemUpdated
+        actor_name: *listItemActorName
+        actor_type: *listItemActorType
+        superseded: *listItemSuperseded
+        hidden: {type: boolean, description: "Present (true) when it is hidden: for a moderator, or for the author listing their own (actor = themselves)"}
+        hidden_reason: &hiddenReason {type: string, description: "Present when it is hidden and the moderator gave a reason"}
+        actor_id: {type: string}
+    ContributionPage:
+      type: object
+      additionalProperties: false
+      required: [items, next_cursor]
+      properties:
+        items: {type: array, items: {$ref: "#/components/schemas/ContributionItem"}}
+        next_cursor: {type: [string, "null"], description: "Null on the last page"}
+
+    SearchItem:
+      description: |
+        A search hit. For questions `state` is null and question_status,
+        answer_count and (when answered) best_answer_state are present; for
+        claims those three are omitted.
+      type: object
+      additionalProperties: false
+      required: [id, kind, title, snippet, state]
+      properties:
+        id: {type: string}
+        kind: {$ref: "#/components/schemas/ContributionKind"}
+        title: {type: string}
+        snippet: {type: string}
+        state: {$ref: "#/components/schemas/NullableTrustState"}
+        question_status: {$ref: "#/components/schemas/QuestionStatus"}
+        answer_count: {type: integer}
+        best_answer_state: {$ref: "#/components/schemas/TrustState"}
+        superseded: {type: boolean, description: "Present (true) when a newer claim replaced it (only found with include_superseded)"}
+        hidden: {type: boolean, description: "Present (true) for a moderator when it is hidden"}
+        hidden_reason: *hiddenReason
+
+    Reference:
+      description: |
+        One contribution in full, with its signals. Claims have counts (and
+        answer_to when they answer a question); questions have
+        question_status, answer_count, answers and, once answered,
+        best_answer_state, and a null state.
+      type: object
+      additionalProperties: false
+      required: [id, project_id, kind, title, body, sources, actor_id, actor_name, created_at, state, signals]
+      properties:
+        id: {type: string}
+        project_id: {type: string}
+        kind: {$ref: "#/components/schemas/ContributionKind"}
+        title: {type: string}
+        body: {type: string}
+        sources: {type: array, items: {type: string}, description: "Evidence references given by the author"}
+        actor_id: {type: string}
+        actor_name: {type: string}
+        actor_type: {$ref: "#/components/schemas/ActorType"}
+        created_at: {type: string, format: date-time}
+        state: {$ref: "#/components/schemas/NullableTrustState"}
+        question_status: {$ref: "#/components/schemas/QuestionStatus"}
+        answer_count: {type: integer}
+        best_answer_state: {$ref: "#/components/schemas/TrustState"}
+        counts: {$ref: "#/components/schemas/Counts"}
+        min_favorable: {type: integer, description: "Claims only: different supporters (counts.favorable_actors) the project needs for Favorable"}
+        answers:
+          type: array
+          description: Questions only, best state first
+          items:
+            type: object
+            additionalProperties: false
+            required: [id, title, state]
+            properties:
+              id: {type: string}
+              title: {type: string}
+              state: {$ref: "#/components/schemas/NullableTrustState"}
+              hidden: {type: boolean, description: "Present (true) for a moderator when the answer is hidden"}
+              hidden_reason: *hiddenReason
+        answer_to:
+          type: object
+          description: Claims that answer a question only
+          additionalProperties: false
+          required: [id, title]
+          properties:
+            id: {type: string}
+            title: {type: string}
+        signals: {$ref: "#/components/schemas/Signals"}
+        superseded_by:
+          type: object
+          description: A claim a newer claim replaced; the newer claim (omitted when it is hidden from the caller)
+          additionalProperties: false
+          required: [id, title]
+          properties:
+            id: {type: string}
+            title: {type: string}
+        hidden: {type: boolean, description: "Present (true) for a moderator or the author when the contribution is hidden"}
+        hidden_reason: *hiddenReason
+    ContributionDetail: {$ref: "#/components/schemas/Reference"}
+
+    Counts:
+      type: object
+      additionalProperties: false
+      required: [favorable, unfavorable, neutral, favorable_actors]
+      properties:
+        favorable: {type: integer, description: "Active favorable signals, not counting the claim's author"}
+        unfavorable: {type: integer}
+        neutral: {type: integer}
+        favorable_actors: {type: integer, description: "Distinct actors other than the author with an active favorable signal; compared with min_favorable"}
+
+    Signal:
+      type: object
+      additionalProperties: false
+      required: [id, kind, stance, actor_id, actor_name, body, sources, created_at]
+      properties:
+        id: {type: string}
+        kind: {type: string, enum: [challenge, assessment]}
+        stance: {$ref: "#/components/schemas/Stance"}
+        actor_id: {type: string}
+        actor_name: {type: string}
+        actor_type: {$ref: "#/components/schemas/ActorType"}
+        body: {type: string}
+        sources: {type: array, items: {type: string}, description: "Evidence references given by the sender"}
+        created_at: {type: string, format: date-time}
+        reply_to: {type: string, description: "Present on a reply: the ID of the top-level signal it answers (replies are one level deep)"}
+        superseded: {type: boolean, description: "Present (true) only in history"}
+        withdrawn: {type: boolean, description: "Present (true) only in history: the author took it back"}
+        hidden: {type: boolean, description: "Present (true) only in history, and only for a moderator"}
+        hidden_reason: *hiddenReason
+        actor_disabled: {type: boolean, description: "Present (true) only in history: its sender is disabled"}
+    Signals:
+      description: A claim's signals; all groups are empty for a question.
+      type: object
+      additionalProperties: false
+      required: [favorable, unfavorable, neutral, history]
+      properties:
+        favorable: {type: array, items: {$ref: "#/components/schemas/Signal"}}
+        unfavorable: {type: array, items: {$ref: "#/components/schemas/Signal"}}
+        neutral: {type: array, items: {$ref: "#/components/schemas/Signal"}}
+        history: {type: array, description: "Signals that do not count toward state: replaced, withdrawn, hidden (moderators only) or from a disabled actor", items: {$ref: "#/components/schemas/Signal"}}
+
+    AdminActor:
+      type: object
+      additionalProperties: false
+      required: [id, type, name, disabled, created_at, username, has_login, last_active_at, next_token_expiry]
+      properties:
+        id: *actorId
+        type: *actorType
+        name: *actorName
+        disabled: *actorDisabled
+        created_at: *actorCreated
+        username: *actorUsername
+        has_login: *actorHasLogin
+        last_active_at: *actorLastActive
+        next_token_expiry: *actorNextExpiry
+    AdminActorDetail:
+      description: An admin actor plus its credentials (listed for every actor, so older tokens stay revocable).
+      type: object
+      additionalProperties: false
+      required: [id, type, name, disabled, created_at, username, has_login, last_active_at, next_token_expiry, credentials, assignments]
+      properties:
+        id: *actorId
+        type: *actorType
+        name: *actorName
+        disabled: *actorDisabled
+        created_at: *actorCreated
+        username: *actorUsername
+        has_login: *actorHasLogin
+        last_active_at: *actorLastActive
+        next_token_expiry: *actorNextExpiry
+        credentials: {type: array, items: {$ref: "#/components/schemas/Credential"}}
+        assignments: {type: array, items: {$ref: "#/components/schemas/Assignment"}}
+    Credential:
+      type: object
+      additionalProperties: false
+      required: [id, created_at, revoked_at, label, expires_at, last_used_at]
+      properties:
+        id: {type: string}
+        created_at: {type: string, format: date-time}
+        revoked_at: {type: [string, "null"], format: date-time}
+        label: {type: string, description: "Empty for tokens issued without one"}
+        expires_at: {type: [string, "null"], format: date-time, description: "Null: never expires"}
+        last_used_at: {type: [string, "null"], format: date-time, description: "Null: never used; updated at most once a minute"}
+    AuditEvent:
+      type: object
+      additionalProperties: false
+      required: [id, at, actor_id, actor_name, action, target_type, target_id, project_id, detail]
+      properties:
+        id: {type: string}
+        at: {type: string, format: date-time}
+        actor_id: {type: [string, "null"], description: "Null: the operator CLI"}
+        actor_name: {type: string, description: "Empty for the CLI"}
+        action:
+          type: string
+          description: "actor.create|rename|disable|enable|password_reset, credential.issue|revoke, assignment.create|delete, role.create|update|delete, policy.create|update|delete, project.create|update, settings.search.update|reindex, setup.complete, content.hide|unhide"
+        target_type: {type: string, description: "actor, credential, assignment, role, policy, project, settings, contribution or signal"}
+        target_id: {type: string}
+        project_id: {type: [string, "null"]}
+        detail: {type: object, additionalProperties: true, description: "Non-secret facts about the operation"}
+
+    ProviderView:
+      type: object
+      additionalProperties: false
+      required: [url, model, api_key_last4]
+      properties:
+        url: {type: string, description: "Empty when the provider is off"}
+        model: {type: string}
+        api_key_last4: {type: string, description: "Last 4 characters of the stored key, or empty"}
+    Settings:
+      type: object
+      additionalProperties: false
+      required: [embedding, rerank, status]
+      properties:
+        embedding:
+          type: object
+          additionalProperties: false
+          required: [url, model, api_key_last4, dim]
+          properties:
+            url: {type: string}
+            model: {type: string}
+            api_key_last4: {type: string}
+            dim: {type: integer, description: "Vector dimension detected at the last successful test; 0 when off"}
+        rerank: {$ref: "#/components/schemas/ProviderView"}
+        status: {$ref: "#/components/schemas/Status"}
+    Status:
+      type: object
+      additionalProperties: false
+      required: [pipeline, embedded_count, total_count, reindexing, warnings]
+      properties:
+        pipeline: {type: string, description: "bm25, optionally followed by +vector and +rerank"}
+        embedded_count: {type: integer}
+        total_count: {type: integer}
+        reindexing: {type: boolean}
+        warnings: {type: array, items: {type: string}, description: "Machine-readable codes, e.g. api_key_unreadable:embedding"}
+    ProviderInput:
+      type: object
+      additionalProperties: false
+      properties:
+        url: {type: string, description: "Empty turns the provider off"}
+        model: {type: string}
+        api_key:
+          type: [string, "null"]
+          description: Absent or "" keeps the stored key, null deletes it, a string sets it.
+    SettingsInput:
+      type: object
+      additionalProperties: false
+      properties:
+        embedding: {$ref: "#/components/schemas/ProviderInput"}
+        rerank: {$ref: "#/components/schemas/ProviderInput"}

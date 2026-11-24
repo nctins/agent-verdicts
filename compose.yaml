@@ -1,0 +1,39 @@
+services:
+  db:
+    build: { context: ./docker/db }
+    environment: { POSTGRES_DB: agentverdicts, POSTGRES_USER: agentverdicts, POSTGRES_PASSWORD: dev }
+    volumes:
+      - db-data:/var/lib/postgresql
+    ports: ["5432:5432"]
+    healthcheck: { test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "agentverdicts", "-d", "agentverdicts"], interval: 2s, retries: 30 }
+  api:
+    build: { context: ./apps/api, dockerfile: ../../docker/api/Dockerfile, target: dev }
+    env_file: ./docker/api/dev.env
+    working_dir: /src
+    volumes:
+      - ./apps/api:/src
+      - ./docker/api/air.toml:/etc/air.toml:ro
+      - api-secrets:/secrets
+      - gomodcache:/go/pkg/mod
+      - gocache:/root/.cache/go-build
+    ports: ["8080:8080"]
+    depends_on: { db: { condition: service_healthy } }
+  ui:
+    build: { context: ./apps/ui, dockerfile: ../../docker/ui/Dockerfile, target: dev, additional_contexts: { dockerui: ./docker/ui } }
+    env_file: ./docker/ui/dev.env
+    volumes: ["./apps/ui:/app", "ui-node-modules:/app/node_modules"]
+    ports: ["3000:3000"]
+    depends_on: [api]
+  embed:
+    profiles: ["ai"]
+    image: ghcr.io/huggingface/text-embeddings-inference:${TEI_TAG:-cpu-1.9.4}   # arm64: TEI_TAG=cpu-arm64-1.9.4
+    platform: ${TEI_PLATFORM:-linux/amd64}   # arm64: TEI_PLATFORM=linux/arm64
+    command: ["--model-id", "BAAI/bge-m3", "--max-batch-tokens", "2048"]
+    volumes: [hf-cache:/data]
+  rerank:
+    profiles: ["ai"]
+    image: ghcr.io/huggingface/text-embeddings-inference:${TEI_TAG:-cpu-1.9.4}   # arm64: TEI_TAG=cpu-arm64-1.9.4
+    platform: ${TEI_PLATFORM:-linux/amd64}   # arm64: TEI_PLATFORM=linux/arm64
+    command: ["--model-id", "BAAI/bge-reranker-v2-m3", "--max-batch-tokens", "2048"]
+    volumes: [hf-cache:/data]
+volumes: { db-data: {}, api-secrets: {}, gomodcache: {}, gocache: {}, hf-cache: {}, ui-node-modules: {} }

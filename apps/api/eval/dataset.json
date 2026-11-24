@@ -1,0 +1,2652 @@
+{
+ "note": "written by assistant; may be biased — add real user questions",
+ "contributions": [
+  {
+   "id": "r1",
+   "title": "Rate limit mặc định của public API",
+   "body": "Rate limit mặc định của public API là 100 request/phút cho mỗi API key.",
+   "lang": "vi"
+  },
+  {
+   "id": "r2",
+   "title": "Chính sách retry của webhook",
+   "body": "Webhook retry dùng exponential backoff, tối đa 8 lần trong 24 giờ.",
+   "lang": "vi"
+  },
+  {
+   "id": "r3",
+   "title": "Large refunds need a second approver",
+   "body": "Refund over $10,000 requires a second approver from finance.",
+   "lang": "en"
+  },
+  {
+   "id": "r4",
+   "title": "Idempotency key retention",
+   "body": "Idempotency keys are kept for 24 hours, then reused keys create new charges.",
+   "lang": "en"
+  },
+  {
+   "id": "r5",
+   "title": "Cách lưu số tiền trong hệ thống",
+   "body": "Tất cả số tiền được lưu bằng số nguyên theo đơn vị nhỏ nhất (minor units).",
+   "lang": "vi"
+  },
+  {
+   "id": "r6",
+   "title": "Removal of the /v1/charges endpoint",
+   "body": "The /v1/charges endpoint will be removed at the end of Q2.",
+   "lang": "en"
+  },
+  {
+   "id": "r7",
+   "title": "3-D Secure for EU cards",
+   "body": "3-D Secure is mandatory for every card issued in the EU.",
+   "lang": "en"
+  },
+  {
+   "id": "r8",
+   "title": "Timeout khi gọi ngân hàng đối tác",
+   "body": "Timeout gọi sang ngân hàng đối tác là 30 giây.",
+   "lang": "vi"
+  },
+  {
+   "id": "r9",
+   "title": "Exchange rate used for currency conversion",
+   "body": "Currency conversion uses the mid-market rate captured at authorization time.",
+   "lang": "en"
+  },
+  {
+   "id": "r10",
+   "title": "PCI scope boundaries",
+   "body": "PCI scope only covers the tokenization service, not the checkout frontend.",
+   "lang": "en"
+  },
+  {
+   "id": "r11",
+   "title": "Visa chargeback window",
+   "body": "Chargeback window for Visa is 120 days from the transaction date.",
+   "lang": "en"
+  },
+  {
+   "id": "r12",
+   "title": "Retry of failed payouts",
+   "body": "Failed payouts are retried automatically the next business day.",
+   "lang": "en"
+  },
+  {
+   "id": "r13",
+   "title": "Partition và thời gian lưu bảng events",
+   "body": "Bảng events được partition theo ngày, giữ lại 400 ngày.",
+   "lang": "vi"
+  },
+  {
+   "id": "r14",
+   "title": "Nightly ETL completion time",
+   "body": "The nightly ETL finishes before 06:00 UTC on 95% of days.",
+   "lang": "en"
+  },
+  {
+   "id": "r15",
+   "title": "Backup snapshot warehouse sang region khác",
+   "body": "Snapshot của warehouse được backup sang region thứ hai mỗi 6 giờ.",
+   "lang": "vi"
+  },
+  {
+   "id": "r16",
+   "title": "PII hashing in the data lake",
+   "body": "PII columns are hashed with a per-tenant salt before landing in the lake.",
+   "lang": "en"
+  },
+  {
+   "id": "r17",
+   "title": "Giới hạn thời gian chạy query",
+   "body": "Query nào chạy quá 15 phút sẽ bị tự động kill.",
+   "lang": "vi"
+  },
+  {
+   "id": "r18",
+   "title": "Incremental dbt builds",
+   "body": "dbt models are rebuilt incrementally except for the finance marts.",
+   "lang": "en"
+  },
+  {
+   "id": "r19",
+   "title": "Kafka topic retention",
+   "body": "The Kafka cluster keeps 7 days of retention on every topic.",
+   "lang": "en"
+  },
+  {
+   "id": "r20",
+   "title": "Độ trễ dữ liệu của dashboard doanh thu",
+   "body": "Dashboard doanh thu lấy dữ liệu trễ tối đa 2 giờ.",
+   "lang": "vi"
+  },
+  {
+   "id": "r21",
+   "title": "Review for events schema changes",
+   "body": "Schema changes to the events table need a data-contract review.",
+   "lang": "en"
+  },
+  {
+   "id": "r22",
+   "title": "Spark job instance types",
+   "body": "Spark jobs run on spot instances with on-demand fallback.",
+   "lang": "en"
+  },
+  {
+   "id": "r23",
+   "title": "Phiên bản iOS tối thiểu",
+   "body": "App iOS hỗ trợ từ iOS 15 trở lên.",
+   "lang": "vi"
+  },
+  {
+   "id": "r24",
+   "title": "Crash-free sessions of the last release",
+   "body": "Crash-free sessions were above 99.5% for the last release.",
+   "lang": "en"
+  },
+  {
+   "id": "r25",
+   "title": "Offline order cache",
+   "body": "Offline mode caches the last 50 orders on the device.",
+   "lang": "en"
+  },
+  {
+   "id": "r26",
+   "title": "Android push notification opt-in rate",
+   "body": "Push notification opt-in rate on Android is around 70%.",
+   "lang": "en"
+  },
+  {
+   "id": "r27",
+   "title": "Kích thước ảnh đại diện khi upload",
+   "body": "Ảnh đại diện được nén về tối đa 512x512 trước khi upload.",
+   "lang": "vi"
+  },
+  {
+   "id": "r28",
+   "title": "Fallback when biometric login fails",
+   "body": "The app falls back to SMS OTP when biometric login fails three times.",
+   "lang": "en"
+  },
+  {
+   "id": "r29",
+   "title": "Feature flag refresh interval",
+   "body": "Feature flags are fetched on cold start and refreshed every 15 minutes.",
+   "lang": "en"
+  },
+  {
+   "id": "r30",
+   "title": "UI framework cho màn hình Android mới",
+   "body": "Bản Android dùng Jetpack Compose cho toàn bộ màn hình mới.",
+   "lang": "vi"
+  },
+  {
+   "id": "r31",
+   "title": "Where email deep links open",
+   "body": "Deep links from email open the in-app browser, not Safari.",
+   "lang": "en"
+  },
+  {
+   "id": "r32",
+   "title": "Mobile release cadence",
+   "body": "Release train ships every two weeks on Tuesday.",
+   "lang": "en"
+  },
+  {
+   "id": "r33",
+   "title": "Dark mode default",
+   "body": "Dark mode follows the system setting by default.",
+   "lang": "en"
+  },
+  {
+   "id": "r34",
+   "title": "Phiên bản database production",
+   "body": "Database chính chạy PostgreSQL 16 với 2 read replica.",
+   "lang": "vi"
+  },
+  {
+   "id": "r35",
+   "title": "Primary and failover regions",
+   "body": "Primary region is us-east-1; failover target is us-west-2.",
+   "lang": "en"
+  },
+  {
+   "id": "r36",
+   "title": "On-call rotation handover",
+   "body": "On-call rotation is weekly and hands over on Monday 10:00 local time.",
+   "lang": "en"
+  },
+  {
+   "id": "r37",
+   "title": "TLS certificate renewal",
+   "body": "TLS certificates are renewed automatically 30 days before expiry.",
+   "lang": "en"
+  },
+  {
+   "id": "r38",
+   "title": "Review thay đổi Terraform",
+   "body": "Mọi thay đổi Terraform phải qua review của ít nhất một người khác.",
+   "lang": "vi"
+  },
+  {
+   "id": "r39",
+   "title": "Container image CVE scanning",
+   "body": "Container images are scanned for CVEs on every push to main.",
+   "lang": "en"
+  },
+  {
+   "id": "r40",
+   "title": "Thời gian giữ log production",
+   "body": "Log của production được giữ 30 ngày trên hot storage.",
+   "lang": "vi"
+  },
+  {
+   "id": "r41",
+   "title": "Staging environment rebuild schedule",
+   "body": "The staging environment is wiped and rebuilt every Sunday night.",
+   "lang": "en"
+  },
+  {
+   "id": "r42",
+   "title": "SSH access to production hosts",
+   "body": "SSH access to production hosts requires a short-lived certificate.",
+   "lang": "en"
+  },
+  {
+   "id": "r43",
+   "title": "Backup restore tests",
+   "body": "Backups are restore-tested once per quarter.",
+   "lang": "en"
+  },
+  {
+   "id": "r44",
+   "title": "Autoscaling threshold",
+   "body": "Autoscaling kicks in at 70% average CPU over 5 minutes.",
+   "lang": "en"
+  },
+  {
+   "id": "r45",
+   "title": "Chi phí cloud tháng trước",
+   "body": "Chi phí cloud tháng trước tăng 12% so với tháng trước nữa.",
+   "lang": "vi"
+  },
+  {
+   "id": "r46",
+   "title": "Thời gian onboarding kỹ sư mới",
+   "body": "Quy trình onboarding kỹ sư mới kéo dài 2 tuần.",
+   "lang": "vi"
+  },
+  {
+   "id": "r47",
+   "title": "Changelog requirement for public API changes",
+   "body": "Every public API change needs a changelog entry before merge.",
+   "lang": "en"
+  },
+  {
+   "id": "r48",
+   "title": "Postmortem publication deadline",
+   "body": "Incident postmortems are published within 5 business days.",
+   "lang": "en"
+  },
+  {
+   "id": "r49",
+   "title": "Chu kỳ review tài liệu kiến trúc",
+   "body": "Tài liệu kiến trúc được review lại mỗi quý.",
+   "lang": "vi"
+  },
+  {
+   "id": "r50",
+   "title": "Code style enforcement in review",
+   "body": "Code style is enforced by CI; reviewers should not comment on formatting.",
+   "lang": "en"
+  },
+  {
+   "id": "r51",
+   "title": "Summary required for long design docs",
+   "body": "Design docs over 10 pages must include a one-page summary.",
+   "lang": "en"
+  },
+  {
+   "id": "r52",
+   "title": "Weekly focus days",
+   "body": "Engineers get two focus days without meetings per week.",
+   "lang": "en"
+  },
+  {
+   "id": "d-data-platform-1",
+   "title": "Bảng sessions được partition theo tháng, giữ lại 2 năm",
+   "body": "Bảng sessions được partition theo tháng, giữ lại 2 năm.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-2",
+   "title": "Raw clickstream in the lake is kept for 90 days before…",
+   "body": "Raw clickstream in the lake is kept for 90 days before compaction.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-3",
+   "title": "Partition pruning requires filtering on event_date, not on…",
+   "body": "Partition pruning requires filtering on event_date, not on timestamp.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-4",
+   "title": "The hourly ETL for marketing finishes within 20 minutes",
+   "body": "The hourly ETL for marketing finishes within 20 minutes.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-5",
+   "title": "ETL failures page the data on-call only between 06:00 and…",
+   "body": "ETL failures page the data on-call only between 06:00 and 22:00.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-6",
+   "title": "Airflow is the orchestrator for every batch pipeline",
+   "body": "Airflow is the orchestrator for every batch pipeline.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-7",
+   "title": "Warehouse snapshots are retained for 35 days",
+   "body": "Warehouse snapshots are retained for 35 days.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-8",
+   "title": "Backup của data lake chỉ chạy một lần mỗi ngày",
+   "body": "Backup của data lake chỉ chạy một lần mỗi ngày.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-9",
+   "title": "Restore from a warehouse snapshot takes about 4 hours",
+   "body": "Restore from a warehouse snapshot takes about 4 hours.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-10",
+   "title": "Email addresses are tokenized, not hashed, so analysts can…",
+   "body": "Email addresses are tokenized, not hashed, so analysts can join on them.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-11",
+   "title": "Dữ liệu PII bị xoá sau 30 ngày khi khách hàng yêu cầu",
+   "body": "Dữ liệu PII bị xoá sau 30 ngày khi khách hàng yêu cầu.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-12",
+   "title": "Access to raw PII tables requires a ticket approved by legal",
+   "body": "Access to raw PII tables requires a ticket approved by legal.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-13",
+   "title": "Ad-hoc queries are limited to 2 TB scanned per user per day",
+   "body": "Ad-hoc queries are limited to 2 TB scanned per user per day.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-14",
+   "title": "Query timeout trên BI tool là 5 phút",
+   "body": "Query timeout trên BI tool là 5 phút.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-15",
+   "title": "Long-running queries in the scheduler queue get lower…",
+   "body": "Long-running queries in the scheduler queue get lower priority after 1 hour.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-16",
+   "title": "dbt tests run on every pull request against a sample dataset",
+   "body": "dbt tests run on every pull request against a sample dataset.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-17",
+   "title": "Finance marts are rebuilt in full every night at 02:00 UTC",
+   "body": "Finance marts are rebuilt in full every night at 02:00 UTC.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-18",
+   "title": "dbt docs được publish nội bộ sau mỗi lần deploy",
+   "body": "dbt docs được publish nội bộ sau mỗi lần deploy.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-19",
+   "title": "Kafka topics use 12 partitions by default",
+   "body": "Kafka topics use 12 partitions by default.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-20",
+   "title": "The compacted Kafka topics keep only the latest value per…",
+   "body": "The compacted Kafka topics keep only the latest value per key indefinitely.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-21",
+   "title": "Consumer lag above 10 minutes triggers an alert",
+   "body": "Consumer lag above 10 minutes triggers an alert.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-22",
+   "title": "Dashboard tồn kho được cập nhật realtime qua streaming",
+   "body": "Dashboard tồn kho được cập nhật realtime qua streaming.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-23",
+   "title": "Revenue numbers in the board deck come from the finance…",
+   "body": "Revenue numbers in the board deck come from the finance mart, not the dashboard.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-24",
+   "title": "Marketing dashboards refresh every 15 minutes",
+   "body": "Marketing dashboards refresh every 15 minutes.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-25",
+   "title": "Adding a nullable column to events does not need review",
+   "body": "Adding a nullable column to events does not need review.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-26",
+   "title": "Data contracts are stored as YAML next to the producer…",
+   "body": "Data contracts are stored as YAML next to the producer service code.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-27",
+   "title": "Breaking schema changes need 30 days notice to consumers",
+   "body": "Breaking schema changes need 30 days notice to consumers.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-28",
+   "title": "Spark executors use 8 GB memory by default",
+   "body": "Spark executors use 8 GB memory by default.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-29",
+   "title": "Spot interruption rate for the Spark cluster is about 5%…",
+   "body": "Spot interruption rate for the Spark cluster is about 5% per week.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-30",
+   "title": "Cụm Spark tự scale về 0 khi không có job",
+   "body": "Cụm Spark tự scale về 0 khi không có job.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-31",
+   "title": "The feature store serves online features with p99 under 10…",
+   "body": "The feature store serves online features with p99 under 10 ms.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-32",
+   "title": "Data quality checks block publishing when null rate exceeds…",
+   "body": "Data quality checks block publishing when null rate exceeds 1%.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-33",
+   "title": "Bảng dimension khách hàng dùng SCD type 2",
+   "body": "Bảng dimension khách hàng dùng SCD type 2.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-34",
+   "title": "Analysts use a separate warehouse with read-only access",
+   "body": "Analysts use a separate warehouse with read-only access.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-35",
+   "title": "Cost of the warehouse is charged back to teams monthly",
+   "body": "Cost of the warehouse is charged back to teams monthly.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-36",
+   "title": "Event names follow object_action naming, e.g. order_created",
+   "body": "Event names follow object_action naming, e.g. order_created.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-37",
+   "title": "Late-arriving events up to 3 days are merged into the right…",
+   "body": "Late-arriving events up to 3 days are merged into the right partition.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-38",
+   "title": "The CDC pipeline from Postgres uses Debezium",
+   "body": "The CDC pipeline from Postgres uses Debezium.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-39",
+   "title": "Lineage được thu thập tự động qua OpenLineage",
+   "body": "Lineage được thu thập tự động qua OpenLineage.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-data-platform-40",
+   "title": "Sample datasets for development are refreshed weekly",
+   "body": "Sample datasets for development are refreshed weekly.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-1",
+   "title": "Onboarding cho PM mới kéo dài 1 tuần",
+   "body": "Onboarding cho PM mới kéo dài 1 tuần.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-2",
+   "title": "New engineers ship their first change within the first 3…",
+   "body": "New engineers ship their first change within the first 3 days.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-3",
+   "title": "Mỗi kỹ sư mới được gán một buddy trong tháng đầu",
+   "body": "Mỗi kỹ sư mới được gán một buddy trong tháng đầu.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-4",
+   "title": "Internal API changes do not need a changelog entry",
+   "body": "Internal API changes do not need a changelog entry.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-5",
+   "title": "Changelog is published to the developer portal every Friday",
+   "body": "Changelog is published to the developer portal every Friday.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-6",
+   "title": "Breaking changes require a migration guide in the docs",
+   "body": "Breaking changes require a migration guide in the docs.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-7",
+   "title": "Postmortems are blameless and reviewed in the weekly ops…",
+   "body": "Postmortems are blameless and reviewed in the weekly ops meeting.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-8",
+   "title": "Incident severity SEV1 requires an incident commander…",
+   "body": "Incident severity SEV1 requires an incident commander within 15 minutes.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-9",
+   "title": "Biên bản sự cố nội bộ được lưu trong wiki, không công khai",
+   "body": "Biên bản sự cố nội bộ được lưu trong wiki, không công khai.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-10",
+   "title": "Runbooks are reviewed every six months",
+   "body": "Runbooks are reviewed every six months.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-11",
+   "title": "Tài liệu API được sinh tự động từ OpenAPI spec",
+   "body": "Tài liệu API được sinh tự động từ OpenAPI spec.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-12",
+   "title": "ADRs are stored in the repo under docs/adr",
+   "body": "ADRs are stored in the repo under docs/adr.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-13",
+   "title": "Linters run as a pre-commit hook, but CI is the source of…",
+   "body": "Linters run as a pre-commit hook, but CI is the source of truth.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-14",
+   "title": "Reviewers must respond to a pull request within one…",
+   "body": "Reviewers must respond to a pull request within one business day.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-15",
+   "title": "Pull requests over 400 lines should be split",
+   "body": "Pull requests over 400 lines should be split.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-16",
+   "title": "Design docs need sign-off from two senior engineers",
+   "body": "Design docs need sign-off from two senior engineers.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-17",
+   "title": "RFCs stay open for comments for at least one week",
+   "body": "RFCs stay open for comments for at least one week.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-18",
+   "title": "Mỗi tài liệu thiết kế phải có mục 'Alternatives considered'",
+   "body": "Mỗi tài liệu thiết kế phải có mục 'Alternatives considered'.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-19",
+   "title": "Meetings default to 25 minutes instead of 30",
+   "body": "Meetings default to 25 minutes instead of 30.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-20",
+   "title": "Không họp vào chiều thứ Sáu",
+   "body": "Không họp vào chiều thứ Sáu.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-21",
+   "title": "Engineers can work remotely up to three days per week",
+   "body": "Engineers can work remotely up to three days per week.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-22",
+   "title": "Hackathon nội bộ tổ chức mỗi quý một lần",
+   "body": "Hackathon nội bộ tổ chức mỗi quý một lần.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-23",
+   "title": "Performance reviews happen twice a year",
+   "body": "Performance reviews happen twice a year.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-24",
+   "title": "Learning budget is $1,000 per engineer per year",
+   "body": "Learning budget is $1,000 per engineer per year.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-25",
+   "title": "Engineering handbook is versioned in Git and edited via…",
+   "body": "Engineering handbook is versioned in Git and edited via pull requests.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-26",
+   "title": "Glossary terms are defined once and linked from other pages",
+   "body": "Glossary terms are defined once and linked from other pages.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-27",
+   "title": "Docs use American English spelling",
+   "body": "Docs use American English spelling.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-28",
+   "title": "Screenshots in docs must not contain customer data",
+   "body": "Screenshots in docs must not contain customer data.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-29",
+   "title": "Mọi trang tài liệu có owner và ngày review gần nhất",
+   "body": "Mọi trang tài liệu có owner và ngày review gần nhất.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-docs-handbook-30",
+   "title": "Deprecated docs are archived, not deleted",
+   "body": "Deprecated docs are archived, not deleted.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-1",
+   "title": "Database phân tích chạy ClickHouse trên 3 node",
+   "body": "Database phân tích chạy ClickHouse trên 3 node.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-2",
+   "title": "Read replicas lag behind primary by less than 1 second on…",
+   "body": "Read replicas lag behind primary by less than 1 second on average.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-3",
+   "title": "Postgres major upgrades are scheduled twice a year",
+   "body": "Postgres major upgrades are scheduled twice a year.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-4",
+   "title": "Disaster recovery RTO is 4 hours and RPO is 15 minutes",
+   "body": "Disaster recovery RTO is 4 hours and RPO is 15 minutes.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-5",
+   "title": "Failover drills are run every six months",
+   "body": "Failover drills are run every six months.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-6",
+   "title": "CDN có điểm POP tại Singapore và Tokyo",
+   "body": "CDN có điểm POP tại Singapore và Tokyo.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-7",
+   "title": "On-call engineers get a day off after a night with more…",
+   "body": "On-call engineers get a day off after a night with more than two pages.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-8",
+   "title": "Escalation goes to the secondary on-call after 10 minutes…",
+   "body": "Escalation goes to the secondary on-call after 10 minutes without ack.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-9",
+   "title": "Lịch trực được quản lý trên PagerDuty",
+   "body": "Lịch trực được quản lý trên PagerDuty.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-10",
+   "title": "Internal certificates are issued by a private CA valid for…",
+   "body": "Internal certificates are issued by a private CA valid for 90 days.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-11",
+   "title": "Wildcard certificates are not allowed for production domains",
+   "body": "Wildcard certificates are not allowed for production domains.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-12",
+   "title": "Terraform state is stored in S3 with DynamoDB locking",
+   "body": "Terraform state is stored in S3 with DynamoDB locking.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-13",
+   "title": "Terraform plan chạy tự động trên mỗi pull request",
+   "body": "Terraform plan chạy tự động trên mỗi pull request.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-14",
+   "title": "Manual changes in the cloud console are reverted by drift…",
+   "body": "Manual changes in the cloud console are reverted by drift detection nightly.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-15",
+   "title": "Base images are rebuilt weekly to pick up OS patches",
+   "body": "Base images are rebuilt weekly to pick up OS patches.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-16",
+   "title": "Critical CVEs must be patched within 7 days",
+   "body": "Critical CVEs must be patched within 7 days.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-17",
+   "title": "Container images không được chạy với user root",
+   "body": "Container images không được chạy với user root.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-18",
+   "title": "Logs on cold storage are kept for 1 year",
+   "body": "Logs on cold storage are kept for 1 year.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-19",
+   "title": "Log debug bị tắt ở production",
+   "body": "Log debug bị tắt ở production.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-20",
+   "title": "Metrics are retained for 13 months at 1-minute resolution",
+   "body": "Metrics are retained for 13 months at 1-minute resolution.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-21",
+   "title": "Staging data is a masked copy of production refreshed…",
+   "body": "Staging data is a masked copy of production refreshed monthly.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-22",
+   "title": "Preview environments are created per pull request and…",
+   "body": "Preview environments are created per pull request and deleted after 3 days.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-23",
+   "title": "Môi trường dev dùng chung một cluster Kubernetes",
+   "body": "Môi trường dev dùng chung một cluster Kubernetes.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-24",
+   "title": "Bastion hosts were removed in favour of SSM sessions",
+   "body": "Bastion hosts were removed in favour of SSM sessions.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-25",
+   "title": "Production database access is read-only by default and…",
+   "body": "Production database access is read-only by default and time-boxed.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-26",
+   "title": "MFA is required for all cloud console logins",
+   "body": "MFA is required for all cloud console logins.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-27",
+   "title": "Backups are encrypted with KMS keys rotated yearly",
+   "body": "Backups are encrypted with KMS keys rotated yearly.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-28",
+   "title": "Snapshot của database chạy mỗi giờ và giữ 7 ngày",
+   "body": "Snapshot của database chạy mỗi giờ và giữ 7 ngày.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-29",
+   "title": "Restore test lần gần nhất mất 2 giờ 40 phút",
+   "body": "Restore test lần gần nhất mất 2 giờ 40 phút.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-30",
+   "title": "Autoscaling scales in after 15 minutes below 30% CPU",
+   "body": "Autoscaling scales in after 15 minutes below 30% CPU.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-31",
+   "title": "Minimum replica count for public services is 3",
+   "body": "Minimum replica count for public services is 3.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-32",
+   "title": "Pod memory limits are set to 2x the requests",
+   "body": "Pod memory limits are set to 2x the requests.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-33",
+   "title": "Cloud budget alerts trigger at 80% of the monthly forecast",
+   "body": "Cloud budget alerts trigger at 80% of the monthly forecast.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-34",
+   "title": "Reserved instances cover about 60% of compute spend",
+   "body": "Reserved instances cover about 60% of compute spend.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-35",
+   "title": "Chi phí lưu trữ S3 chiếm 20% tổng hoá đơn cloud",
+   "body": "Chi phí lưu trữ S3 chiếm 20% tổng hoá đơn cloud.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-36",
+   "title": "Kubernetes clusters are upgraded one minor version per…",
+   "body": "Kubernetes clusters are upgraded one minor version per quarter.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-37",
+   "title": "Service mesh enforces mTLS between all services",
+   "body": "Service mesh enforces mTLS between all services.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-38",
+   "title": "DNS is managed in Route 53 with 60-second TTL for public…",
+   "body": "DNS is managed in Route 53 with 60-second TTL for public records.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-39",
+   "title": "Status page được cập nhật bởi incident commander",
+   "body": "Status page được cập nhật bởi incident commander.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-infra-ops-40",
+   "title": "Load balancers drain connections for 30 seconds before…",
+   "body": "Load balancers drain connections for 30 seconds before deploy.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-1",
+   "title": "App Android hỗ trợ từ Android 8.0 trở lên",
+   "body": "App Android hỗ trợ từ Android 8.0 trở lên.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-2",
+   "title": "iPadOS is supported but has no dedicated tablet layout",
+   "body": "iPadOS is supported but has no dedicated tablet layout.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-3",
+   "title": "Minimum supported iOS version is raised once per year in…",
+   "body": "Minimum supported iOS version is raised once per year in September.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-4",
+   "title": "ANR rate on Android was 0.3% last month",
+   "body": "ANR rate on Android was 0.3% last month.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-5",
+   "title": "Crash reports are collected with Crashlytics",
+   "body": "Crash reports are collected with Crashlytics.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-6",
+   "title": "Tỷ lệ crash trên iOS cao hơn Android trong bản trước",
+   "body": "Tỷ lệ crash trên iOS cao hơn Android trong bản trước.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-7",
+   "title": "Offline mode lets users browse the catalog but not place…",
+   "body": "Offline mode lets users browse the catalog but not place orders.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-8",
+   "title": "The app cache is cleared on logout",
+   "body": "The app cache is cleared on logout.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-9",
+   "title": "Push notification opt-in rate on iOS is around 45%",
+   "body": "Push notification opt-in rate on iOS is around 45%.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-10",
+   "title": "Silent push is used to refresh the cart badge",
+   "body": "Silent push is used to refresh the cart badge.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-11",
+   "title": "Thông báo marketing bị giới hạn 3 lần mỗi tuần",
+   "body": "Thông báo marketing bị giới hạn 3 lần mỗi tuần.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-12",
+   "title": "Product images are served as WebP from the CDN",
+   "body": "Product images are served as WebP from the CDN.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-13",
+   "title": "Video upload is limited to 60 seconds",
+   "body": "Video upload is limited to 60 seconds.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-14",
+   "title": "Biometric login is disabled on rooted or jailbroken devices",
+   "body": "Biometric login is disabled on rooted or jailbroken devices.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-15",
+   "title": "Session token on mobile expires after 30 days of inactivity",
+   "body": "Session token on mobile expires after 30 days of inactivity.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-16",
+   "title": "OTP qua SMS hết hạn sau 5 phút",
+   "body": "OTP qua SMS hết hạn sau 5 phút.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-17",
+   "title": "Remote config values are cached for 12 hours",
+   "body": "Remote config values are cached for 12 hours.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-18",
+   "title": "Feature flags default to off when the fetch fails",
+   "body": "Feature flags default to off when the fetch fails.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-19",
+   "title": "Bản iOS dùng SwiftUI cho các màn hình mới",
+   "body": "Bản iOS dùng SwiftUI cho các màn hình mới.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-20",
+   "title": "Shared business logic is written in Kotlin Multiplatform",
+   "body": "Shared business logic is written in Kotlin Multiplatform.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-21",
+   "title": "Universal links on iOS open the app directly when installed",
+   "body": "Universal links on iOS open the app directly when installed.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-22",
+   "title": "Links to the help center open in the external browser",
+   "body": "Links to the help center open in the external browser.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-23",
+   "title": "Hotfix releases can bypass the release train with QA…",
+   "body": "Hotfix releases can bypass the release train with QA sign-off.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-24",
+   "title": "App Store review takes about 24 hours on average",
+   "body": "App Store review takes about 24 hours on average.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-25",
+   "title": "Bản beta được phân phối qua TestFlight và Firebase App…",
+   "body": "Bản beta được phân phối qua TestFlight và Firebase App Distribution.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-26",
+   "title": "Users can override dark mode in the app settings",
+   "body": "Users can override dark mode in the app settings.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-27",
+   "title": "Font scaling follows the system accessibility size",
+   "body": "Font scaling follows the system accessibility size.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-28",
+   "title": "Ứng dụng hỗ trợ tiếng Việt và tiếng Anh",
+   "body": "Ứng dụng hỗ trợ tiếng Việt và tiếng Anh.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-29",
+   "title": "Analytics events are batched and sent every 30 seconds",
+   "body": "Analytics events are batched and sent every 30 seconds.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-30",
+   "title": "In-app review prompt is shown at most once per 90 days",
+   "body": "In-app review prompt is shown at most once per 90 days.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-31",
+   "title": "App size on Android is about 38 MB after install",
+   "body": "App size on Android is about 38 MB after install.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-32",
+   "title": "Location permission is requested only when the user opens…",
+   "body": "Location permission is requested only when the user opens the store map.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-33",
+   "title": "The app enforces certificate pinning for the payments API",
+   "body": "The app enforces certificate pinning for the payments API.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-34",
+   "title": "Phiên bản app cũ hơn 6 tháng bị buộc cập nhật",
+   "body": "Phiên bản app cũ hơn 6 tháng bị buộc cập nhật.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-35",
+   "title": "Deep links from SMS campaigns go to the home screen if the…",
+   "body": "Deep links from SMS campaigns go to the home screen if the route is unknown.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-mobile-app-36",
+   "title": "Release notes are written by product, not engineering",
+   "body": "Release notes are written by product, not engineering.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-1",
+   "title": "Rate limit của internal API giữa các service là 1000…",
+   "body": "Rate limit của internal API giữa các service là 1000 request/phút.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-2",
+   "title": "The sandbox environment has no rate limit on API keys",
+   "body": "The sandbox environment has no rate limit on API keys.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-3",
+   "title": "API keys are rotated every 90 days by the security team",
+   "body": "API keys are rotated every 90 days by the security team.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-4",
+   "title": "Webhook payloads are signed with HMAC-SHA256 using the…",
+   "body": "Webhook payloads are signed with HMAC-SHA256 using the endpoint secret.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-5",
+   "title": "Webhook endpoint phải trả về 2xx trong vòng 10 giây, nếu…",
+   "body": "Webhook endpoint phải trả về 2xx trong vòng 10 giây, nếu không sẽ tính là thất bại.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-6",
+   "title": "Disabled webhook endpoints are re-enabled manually from the…",
+   "body": "Disabled webhook endpoints are re-enabled manually from the dashboard.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-7",
+   "title": "Refunds under $500 are approved automatically",
+   "body": "Refunds under $500 are approved automatically.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-8",
+   "title": "Partial refunds are allowed up to the original captured…",
+   "body": "Partial refunds are allowed up to the original captured amount.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-9",
+   "title": "Hoàn tiền cho giao dịch quá 180 ngày phải xử lý thủ công",
+   "body": "Hoàn tiền cho giao dịch quá 180 ngày phải xử lý thủ công.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-10",
+   "title": "Idempotency is not supported on GET requests",
+   "body": "Idempotency is not supported on GET requests.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-11",
+   "title": "Idempotency key tối đa 255 ký tự",
+   "body": "Idempotency key tối đa 255 ký tự.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-12",
+   "title": "Amounts in JPY have zero decimal places, so minor unit…",
+   "body": "Amounts in JPY have zero decimal places, so minor unit equals major unit.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-13",
+   "title": "Số tiền âm bị từ chối với lỗi validation",
+   "body": "Số tiền âm bị từ chối với lỗi validation.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-14",
+   "title": "The /v2/payments endpoint replaces /v1/charges and supports…",
+   "body": "The /v2/payments endpoint replaces /v1/charges and supports multi-capture.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-15",
+   "title": "API version is pinned per account at signup time",
+   "body": "API version is pinned per account at signup time.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-16",
+   "title": "Endpoint /v1/customers sẽ được giữ lại ít nhất đến hết năm…",
+   "body": "Endpoint /v1/customers sẽ được giữ lại ít nhất đến hết năm sau.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-17",
+   "title": "3-D Secure is optional for cards issued in the US",
+   "body": "3-D Secure is optional for cards issued in the US.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-18",
+   "title": "Strong Customer Authentication exemptions apply to…",
+   "body": "Strong Customer Authentication exemptions apply to transactions under €30.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-19",
+   "title": "Timeout mặc định của SDK client là 80 giây",
+   "body": "Timeout mặc định của SDK client là 80 giây.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-20",
+   "title": "Connection pool tới ngân hàng đối tác giới hạn 50 kết nối",
+   "body": "Connection pool tới ngân hàng đối tác giới hạn 50 kết nối.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-21",
+   "title": "Currency conversion fees are 1% on top of the mid-market…",
+   "body": "Currency conversion fees are 1% on top of the mid-market rate.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-22",
+   "title": "Tỷ giá được cập nhật mỗi 60 giây từ nhà cung cấp dữ liệu",
+   "body": "Tỷ giá được cập nhật mỗi 60 giây từ nhà cung cấp dữ liệu.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-23",
+   "title": "Settlement currency is chosen per merchant account",
+   "body": "Settlement currency is chosen per merchant account.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-24",
+   "title": "The tokenization service runs in an isolated VPC with no…",
+   "body": "The tokenization service runs in an isolated VPC with no internet egress.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-25",
+   "title": "Card numbers are never logged; only the last four digits…",
+   "body": "Card numbers are never logged; only the last four digits are stored.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-26",
+   "title": "Kiểm toán PCI DSS diễn ra mỗi năm một lần vào tháng 9",
+   "body": "Kiểm toán PCI DSS diễn ra mỗi năm một lần vào tháng 9.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-27",
+   "title": "Dispute evidence must be submitted within 7 days of the…",
+   "body": "Dispute evidence must be submitted within 7 days of the notification.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-28",
+   "title": "Phí chargeback là $15 cho mỗi dispute",
+   "body": "Phí chargeback là $15 cho mỗi dispute.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-29",
+   "title": "Payouts to Vietnamese bank accounts settle in T+2",
+   "body": "Payouts to Vietnamese bank accounts settle in T+2.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-30",
+   "title": "Payout schedule mặc định là hằng ngày, có thể đổi sang hằng…",
+   "body": "Payout schedule mặc định là hằng ngày, có thể đổi sang hằng tuần.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-31",
+   "title": "Minimum payout amount is $1",
+   "body": "Minimum payout amount is $1.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-32",
+   "title": "Failed card payments are not retried automatically; the…",
+   "body": "Failed card payments are not retried automatically; the merchant decides.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-33",
+   "title": "Subscription renewals retry failed charges on days 1, 3, 5…",
+   "body": "Subscription renewals retry failed charges on days 1, 3, 5 and 7.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-34",
+   "title": "Merchant onboarding requires KYB documents before the first…",
+   "body": "Merchant onboarding requires KYB documents before the first payout.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-35",
+   "title": "Fraud score above 75 blocks the payment by default",
+   "body": "Fraud score above 75 blocks the payment by default.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-36",
+   "title": "Danh sách đen thẻ được đồng bộ từ đối tác mỗi đêm",
+   "body": "Danh sách đen thẻ được đồng bộ từ đối tác mỗi đêm.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-37",
+   "title": "Apple Pay và Google Pay được hỗ trợ trên checkout web",
+   "body": "Apple Pay và Google Pay được hỗ trợ trên checkout web.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-38",
+   "title": "Receipts are emailed only if the customer email is present",
+   "body": "Receipts are emailed only if the customer email is present.",
+   "lang": "en",
+   "distractor": true
+  },
+  {
+   "id": "d-payments-api-39",
+   "title": "Mỗi merchant có tối đa 10 API key đang hoạt động",
+   "body": "Mỗi merchant có tối đa 10 API key đang hoạt động.",
+   "lang": "vi",
+   "distractor": true
+  },
+  {
+   "id": "v1",
+   "title": "Hạn mức chuyển khoản nội địa của doanh nghiệp",
+   "body": "Hạn mức chuyển khoản nội địa mỗi ngày là 500 triệu đồng cho tài khoản doanh nghiệp.",
+   "lang": "vi"
+  },
+  {
+   "id": "v2",
+   "title": "Hạn mức chuyển tiền của tài khoản cá nhân",
+   "body": "Tài khoản cá nhân chỉ được chuyển tối đa 100 triệu đồng mỗi ngày qua API.",
+   "lang": "vi"
+  },
+  {
+   "id": "v3",
+   "title": "Lịch đối soát với ngân hàng",
+   "body": "Đối soát giao dịch với ngân hàng chạy lúc 2 giờ sáng hằng ngày; chênh lệch được gửi email cho đội kế toán.",
+   "lang": "vi"
+  },
+  {
+   "id": "v4",
+   "title": "Hạn ký báo cáo đối soát cuối tháng",
+   "body": "Báo cáo đối soát cuối tháng phải được kế toán trưởng ký trước ngày 5 của tháng sau.",
+   "lang": "vi"
+  },
+  {
+   "id": "v5",
+   "title": "Thời hạn và số lần nhập OTP",
+   "body": "Mã OTP gửi qua SMS hết hạn sau 3 phút và chỉ được nhập sai tối đa 5 lần.",
+   "lang": "vi"
+  },
+  {
+   "id": "v6",
+   "title": "Khoá tài khoản khi nhập sai mật khẩu",
+   "body": "Người dùng bị khoá đăng nhập 30 phút sau 10 lần nhập sai mật khẩu liên tiếp.",
+   "lang": "vi"
+  },
+  {
+   "id": "v7",
+   "title": "Phiên bản Android tối thiểu",
+   "body": "Ứng dụng Android hỗ trợ từ Android 8.0 (API 26) trở lên.",
+   "lang": "vi"
+  },
+  {
+   "id": "v8",
+   "title": "Điều kiện bắt buộc cập nhật app",
+   "body": "Bản cập nhật bắt buộc được bật khi phiên bản app cũ hơn hai bản phát hành lớn.",
+   "lang": "vi"
+  },
+  {
+   "id": "v9",
+   "title": "Tần suất nạp dữ liệu từ app vào data lake",
+   "body": "Dữ liệu thô từ ứng dụng di động được đẩy vào data lake mỗi 15 phút theo lô.",
+   "lang": "vi"
+  },
+  {
+   "id": "v10",
+   "title": "Giờ tính lại bảng DAU",
+   "body": "Bảng tổng hợp người dùng hoạt động hằng ngày (DAU) được tính lại lúc 7 giờ sáng giờ Việt Nam.",
+   "lang": "vi"
+  },
+  {
+   "id": "v11",
+   "title": "Quota quét dữ liệu của nhóm phân tích",
+   "body": "Mỗi nhóm phân tích được cấp quota 2 TB dữ liệu quét mỗi tháng trên warehouse.",
+   "lang": "vi"
+  },
+  {
+   "id": "v12",
+   "title": "Giới hạn truy vấn đồng thời trên warehouse",
+   "body": "Truy vấn ad-hoc trên warehouse bị giới hạn 20 truy vấn đồng thời cho mỗi nhóm.",
+   "lang": "vi"
+  },
+  {
+   "id": "v13",
+   "title": "Thời gian xác nhận cảnh báo P1",
+   "body": "Cảnh báo sự cố mức P1 phải được người trực xác nhận trong vòng 5 phút.",
+   "lang": "vi"
+  },
+  {
+   "id": "v14",
+   "title": "Quy trình xử lý sự cố P2",
+   "body": "Sự cố mức P2 được xử lý trong giờ hành chính, không cần gọi người trực ban đêm.",
+   "lang": "vi"
+  },
+  {
+   "id": "v15",
+   "title": "Cấu hình cụm Redis cache",
+   "body": "Cụm Redis cache dùng chế độ cluster với 6 node, bộ nhớ tối đa 64 GB.",
+   "lang": "vi"
+  },
+  {
+   "id": "v16",
+   "title": "TTL mặc định của khoá Redis",
+   "body": "Khoá trong Redis mặc định hết hạn sau 1 giờ nếu service không tự đặt TTL.",
+   "lang": "vi"
+  },
+  {
+   "id": "v17",
+   "title": "Xoay vòng mật khẩu tài khoản dịch vụ",
+   "body": "Mật khẩu của tài khoản dịch vụ được xoay vòng tự động mỗi 30 ngày qua Vault.",
+   "lang": "vi"
+  },
+  {
+   "id": "v18",
+   "title": "Thu hồi quyền khi nhân viên nghỉ việc",
+   "body": "Quyền truy cập production được thu hồi ngay trong ngày nhân viên nghỉ việc.",
+   "lang": "vi"
+  },
+  {
+   "id": "v19",
+   "title": "Chuẩn bị thiết bị cho nhân viên mới",
+   "body": "Nhân viên mới được cấp laptop và tài khoản email trước ngày làm việc đầu tiên một ngày.",
+   "lang": "vi"
+  },
+  {
+   "id": "v20",
+   "title": "Chương trình buddy cho kỹ sư mới",
+   "body": "Mỗi kỹ sư mới có một người hướng dẫn (buddy) trong ba tháng đầu.",
+   "lang": "vi"
+  },
+  {
+   "id": "v21",
+   "title": "Ngân sách học tập hằng năm",
+   "body": "Ngân sách học tập mỗi kỹ sư là 10 triệu đồng một năm cho sách và khoá học.",
+   "lang": "vi"
+  },
+  {
+   "id": "v22",
+   "title": "Chính sách làm việc từ xa",
+   "body": "Nhân viên được làm việc từ xa tối đa ba ngày mỗi tuần.",
+   "lang": "vi"
+  },
+  {
+   "id": "v23",
+   "title": "Phí giao dịch thẻ nội địa",
+   "body": "Phí giao dịch thẻ nội địa là 1,1% giá trị giao dịch, tối thiểu 1.100 đồng.",
+   "lang": "vi"
+  },
+  {
+   "id": "v24",
+   "title": "Phí giao dịch thẻ quốc tế",
+   "body": "Thẻ quốc tế chịu phí 2,5% cộng thêm phí chuyển đổi ngoại tệ 1%.",
+   "lang": "vi"
+  },
+  {
+   "id": "long-1",
+   "title": "Sổ tay vận hành hệ thống thanh toán",
+   "body": "## 1. Mục đích của tài liệu\n\nTài liệu này mô tả cách đội vận hành giữ cho hệ thống thanh toán chạy ổn định trong giờ cao điểm và khi có sự cố. Người đọc chính là kỹ sư trực ca, kỹ sư backend mới vào đội và nhóm hỗ trợ khách hàng cấp hai. Tài liệu không thay thế cho runbook chi tiết của từng service, mà đóng vai trò bản đồ tổng quan: hệ thống gồm những phần nào, dữ liệu đi qua đâu, và khi một phần hỏng thì ai cần được gọi. Mọi thay đổi lớn đối với luồng thanh toán phải cập nhật lại tài liệu này trong cùng pull request.\n\n## 2. Các thành phần chính\n\nHệ thống thanh toán gồm năm service. Service gateway nhận yêu cầu từ merchant, kiểm tra chữ ký và rate limit, rồi chuyển tiếp vào bên trong. Service authorization giữ trạng thái của từng giao dịch và nói chuyện với các ngân hàng đối tác thông qua lớp router. Service tokenization nằm trong một VPC riêng, là nơi duy nhất nhìn thấy số thẻ đầy đủ. Service ledger ghi sổ kép cho mọi biến động số dư. Cuối cùng, service reconciliation đối chiếu sổ của chúng ta với file quyết toán mà ngân hàng gửi về mỗi đêm. Các service giao tiếp qua gRPC nội bộ, còn sự kiện nghiệp vụ được phát lên Kafka để các hệ thống phân tích và thông báo tiêu thụ.\n\n## 3. Luồng authorize và capture\n\nKhi merchant gọi tạo thanh toán, gateway sinh một mã giao dịch và lưu bản ghi ở trạng thái pending. Authorization chọn ngân hàng đối tác dựa trên loại thẻ, quốc gia phát hành và tỷ lệ thành công gần nhất của từng ngân hàng. Yêu cầu authorize được gửi đi với timeout riêng cho từng đối tác; nếu hết thời gian chờ mà chưa có phản hồi, giao dịch chuyển sang trạng thái unknown và được một job truy vấn lại trạng thái sau đó, tuyệt đối không tự động gửi lại yêu cầu authorize lần hai vì có thể trừ tiền khách hai lần. Capture có thể chạy ngay sau authorize hoặc trễ tối đa bảy ngày tuỳ cấu hình của merchant. Quá bảy ngày mà chưa capture thì khoản giữ tiền tự hết hạn phía ngân hàng.\n\n## 4. Định tuyến và cơ chế ngắt mạch\n\nLớp router theo dõi tỷ lệ lỗi của từng ngân hàng theo cửa sổ trượt một phút. Đây là phần quan trọng nhất của tài liệu đối với người trực ca. Khi một ngân hàng trả về mã lỗi 91 (issuer hoặc switch không sẵn sàng) cho quá 20% yêu cầu trong cửa sổ đó, router mở cầu dao và ngừng định tuyến sang ngân hàng đó trong 10 phút. Trong thời gian cầu dao mở, giao dịch được chuyển sang ngân hàng dự phòng nếu loại thẻ cho phép; nếu không có ngân hàng dự phòng phù hợp, gateway trả lỗi tạm thời để merchant tự thử lại. Sau 10 phút, router cho đi một lượng nhỏ giao dịch thăm dò, khoảng 5% lưu lượng, và chỉ đóng cầu dao hoàn toàn khi tỷ lệ lỗi của lưu lượng thăm dò xuống dưới 2%. Người trực ca có thể mở hoặc đóng cầu dao thủ công bằng lệnh trong công cụ quản trị, nhưng mọi thao tác thủ công phải ghi vào kênh sự cố kèm lý do.\n\n## 5. Hoàn tiền\n\nHoàn tiền toàn phần hoặc một phần đều đi qua service authorization và tạo bút toán đảo trong ledger. Hoàn tiền dưới ngưỡng tự động được duyệt ngay; trên ngưỡng phải có người thứ hai bên tài chính duyệt. Một giao dịch có thể được hoàn nhiều lần nhưng tổng số tiền hoàn không vượt quá số tiền đã capture. Khi ngân hàng từ chối lệnh hoàn, hệ thống không tự thử lại vô hạn: lệnh được thử lại ba lần trong hai giờ, sau đó chuyển vào hàng đợi xử lý thủ công của nhóm hỗ trợ cấp hai, kèm mã lỗi gốc từ ngân hàng để họ liên hệ đối tác.\n\n## 6. Ghi sổ và đối soát\n\nLedger dùng sổ kép: mỗi biến động tạo đúng hai bút toán có tổng bằng không. Bảng bút toán chỉ cho phép thêm, không cho phép sửa hay xoá; sai sót được sửa bằng bút toán điều chỉnh. Mỗi đêm, reconciliation tải file quyết toán của từng ngân hàng, so khớp theo mã tham chiếu và số tiền, rồi sinh ba danh sách: khớp, lệch số tiền và chỉ có ở một phía. Danh sách lệch được gửi cho kế toán vào đầu giờ sáng. Một khoản lệch tồn tại quá ba ngày làm việc sẽ tự động mở ticket cho đội thanh toán. Đối soát không bao giờ tự sửa ledger; con người quyết định bút toán điều chỉnh.\n\n## 7. Giám sát\n\nMỗi service xuất metric theo chuẩn chung: số yêu cầu, độ trễ theo phân vị và tỷ lệ lỗi phân theo mã. Bảng điều khiển chính hiển thị tỷ lệ authorize thành công theo từng ngân hàng, vì đây là chỉ số phản ánh sức khoẻ hệ thống rõ nhất. Cảnh báo được chia hai mức. Mức trang (gọi điện cho người trực) dành cho tỷ lệ thành công tổng giảm hơn mười điểm phần trăm so với cùng giờ tuần trước, hoặc khi hàng đợi sự kiện Kafka của ledger tồn đọng quá năm phút. Mức thông báo (gửi vào kênh chat) dành cho các tín hiệu chưa ảnh hưởng tới khách như một ngân hàng bị mở cầu dao, hay job đối soát chạy chậm hơn bình thường.\n\n## 8. Quy trình khi có sự cố\n\nNgười trực nhận cảnh báo mức trang phải xác nhận trong vòng năm phút và mở kênh sự cố riêng. Việc đầu tiên luôn là xác định phạm vi: một ngân hàng, một loại thẻ, một merchant hay toàn hệ thống. Nếu sự cố chỉ nằm ở một ngân hàng, cách xử lý nhanh nhất thường là mở cầu dao thủ công và chờ đối tác khắc phục. Nếu sự cố nằm trong hệ thống của chúng ta, ưu tiên rollback bản deploy gần nhất trước khi tìm nguyên nhân. Mỗi sự cố mức trang đều cần bản postmortem, viết theo mẫu chung và không quy lỗi cho cá nhân.\n\n## 9. Bảo trì định kỳ\n\nKhoá ký webhook của merchant được xoay vòng theo yêu cầu của merchant, không theo lịch cố định. Chứng chỉ mTLS với ngân hàng đối tác được gia hạn trước ba mươi ngày, và lịch gia hạn được ghi trong lịch chung của đội. Bảng giao dịch được lưu trữ sang kho lạnh sau mười tám tháng; dữ liệu trong kho lạnh vẫn tra cứu được nhưng mất vài phút. Mỗi quý, đội chạy một buổi diễn tập sự cố, giả lập một ngân hàng lớn ngừng hoạt động trong giờ cao điểm để kiểm tra cơ chế ngắt mạch và quy trình liên lạc.\n\n## 10. Liên hệ\n\nĐội thanh toán sở hữu gateway, authorization và ledger. Đội bảo mật sở hữu tokenization và mọi thay đổi trong VPC của nó phải được họ duyệt. Đội tài chính sở hữu quy tắc đối soát và ngưỡng duyệt hoàn tiền. Khi không rõ ai sở hữu một vấn đề, người trực ca của đội thanh toán là điểm liên hệ mặc định và có trách nhiệm chuyển tiếp.\n\n## 11. Thuật ngữ\n\nAuthorize là bước ngân hàng phát hành xác nhận thẻ còn hiệu lực và giữ một khoản tiền. Capture là bước yêu cầu chuyển khoản tiền đã giữ. Quyết toán là việc ngân hàng chuyển tiền thật cho chúng ta theo lô, thường vào ngày làm việc kế tiếp. Cầu dao (circuit breaker) là cơ chế tạm ngừng gửi yêu cầu tới một đối tác đang lỗi để tránh làm tình hình tệ hơn.",
+   "lang": "vi"
+  },
+  {
+   "id": "long-2",
+   "title": "Data platform architecture overview",
+   "body": "## Purpose\n\nThis document describes how data moves from production systems into the warehouse and the lake, which guarantees each stage gives, and where to look when a number on a dashboard looks wrong. It is written for analysts who want to understand the plumbing and for engineers who are about to change it. It deliberately avoids listing every table; the catalog is the source of truth for that.\n\n## Sources\n\nThere are three families of sources. Operational databases are captured with change data capture: every insert, update and delete on the replicated tables becomes an event on Kafka within seconds. Product events are emitted by the mobile apps and the web frontend through the tracking SDK, which batches events on the device and uploads them to the collector. Third-party data, such as advertising spend and payment processor settlement files, arrives as files on a schedule and is loaded by dedicated connectors. Each family lands in its own raw zone so that a problem in one does not block the others.\n\n## Ingestion\n\nThe collector validates every product event against the registered schema. Events that fail validation are not dropped; they go to a quarantine topic with the validation error attached, and a daily report lists the top offending event names and app versions. Valid events are written to Kafka, partitioned by user identifier so that events of one user stay ordered. From Kafka, a streaming job writes hourly Parquet files to the raw zone of the lake, and a separate job keeps a near-real-time copy of a small set of critical events in the warehouse for operational dashboards.\n\n## Deduplication\n\nMobile clients retry uploads aggressively on poor networks, so the same event can arrive several times. Every event carries an event_id generated on the device. The deduplication job runs every hour and removes duplicates using a 72-hour lookback window keyed on event_id: an event whose event_id was already seen in the previous 72 hours is discarded. Duplicates that arrive later than 72 hours after the original are rare, under one in a million events according to the last audit, and are accepted as noise. Changing the window is expensive because the job keeps the seen identifiers in a state store whose size grows linearly with the window. The window was raised from 24 to 72 hours after an incident where an app release cached events offline for two days.\n\n## Modeling\n\nModeling happens in dbt on top of the warehouse. Staging models rename and type-cast raw columns but never filter rows. Intermediate models join entities and apply business rules. Marts are the only layer that dashboards and analysts are allowed to query directly. Most models are built incrementally on a date partition; full rebuilds are reserved for marts whose logic changes retroactively, such as finance. Every model must declare an owner and at least a uniqueness and a not-null test on its primary key. A model without tests fails the continuous integration check and cannot be merged.\n\n## Scheduling\n\nThe orchestration layer runs the nightly pipeline as a single dependency graph rather than independent cron jobs, so that a late upstream automatically delays its downstream instead of producing partial numbers. When a node fails, the graph stops at that node and the rest of the unaffected branches continue. The on-call data engineer receives an alert only when a node on the critical path fails or when the expected finish time is at risk; failures of non-critical nodes are reported in the morning summary.\n\n## Data quality\n\nBesides dbt tests, a freshness monitor checks that each mart has received data for the expected partition. Volume monitors compare the row count of each daily partition with the median of the same weekday over the past four weeks and raise a warning when the difference exceeds thirty percent. Warnings do not block the pipeline; they annotate the affected dashboards with a banner so that readers know the number may be incomplete. Analysts can subscribe to the quality alerts of the marts they depend on.\n\n## Access and privacy\n\nPersonal data is classified at the column level in the catalog. Columns tagged as personal are hashed or removed before data leaves the raw zone, and only a small group of engineers can read the raw zone at all. Access to marts is granted per domain through groups; requests go through the access portal and are approved by the mart owner. Access reviews happen every six months, and grants that were not used during the review period are revoked automatically.\n\n## Cost control\n\nWarehouse compute is split into separate pools for pipelines, dashboards and ad-hoc analysis, so that a heavy exploratory query cannot slow down the nightly build. Each pool has a monthly budget; when a pool reaches eighty percent of its budget, its owners are notified, and at one hundred percent ad-hoc queries are queued rather than rejected. Storage in the lake is tiered: partitions older than one year move to infrequent-access storage automatically.\n\n## Where to start debugging\n\nWhen a dashboard number looks wrong, first check the banner and the freshness monitor of the mart behind it. Then compare the mart with its intermediate model for the same partition; a difference there points at business rules. If the intermediate model is already wrong, check the quarantine report for validation failures introduced by a recent app release. Most incidents in the past year were caused by a schema change in a source that was not announced to the data team, which is why schema changes to shared tables require a data-contract review.\n\n## Glossary\n\nThe raw zone holds data exactly as it arrived, partitioned by arrival hour. The curated zone holds deduplicated, typed and privacy-filtered data partitioned by event date. A mart is a set of tables owned by one business domain and designed for direct querying. A data contract is a written agreement between the owner of a source and the data team describing the schema, semantics and change process of that source.\n\n## Change process\n\nChanges to shared pipelines go through a design note when they alter a guarantee described in this document, for example the deduplication window, the freshness of a mart or the privacy treatment of a column. The note is reviewed by the data platform team and by the owners of the affected marts. Purely internal refactors that keep every guarantee only need a regular code review. After a guarantee changes, this document is updated in the same pull request, and the change is announced in the analytics channel with the date it takes effect.\n\n## Backfills\n\nBackfills are run by the data platform team on request. A backfill of a mart recomputes the requested partitions from the curated zone and swaps them atomically, so dashboards never see half-written data. Backfills that would rescan more than a year of history are scheduled outside business hours because they compete with ad-hoc queries for compute. Requesters are expected to validate the backfilled numbers within two business days, after which the previous version of the partitions is deleted.\n\n## Retention\n\nRaw product events are kept for two years in the lake and curated events for five years, unless a deletion request from a user requires earlier removal. Deletion requests are processed weekly: the user's identifiers are looked up in every zone, the matching rows are removed, and the affected partitions are rewritten. Marts that hold aggregated data without identifiers are not rewritten. The warehouse copy of critical events is kept for ninety days only, since it exists for operational dashboards rather than for history.\n\n## Ownership\n\nThe data platform team owns ingestion, deduplication, the lake, the orchestration layer and the quality monitors. Domain teams own their marts, including the business rules in intermediate models, the tests and the documentation in the catalog. When ownership is unclear, the default owner is the team that created the model, as recorded in its metadata, until a transfer is agreed in writing.",
+   "lang": "en"
+  },
+  {
+   "id": "long-3",
+   "title": "Hướng dẫn phát hành ứng dụng di động",
+   "body": "## Tổng quan\n\nTài liệu này mô tả quy trình đưa một bản ứng dụng iOS và Android từ nhánh chính tới tay người dùng. Mục tiêu của quy trình là phát hành đều đặn, phát hiện lỗi sớm khi bản mới mới chỉ đến một phần nhỏ người dùng, và có thể dừng lại nhanh chóng. Người chịu trách nhiệm cho mỗi đợt phát hành gọi là release captain, được luân phiên giữa các kỹ sư mobile theo từng đợt.\n\n## Nhánh và đóng băng mã\n\nMọi tính năng được merge vào nhánh chính phía sau feature flag. Vào sáng thứ Năm của tuần phát hành, release captain cắt nhánh release từ nhánh chính và thông báo đóng băng. Sau thời điểm này, chỉ các bản sửa lỗi đã được release captain đồng ý mới được cherry-pick vào nhánh release. Tính năng chưa hoàn thiện không bị gỡ khỏi mã mà chỉ để flag ở trạng thái tắt. Nhờ vậy nhánh release luôn gần với nhánh chính và việc cherry-pick hiếm khi xung đột.\n\n## Kiểm thử trước khi gửi duyệt\n\nBản build từ nhánh release được đưa lên kênh thử nghiệm nội bộ, TestFlight cho iOS và internal track cho Android. Đội QA chạy bộ kiểm thử hồi quy thủ công trong khoảng một ngày rưỡi, tập trung vào đăng nhập, thanh toán, thông báo đẩy và chế độ ngoại tuyến. Song song, bộ kiểm thử tự động trên thiết bị thật chạy trên trang trại thiết bị gồm khoảng bốn mươi máy với các phiên bản hệ điều hành khác nhau. Lỗi mức nghiêm trọng cao chặn phát hành; lỗi mức trung bình được ghi lại và release captain quyết định có chấp nhận hay không.\n\n## Gửi duyệt lên cửa hàng\n\nSau khi QA đồng ý, bản build được gửi lên App Store và Google Play. Ghi chú phát hành được viết bằng tiếng Việt và tiếng Anh, do đội sản phẩm cung cấp. Thời gian duyệt của Apple thường dưới hai ngày nhưng có thể lâu hơn vào mùa lễ, vì vậy lịch phát hành vào cuối tháng mười hai luôn được lùi sớm hơn một tuần. Nếu bản build bị từ chối, release captain đọc lý do, sửa và gửi lại; mọi lần bị từ chối đều được ghi vào trang lịch sử phát hành để rút kinh nghiệm.\n\n## Phát hành theo giai đoạn\n\nĐây là phần quan trọng nhất của quy trình. Bản mới không đến tay mọi người dùng cùng lúc mà được mở dần theo lịch cố định: 1% người dùng vào ngày đầu tiên, 10% vào ngày thứ ba, 50% vào ngày thứ năm và 100% vào ngày thứ bảy, nếu các chỉ số vẫn ổn định. Trên Android, tỷ lệ được đặt trực tiếp trong Google Play Console. Trên iOS, cơ chế phát hành theo giai đoạn của Apple có lịch riêng, nên chúng tôi kết hợp với feature flag phía server để đạt được cùng tỷ lệ cho những tính năng rủi ro. Điều kiện dừng được xác định trước: nếu tỷ lệ crash của bản mới vượt 0,5% số phiên, hoặc tỷ lệ thanh toán thành công giảm hơn hai điểm phần trăm so với bản cũ, release captain phải tạm dừng rollout ngay mà không cần chờ họp. Việc tiếp tục sau khi dừng cần sự đồng ý của trưởng nhóm mobile.\n\n## Theo dõi sau phát hành\n\nTrong tuần đầu tiên, release captain kiểm tra bảng điều khiển phát hành mỗi buổi sáng: tỷ lệ phiên không crash, lỗi mới xuất hiện nhiều nhất, thời gian khởi động ứng dụng và đánh giá trên cửa hàng. Lỗi mới xuất hiện được gắn nhãn theo phiên bản để không lẫn với lỗi cũ. Nếu cần bản vá nóng, quy trình rút gọn được áp dụng: bỏ qua bước hồi quy đầy đủ, chỉ kiểm thử phần bị ảnh hưởng, và vẫn phát hành theo giai đoạn nhưng với lịch nhanh hơn.\n\n## Bắt buộc cập nhật\n\nỨng dụng hỏi server phiên bản tối thiểu được hỗ trợ mỗi lần khởi động. Khi phiên bản đang chạy thấp hơn mức tối thiểu, người dùng thấy màn hình yêu cầu cập nhật và không thể tiếp tục. Mức tối thiểu chỉ được nâng khi có lý do bảo mật hoặc khi API cũ bị gỡ bỏ, và phải được thông báo cho đội hỗ trợ khách hàng ít nhất một tuần trước.\n\n## Vai trò và trách nhiệm\n\nRelease captain điều phối lịch, quyết định cherry-pick, theo dõi chỉ số và ra quyết định dừng. Đội QA chịu trách nhiệm kiểm thử hồi quy và báo cáo rủi ro. Đội sản phẩm cung cấp ghi chú phát hành và quyết định bật tính năng qua feature flag. Đội hỗ trợ khách hàng nhận danh sách thay đổi trước ngày phát hành để chuẩn bị trả lời người dùng.\n\n## Bài học từ các đợt trước\n\nMột đợt phát hành năm ngoái làm hỏng chế độ ngoại tuyến trên các máy Android có bộ nhớ thấp vì cơ sở dữ liệu cục bộ được nâng cấp schema trong lúc ứng dụng chạy nền. Từ đó, mọi thay đổi schema cục bộ phải có kiểm thử nâng cấp từ ba phiên bản gần nhất. Một đợt khác bị Apple từ chối hai lần vì ảnh chụp màn hình trên cửa hàng không khớp giao diện mới; hiện việc cập nhật ảnh chụp màn hình nằm trong danh sách kiểm tra của release captain.\n\n## Chuẩn bị trước ngày cắt nhánh\n\nMột tuần trước ngày cắt nhánh, release captain gửi thông báo vào kênh mobile kèm danh sách tính năng dự kiến có trong bản phát hành. Các nhóm sản phẩm xác nhận tính năng nào đã sẵn sàng bật, tính năng nào chỉ đi kèm mã nhưng để flag tắt. Release captain cũng kiểm tra chứng chỉ ký ứng dụng, hồ sơ cấp phép của Apple và khoá upload của Google Play còn hạn ít nhất ba tháng; một lần hết hạn chứng chỉ trong quá khứ đã làm trễ đợt phát hành hai ngày.\n\n## Ghi chú phát hành\n\nGhi chú phát hành viết ngắn, tập trung vào thay đổi mà người dùng nhìn thấy. Không liệt kê sửa lỗi nội bộ hay tên tính năng chưa được bật. Khi một thay đổi ảnh hưởng tới thanh toán hoặc đăng nhập, đội hỗ trợ khách hàng nhận bản mô tả chi tiết hơn kèm ảnh chụp màn hình để chuẩn bị kịch bản trả lời. Ghi chú phát hành được lưu lại trong kho tài liệu theo số phiên bản để tra cứu về sau.\n\n## Đo lường chất lượng phát hành\n\nMỗi quý, đội mobile tổng kết các chỉ số: số đợt phát hành đúng lịch, số lần phải dừng rollout, số bản vá nóng và thời gian trung bình từ lúc cắt nhánh tới lúc đạt 100% người dùng. Mục tiêu là ít nhất chín trên mười đợt phát hành đúng lịch và không quá một bản vá nóng mỗi tháng. Khi một chỉ số xấu đi hai quý liên tiếp, đội tổ chức buổi rà soát riêng để tìm nguyên nhân trong quy trình thay vì quy lỗi cho người phụ trách đợt phát hành.\n\n## Phát hành khẩn cấp ngoài lịch\n\nPhát hành khẩn cấp chỉ được dùng khi có lỗ hổng bảo mật hoặc lỗi chặn thanh toán ở quy mô lớn. Trưởng nhóm mobile phê duyệt, release captain của đợt hiện tại điều phối, và bản phát hành đi thẳng từ nhánh release hiện có. Với iOS, đội có thể yêu cầu Apple duyệt nhanh, nhưng chỉ dùng quyền này khi thật sự cần vì số lần yêu cầu có giới hạn.\n\n## Liên hệ\n\nCâu hỏi về lịch phát hành gửi vào kênh mobile-release; câu hỏi về feature flag gửi cho đội sản phẩm phụ trách tính năng.",
+   "lang": "vi"
+  },
+  {
+   "id": "long-4",
+   "title": "Kubernetes platform runbook",
+   "body": "## Scope\n\nThis runbook covers the shared Kubernetes platform that hosts most backend services: how clusters are laid out, how workloads must be configured to be admitted, how upgrades happen, and what the platform on-call does when something breaks. Service-specific procedures live in each service's own runbook; this document only covers what is common to everyone running on the platform.\n\n## Cluster layout\n\nEach region runs one production cluster and one staging cluster. Production clusters span three availability zones, and every node pool is spread evenly across them. System components such as ingress controllers, the service mesh control plane and the logging agents run on a dedicated system node pool that application workloads cannot schedule onto. Application workloads run on general-purpose pools, with a separate memory-optimized pool for caches and a GPU pool that is only available in one region.\n\n## Admission rules\n\nWorkloads are admitted only if they declare CPU and memory requests and a memory limit, run as a non-root user, and pull images from the internal registry. Images must be signed by the build pipeline; unsigned images are rejected at admission time. Every deployment must define liveness and readiness probes, and readiness must not depend on downstream services, otherwise a downstream outage takes the whole fleet out of rotation. Namespaces are created through the platform portal, which also sets resource quotas and default network policies that deny traffic from other namespaces unless explicitly allowed.\n\n## Availability requirements\n\nServices are classified in tiers. Tier-1 services are on the critical path of customer requests. Pod disruption budgets for tier-1 services must keep at least 2 replicas available at all times, and those services must run a minimum of three replicas spread across zones with a topology spread constraint. Tier-2 services may run two replicas and must tolerate one being unavailable. Tier-3 services, such as internal tools, may run a single replica. The tier is a label on the namespace and is checked by a policy controller; a tier-1 deployment that violates the rules is admitted but generates a daily report to its owners.\n\n## Upgrades\n\nKubernetes minor versions are upgraded twice a year, staging first and production two weeks later. Node pools are upgraded by surge: new nodes are added, old nodes are cordoned and drained in batches of 3, and the next batch starts only when all pods from the previous batch are ready on new nodes. A drain respects pod disruption budgets, so a deployment with a misconfigured budget can stall the upgrade; the platform on-call contacts the owner and, after one hour without response, may temporarily relax the budget. Operating system patches follow the same mechanism but run monthly and only touch one node pool per day.\n\n## Autoscaling\n\nHorizontal pod autoscaling is configured per deployment, usually on CPU utilization, and optionally on a custom metric such as queue depth. The cluster autoscaler adds nodes when pods are pending for lack of capacity and removes nodes that stay under half utilization for ten minutes. Scale-down never removes a node that hosts a pod without a controller or a pod with local storage. Teams that need predictable capacity for planned events, such as a marketing campaign, request a scheduled minimum replica count through the portal at least two days in advance.\n\n## Networking\n\nIngress traffic terminates TLS at the edge load balancer and is re-encrypted inside the mesh with mutual TLS between all services. Egress to the internet goes through a small set of NAT gateways with stable addresses, which partners can allow-list. Direct egress from pods is blocked by default; services that call external APIs must declare the destination hosts in their egress policy.\n\n## Observability\n\nLogs from standard output are shipped by the node agent and indexed for thirty days. Metrics are scraped every thirty seconds; high-cardinality labels such as user identifiers are dropped at ingestion and should never be emitted. Traces are sampled at one percent by default, with all error traces kept. Each namespace gets a default dashboard showing request rate, error rate, latency and saturation for its deployments.\n\n## Incident response\n\nThe platform on-call is paged for control-plane errors, for more than five percent of nodes being not ready, and for the ingress error rate exceeding the threshold. The first step is to check whether the problem is limited to one zone; if so, cordon the nodes in that zone and let workloads reschedule to the other two. Never delete a namespace or a persistent volume claim during an incident without a second person confirming. Every page leads to a short written summary within two business days, and pages that turn out to be false alarms are tuned or removed.\n\n## Requests\n\nTeams request namespaces, quota increases, scheduled capacity and egress exceptions through the platform portal. Requests are answered within one business day. Anything that is not covered by the portal is discussed in the weekly platform office hours.\n\n## Secrets and configuration\n\nSecrets are stored in the central vault and injected into pods at start-up through a sidecar; they are never committed to repositories or baked into images. Rotating a secret does not require a redeploy: the sidecar refreshes the mounted file and applications are expected to reload it. Non-secret configuration lives in config maps generated from the service repository, so a configuration change goes through the same review as a code change. Environment-specific overrides are kept to a minimum and must be documented in the service runbook.\n\n## Storage\n\nPersistent volumes are backed by zonal block storage. A pod that uses a persistent volume is pinned to the zone of that volume, which is why stateful workloads should prefer managed databases outside the cluster. Volume snapshots are taken daily for namespaces that opt in, and kept for fourteen days. Ephemeral storage on nodes is limited per pod; pods that exceed their ephemeral storage limit are evicted, which usually shows up as unexplained restarts of services that write large temporary files.\n\n## Cost allocation\n\nCluster cost is allocated to teams by the resource requests of their pods, not by actual usage, so over-requesting directly increases a team's bill. A weekly report lists the deployments whose average CPU usage stays below a fifth of their request, with a suggested new request. The platform team does not change requests on behalf of service owners, but deployments that remain heavily over-provisioned for a quarter are raised in the engineering review.\n\n## Deprecations\n\nPlatform features are deprecated with at least one quarter of notice. Deprecated APIs are listed on the platform portal along with the namespaces still using them, and owners receive a reminder each month until they migrate. Before a Kubernetes upgrade removes an API version, the admission controller starts rejecting new objects that use it two weeks in advance, so that problems surface on deploy rather than during the upgrade.\n\n## Multi-tenancy and isolation\n\nNamespaces are the unit of isolation between teams. Workloads of different teams share nodes, so noisy neighbours are contained through resource requests, limits and priority classes rather than dedicated hardware. Batch jobs run with a lower priority class and are preempted first when the cluster is under pressure; latency-sensitive services must not use the batch priority class. Teams that handle regulated data, such as card data, do not run on the shared platform at all and use isolated clusters managed by the security team. Cross-namespace access to the Kubernetes API is denied by default, and service accounts receive only the permissions their workload declares in its manifest.\n\n## Contacts\n\nThe platform on-call is reachable through the paging tool and the platform channel. Questions that are not urgent go to the weekly office hours or to a ticket in the platform queue, which is triaged every morning.",
+   "lang": "en"
+  },
+  {
+   "id": "long-5",
+   "title": "Incident review: database failover ngày 14/3",
+   "body": "## Tóm tắt / Summary\n\nVào sáng ngày 14/3, cụm PostgreSQL chính của dịch vụ ví điện tử bị failover ngoài kế hoạch. Trong khoảng 38 phút, khoảng 12% yêu cầu ghi bị lỗi và người dùng không thể nạp tiền hay chuyển tiền. Không có dữ liệu nào bị mất, nhưng một số giao dịch phải được đối soát lại thủ công. This review follows the blameless format: it focuses on what the system allowed to happen, not on who pressed which button.\n\n## Bối cảnh / Background\n\nThe wallet service stores balances and the ledger in a single PostgreSQL 16 cluster with one primary and two streaming replicas. Failover is managed by an orchestrator that promotes a replica when the primary fails health checks for thirty consecutive seconds. Ứng dụng kết nối qua một lớp connection pooler; khi primary thay đổi, pooler được cập nhật địa chỉ mới và các kết nối cũ bị đóng. The same setup has been in place for two years and had failed over cleanly during two planned exercises.\n\n## Diễn biến / Timeline\n\nAt 08:02 the primary's disk latency started to climb. Lúc 08:09, cảnh báo về độ trễ ghi đầu tiên được gửi vào kênh chat nhưng chưa ở mức gọi điện. At 08:14 health checks on the primary began to time out and at 08:15 the orchestrator promoted replica B. Ngay sau khi promote, replica B đã không theo kịp primary: replication lag reached 47 seconds at the moment of promotion, so the last 47 seconds of committed writes on the old primary were not present on the new one. The orchestrator was configured to allow promotion with up to 60 seconds of lag, a setting chosen years ago for availability over consistency. Từ 08:15 đến 08:40, ứng dụng ghi vào primary mới trong khi đội vận hành tìm cách đưa 47 giây giao dịch còn thiếu trở lại. At 08:53 write error rates returned to normal after the connection pooler was restarted on all nodes.\n\n## Nguyên nhân gốc / Root cause\n\nThe disk latency was caused by a long-running autovacuum on the largest table. Điều tra cho thấy autovacuum đã bị tắt trên bảng ledger_entries từ sáu tháng trước trong một lần tối ưu tạm thời trước đợt khuyến mãi, và không ai bật lại. Without regular vacuuming, dead tuples accumulated until a forced anti-wraparound vacuum started on 14/3 and saturated the disk. Replica B lagged because it was also replaying the vacuum's write-ahead log on a smaller disk than the primary. Do đó có hai yếu tố cùng lúc: một thay đổi cấu hình tạm thời không được hoàn tác, và một replica có cấu hình phần cứng yếu hơn primary.\n\n## Tác động / Impact\n\nAbout 12% of write requests failed for 38 minutes. Khoảng 3.400 giao dịch nằm trong 47 giây bị thiếu trên primary mới; chúng đã được ghi lại từ WAL của primary cũ và đối soát với ngân hàng trong hai ngày tiếp theo. No customer lost money, but 210 customers saw a temporarily wrong balance and contacted support. Read traffic was not affected because reads are served by the replicas through the cache layer.\n\n## Điều gì hoạt động tốt / What went well\n\nThe orchestrator promoted a replica quickly and the connection pooler picked up the new primary within seconds on most nodes. Kênh sự cố được mở trong vòng năm phút sau cảnh báo gọi điện đầu tiên, và đội hỗ trợ khách hàng nhận được thông báo sớm để trả lời người dùng. The write-ahead log of the old primary was intact, which made recovery of the missing transactions possible.\n\n## Điều gì chưa tốt / What went poorly\n\nCảnh báo độ trễ đĩa chỉ ở mức chat nên mất năm phút mới có người xem. The lag threshold for promotion was not documented anywhere except in the orchestrator's configuration file. Three of the twelve connection pooler nodes kept connections to the old primary until they were restarted manually, which extended the impact by about fifteen minutes. Không có runbook cho việc khôi phục giao dịch từ WAL của primary cũ, nên đội phải tự viết script trong lúc xử lý.\n\n## Hành động khắc phục / Action items\n\nFirst, re-enable autovacuum on ledger_entries and add a check that fails the configuration pipeline when autovacuum is disabled on any table without an expiry date. Thứ hai, giảm ngưỡng lag cho phép promote từ 60 giây xuống 5 giây, chấp nhận rằng failover có thể chậm hơn nhưng không mất giao dịch. Third, give all replicas the same disk class as the primary. Thứ tư, nâng cảnh báo độ trễ đĩa của primary lên mức gọi điện. Fifth, fix the pooler bug that kept stale connections and add the WAL recovery procedure to the database runbook. Mỗi hành động có một người sở hữu và hạn chót, được theo dõi trong buổi họp vận hành hằng tuần cho tới khi hoàn tất.\n\n## Bối cảnh vận hành trước sự cố / Operational context\n\nIn the weeks before the incident the wallet traffic had grown by about a third because of a promotion with partner banks. Đội vận hành đã lên kế hoạch nâng dung lượng đĩa của các replica trong quý tới, nhưng hạng mục này bị xếp sau các việc chuẩn bị cho đợt khuyến mãi. The temporary optimization that disabled autovacuum was applied during that preparation to reduce write amplification during the peak, with a ticket to revert it after the campaign. Ticket đó đã được đóng nhầm khi đội dọn dẹp backlog, nên không có lời nhắc nào sau khi chiến dịch kết thúc.\n\n## Phát hiện và liên lạc / Detection and communication\n\nThe first customer reports reached support at 08:17, two minutes after the promotion of replica B. Đội hỗ trợ đăng thông báo trên trang trạng thái lúc 08:24 và cập nhật mỗi mười lăm phút cho tới khi sự cố kết thúc. Partner banks were informed at 08:30 because some of the failed transfers had already been debited on their side and would appear as pending to customers. Việc liên lạc với ngân hàng đối tác diễn ra qua kênh hotline đã thoả thuận, và mỗi ngân hàng nhận danh sách giao dịch bị ảnh hưởng trong vòng hai giờ sau khi sự cố kết thúc.\n\n## Bài học / Lessons\n\nTemporary configuration changes need an expiry date enforced by tooling, not a ticket that a human must remember. Mọi replica có thể được promote phải có cấu hình phần cứng tương đương primary, nếu không thì không nên cho phép nó được promote. The promotion lag threshold is a business decision about losing data versus losing availability, and it must be written down and reviewed together with the product owner. Cuối cùng, quy trình khôi phục từ WAL phải được diễn tập ít nhất mỗi năm một lần để không phải tự viết script trong lúc sự cố đang diễn ra.\n\n## Phụ lục: số liệu / Appendix: figures\n\nPeak write error rate: 31% at 08:22. Thời gian từ cảnh báo chat đầu tiên tới cảnh báo gọi điện: 6 phút. Number of connection pooler nodes restarted manually: 3 of 12. Số khách hàng liên hệ hỗ trợ trong ngày: 210. Recovered transactions from the old primary's WAL: about 3,400, all reconciled with partner banks within two days. Thời gian bảo trì để bật lại autovacuum và chạy vacuum đầy đủ trên ledger_entries: khoảng bốn giờ vào cuối tuần sau sự cố.\n\n## Theo dõi / Follow-up\n\nThe action items are reviewed in the weekly operations meeting. Ba hạng mục đầu tiên phải hoàn tất trước đợt khuyến mãi tiếp theo; nếu chưa xong, đợt khuyến mãi sẽ bị lùi lại. The review will be reopened if a similar failover happens again within six months.",
+   "lang": "mixed"
+  }
+ ],
+ "queries": [
+  {
+   "query": "rate limit public API per key",
+   "gold_ids": [
+    "r1"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "mỗi API key được gọi tối đa bao nhiêu lần một phút",
+   "gold_ids": [
+    "r1"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "how many times is a failed webhook delivery retried",
+   "gold_ids": [
+    "r2"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "hoàn tiền số tiền lớn cần ai phê duyệt",
+   "gold_ids": [
+    "r3"
+   ],
+   "kind": "X",
+   "lang": "vi"
+  },
+  {
+   "query": "big refunds need a second person to approve?",
+   "gold_ids": [
+    "r3"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "how long are idempotency keys stored",
+   "gold_ids": [
+    "r4"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "gửi lại cùng idempotency key sau một ngày có bị trừ tiền hai lần không",
+   "gold_ids": [
+    "r4"
+   ],
+   "kind": "X",
+   "lang": "vi"
+  },
+  {
+   "query": "how are money amounts stored, floats or integers",
+   "gold_ids": [
+    "r5"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "which charges endpoint is being deprecated",
+   "gold_ids": [
+    "r6"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "do EU cards need 3DS",
+   "gold_ids": [
+    "r7"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "thẻ châu Âu có bắt buộc xác thực 3D Secure không",
+   "gold_ids": [
+    "r7"
+   ],
+   "kind": "X",
+   "lang": "vi"
+  },
+  {
+   "query": "bank partner call timeout",
+   "gold_ids": [
+    "r8"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "timeout goi ngan hang doi tac bao lau",
+   "gold_ids": [
+    "r8"
+   ],
+   "kind": "T",
+   "lang": "vi"
+  },
+  {
+   "query": "what exchange rate is used for currency conversion",
+   "gold_ids": [
+    "r9"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "is the checkout frontend in PCI scope",
+   "gold_ids": [
+    "r10"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "bao lâu khách hàng còn có thể khiếu nại giao dịch Visa",
+   "gold_ids": [
+    "r11"
+   ],
+   "kind": "X",
+   "lang": "vi"
+  },
+  {
+   "query": "what happens when a payout fails",
+   "gold_ids": [
+    "r12"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "how long do we keep the events table",
+   "gold_ids": [
+    "r13"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "bang events giu bao nhieu ngay",
+   "gold_ids": [
+    "r13"
+   ],
+   "kind": "T",
+   "lang": "vi"
+  },
+  {
+   "query": "khi nào ETL hằng đêm chạy xong",
+   "gold_ids": [
+    "r14"
+   ],
+   "kind": "X",
+   "lang": "vi"
+  },
+  {
+   "query": "how often is the warehouse backed up to another region",
+   "gold_ids": [
+    "r15"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "how is personal data protected in the data lake",
+   "gold_ids": [
+    "r16"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "long running queries get killed after how long",
+   "gold_ids": [
+    "r17"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "which dbt models are not incremental",
+   "gold_ids": [
+    "r18"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "Kafka giữ message bao lâu",
+   "gold_ids": [
+    "r19"
+   ],
+   "kind": "X",
+   "lang": "vi"
+  },
+  {
+   "query": "how fresh is the revenue dashboard",
+   "gold_ids": [
+    "r20"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "do I need approval to change the events schema",
+   "gold_ids": [
+    "r21"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "are Spark jobs on spot or on-demand",
+   "gold_ids": [
+    "r22"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "what is the minimum iOS version",
+   "gold_ids": [
+    "r23"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "crash free rate of latest release",
+   "gold_ids": [
+    "r24"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "how many orders are available offline",
+   "gold_ids": [
+    "r25"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "tỷ lệ người dùng Android bật thông báo đẩy",
+   "gold_ids": [
+    "r26"
+   ],
+   "kind": "X",
+   "lang": "vi"
+  },
+  {
+   "query": "avatar image size limit before upload",
+   "gold_ids": [
+    "r27"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "van tay that bai thi dang nhap bang gi",
+   "gold_ids": [
+    "r28"
+   ],
+   "kind": "T",
+   "lang": "vi"
+  },
+  {
+   "query": "how often are feature flags refreshed",
+   "gold_ids": [
+    "r29"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "Android UI framework for new screens",
+   "gold_ids": [
+    "r30"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "email links open in which browser",
+   "gold_ids": [
+    "r31"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "app phát hành bao lâu một lần",
+   "gold_ids": [
+    "r32"
+   ],
+   "kind": "X",
+   "lang": "vi"
+  },
+  {
+   "query": "does the app support dark mode",
+   "gold_ids": [
+    "r33"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "which database version runs in production",
+   "gold_ids": [
+    "r34"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "what is the disaster recovery region",
+   "gold_ids": [
+    "r35"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "khi nào bàn giao ca trực on-call",
+   "gold_ids": [
+    "r36"
+   ],
+   "kind": "X",
+   "lang": "vi"
+  },
+  {
+   "query": "do we renew TLS certs manually",
+   "gold_ids": [
+    "r37"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "who must review terraform changes",
+   "gold_ids": [
+    "r38"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "are docker images checked for vulnerabilities",
+   "gold_ids": [
+    "r39"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "how long are production logs kept",
+   "gold_ids": [
+    "r40"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "when is staging reset",
+   "gold_ids": [
+    "r41"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "how to get ssh into prod servers",
+   "gold_ids": [
+    "r42"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "how often do we verify backups can be restored",
+   "gold_ids": [
+    "r43"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "at what CPU does autoscaling start",
+   "gold_ids": [
+    "r44"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "cloud bill increase last month",
+   "gold_ids": [
+    "r45"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "onboarding new engineer how long",
+   "gold_ids": [
+    "r46"
+   ],
+   "kind": "X",
+   "lang": "en"
+  },
+  {
+   "query": "do public API changes need a changelog",
+   "gold_ids": [
+    "r47"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "deadline to publish incident postmortem",
+   "gold_ids": [
+    "r48"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "tai lieu kien truc review bao lau mot lan",
+   "gold_ids": [
+    "r49"
+   ],
+   "kind": "T",
+   "lang": "vi"
+  },
+  {
+   "query": "should reviewers comment on code formatting",
+   "gold_ids": [
+    "r50"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "long design document requirements",
+   "gold_ids": [
+    "r51"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "no-meeting days per week",
+   "gold_ids": [
+    "r52"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "refnud approvel over 10k",
+   "gold_ids": [
+    "r3"
+   ],
+   "kind": "T",
+   "lang": "en"
+  },
+  {
+   "query": "idempotncy key expiry",
+   "gold_ids": [
+    "r4"
+   ],
+   "kind": "T",
+   "lang": "en"
+  },
+  {
+   "query": "webhook gửi lại tối đa mấy lần",
+   "gold_ids": [
+    "r2"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "số tiền lưu kiểu số nguyên hay số thực",
+   "gold_ids": [
+    "r5"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "kho dữ liệu sao lưu sang vùng khác bao lâu một lần",
+   "gold_ids": [
+    "r15"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "truy vấn chạy lâu quá bị dừng sau mấy phút",
+   "gold_ids": [
+    "r17"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "báo cáo doanh thu chậm bao nhiêu so với thực tế",
+   "gold_ids": [
+    "r20"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "app iPhone cần iOS bản nào",
+   "gold_ids": [
+    "r23"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "ảnh avatar bị nén về kích thước nào",
+   "gold_ids": [
+    "r27"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "production dùng Postgres phiên bản mấy",
+   "gold_ids": [
+    "r34"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "thay đổi hạ tầng bằng terraform có cần người duyệt không",
+   "gold_ids": [
+    "r38"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "log production lưu bao nhiêu ngày",
+   "gold_ids": [
+    "r40"
+   ],
+   "kind": "K",
+   "lang": "vi"
+  },
+  {
+   "query": "tháng trước tiền cloud tăng bao nhiêu phần trăm",
+   "gold_ids": [
+    "r45"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "kỹ sư mới onboarding mất bao lâu",
+   "gold_ids": [
+    "r46"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "doanh nghiệp chuyển khoản trong nước tối đa bao nhiêu một ngày",
+   "gold_ids": [
+    "v1"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "giới hạn chuyển tiền một ngày của khách cá nhân",
+   "gold_ids": [
+    "v2"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "mấy giờ chạy đối soát với ngân hàng",
+   "gold_ids": [
+    "v3"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "hạn chót ký báo cáo đối soát tháng",
+   "gold_ids": [
+    "v4"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "otp sms het han sau bao lau",
+   "gold_ids": [
+    "v5"
+   ],
+   "kind": "T",
+   "lang": "vi"
+  },
+  {
+   "query": "sai mật khẩu nhiều lần thì bị khoá bao lâu",
+   "gold_ids": [
+    "v6"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "điện thoại Android đời cũ nhất còn cài được app",
+   "gold_ids": [
+    "v7"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "khi nào người dùng bị ép phải cập nhật ứng dụng",
+   "gold_ids": [
+    "v8"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "dữ liệu từ app di động vào data lake bao lâu một lần",
+   "gold_ids": [
+    "v9"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "số người dùng hoạt động mỗi ngày cập nhật lúc mấy giờ",
+   "gold_ids": [
+    "v10"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "mỗi team phân tích được quét bao nhiêu dữ liệu một tháng",
+   "gold_ids": [
+    "v11"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "được chạy cùng lúc bao nhiêu truy vấn trên kho dữ liệu",
+   "gold_ids": [
+    "v12"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "sự cố nghiêm trọng nhất phải phản hồi trong bao lâu",
+   "gold_ids": [
+    "v13"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "sự cố P2 có phải gọi người trực ban đêm không",
+   "gold_ids": [
+    "v14"
+   ],
+   "kind": "K",
+   "lang": "vi"
+  },
+  {
+   "query": "cụm redis có bao nhiêu node",
+   "gold_ids": [
+    "v15"
+   ],
+   "kind": "K",
+   "lang": "vi"
+  },
+  {
+   "query": "khoá cache không đặt thời hạn thì tồn tại bao lâu",
+   "gold_ids": [
+    "v16"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "mat khau tai khoan dich vu doi bao lau mot lan",
+   "gold_ids": [
+    "v17"
+   ],
+   "kind": "T",
+   "lang": "vi"
+  },
+  {
+   "query": "nghỉ việc thì bao giờ mất quyền vào production",
+   "gold_ids": [
+    "v18"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "nhân viên mới nhận máy tính khi nào",
+   "gold_ids": [
+    "v19"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "người kèm cặp kỹ sư mới trong bao lâu",
+   "gold_ids": [
+    "v20"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "công ty hỗ trợ bao nhiêu tiền mua sách học",
+   "gold_ids": [
+    "v21"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "được làm ở nhà mấy ngày một tuần",
+   "gold_ids": [
+    "v22"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "phí thanh toán bằng thẻ ATM nội địa",
+   "gold_ids": [
+    "v23"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "phí khi khách dùng thẻ Visa nước ngoài",
+   "gold_ids": [
+    "v24"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "ngân hàng trả mã lỗi 91 thì router ngừng gửi giao dịch sang đó bao lâu",
+   "gold_ids": [
+    "long-1"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "điều kiện đóng lại cầu dao sau khi thăm dò ngân hàng",
+   "gold_ids": [
+    "long-1"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "lệnh hoàn tiền bị ngân hàng từ chối được thử lại mấy lần",
+   "gold_ids": [
+    "long-1"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "lookback window used to deduplicate mobile events by event_id",
+   "gold_ids": [
+    "long-2"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "why was the dedup window increased from 24 hours",
+   "gold_ids": [
+    "long-2"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "what happens to product events that fail schema validation",
+   "gold_ids": [
+    "long-2"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "tỷ lệ người dùng nhận bản mới vào ngày thứ ba của đợt phát hành",
+   "gold_ids": [
+    "long-3"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "tỷ lệ crash bao nhiêu thì phải dừng rollout",
+   "gold_ids": [
+    "long-3"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  },
+  {
+   "query": "how many replicas must a tier-1 pod disruption budget keep available",
+   "gold_ids": [
+    "long-4"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "in what batch size are nodes drained during an upgrade",
+   "gold_ids": [
+    "long-4"
+   ],
+   "kind": "P",
+   "lang": "en"
+  },
+  {
+   "query": "replication lag at the moment the replica was promoted",
+   "gold_ids": [
+    "long-5"
+   ],
+   "kind": "K",
+   "lang": "en"
+  },
+  {
+   "query": "vì sao autovacuum bị tắt trên bảng ledger_entries",
+   "gold_ids": [
+    "long-5"
+   ],
+   "kind": "P",
+   "lang": "vi"
+  }
+ ]
+}

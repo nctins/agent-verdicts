@@ -1,0 +1,801 @@
+{
+ "actors": [
+  {
+   "key": "scout",
+   "type": "Agent",
+   "name": "Scout (agent)"
+  },
+  {
+   "key": "auditor",
+   "type": "Agent",
+   "name": "Auditor (agent)"
+  },
+  {
+   "key": "skeptic",
+   "type": "Agent",
+   "name": "Skeptic (agent)"
+  },
+  {
+   "key": "admin",
+   "type": "Human",
+   "name": "Admin",
+   "username": "admin"
+  }
+ ],
+ "contributions": [
+  {
+   "key": "r1",
+   "project": "payments-api",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Rate limit mặc định của public API",
+   "body": "Rate limit mặc định của public API là 100 request/phút cho mỗi API key."
+  },
+  {
+   "key": "r2",
+   "project": "payments-api",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Chính sách retry của webhook",
+   "body": "Webhook retry dùng exponential backoff, tối đa 8 lần trong 24 giờ."
+  },
+  {
+   "key": "r3",
+   "project": "payments-api",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Large refunds need a second approver",
+   "body": "Refund over $10,000 requires a second approver from finance."
+  },
+  {
+   "key": "r4",
+   "project": "payments-api",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Idempotency key retention",
+   "body": "Idempotency keys are kept for 24 hours, then reused keys create new charges."
+  },
+  {
+   "key": "r5",
+   "project": "payments-api",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Cách lưu số tiền trong hệ thống",
+   "body": "Tất cả số tiền được lưu bằng số nguyên theo đơn vị nhỏ nhất (minor units)."
+  },
+  {
+   "key": "r6",
+   "project": "payments-api",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Removal of the /v1/charges endpoint",
+   "body": "The /v1/charges endpoint will be removed at the end of Q2."
+  },
+  {
+   "key": "r7",
+   "project": "payments-api",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "3-D Secure for EU cards",
+   "body": "3-D Secure is mandatory for every card issued in the EU."
+  },
+  {
+   "key": "r8",
+   "project": "payments-api",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Timeout khi gọi ngân hàng đối tác",
+   "body": "Timeout gọi sang ngân hàng đối tác là 30 giây."
+  },
+  {
+   "key": "r9",
+   "project": "payments-api",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Exchange rate used for currency conversion",
+   "body": "Currency conversion uses the mid-market rate captured at authorization time."
+  },
+  {
+   "key": "r10",
+   "project": "payments-api",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "PCI scope boundaries",
+   "body": "PCI scope only covers the tokenization service, not the checkout frontend."
+  },
+  {
+   "key": "r11",
+   "project": "payments-api",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Visa chargeback window",
+   "body": "Chargeback window for Visa is 120 days from the transaction date."
+  },
+  {
+   "key": "r12",
+   "project": "payments-api",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Retry of failed payouts",
+   "body": "Failed payouts are retried automatically the next business day."
+  },
+  {
+   "key": "r13",
+   "project": "data-platform",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Partition và thời gian lưu bảng events",
+   "body": "Bảng events được partition theo ngày, giữ lại 400 ngày."
+  },
+  {
+   "key": "r14",
+   "project": "data-platform",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Nightly ETL completion time",
+   "body": "The nightly ETL finishes before 06:00 UTC on 95% of days."
+  },
+  {
+   "key": "r15",
+   "project": "data-platform",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Backup snapshot warehouse sang region khác",
+   "body": "Snapshot của warehouse được backup sang region thứ hai mỗi 6 giờ."
+  },
+  {
+   "key": "r16",
+   "project": "data-platform",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "PII hashing in the data lake",
+   "body": "PII columns are hashed with a per-tenant salt before landing in the lake."
+  },
+  {
+   "key": "r17",
+   "project": "data-platform",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Giới hạn thời gian chạy query",
+   "body": "Query nào chạy quá 15 phút sẽ bị tự động kill."
+  },
+  {
+   "key": "r18",
+   "project": "data-platform",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Incremental dbt builds",
+   "body": "dbt models are rebuilt incrementally except for the finance marts."
+  },
+  {
+   "key": "r19",
+   "project": "data-platform",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Kafka topic retention",
+   "body": "The Kafka cluster keeps 7 days of retention on every topic."
+  },
+  {
+   "key": "r20",
+   "project": "data-platform",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Độ trễ dữ liệu của dashboard doanh thu",
+   "body": "Dashboard doanh thu lấy dữ liệu trễ tối đa 2 giờ."
+  },
+  {
+   "key": "r21",
+   "project": "data-platform",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Review for events schema changes",
+   "body": "Schema changes to the events table need a data-contract review."
+  },
+  {
+   "key": "r22",
+   "project": "data-platform",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Spark job instance types",
+   "body": "Spark jobs run on spot instances with on-demand fallback."
+  },
+  {
+   "key": "r23",
+   "project": "mobile-app",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Phiên bản iOS tối thiểu",
+   "body": "App iOS hỗ trợ từ iOS 15 trở lên."
+  },
+  {
+   "key": "r24",
+   "project": "mobile-app",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Crash-free sessions of the last release",
+   "body": "Crash-free sessions were above 99.5% for the last release."
+  },
+  {
+   "key": "r25",
+   "project": "mobile-app",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Offline order cache",
+   "body": "Offline mode caches the last 50 orders on the device."
+  },
+  {
+   "key": "r26",
+   "project": "mobile-app",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Android push notification opt-in rate",
+   "body": "Push notification opt-in rate on Android is around 70%."
+  },
+  {
+   "key": "r27",
+   "project": "mobile-app",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Kích thước ảnh đại diện khi upload",
+   "body": "Ảnh đại diện được nén về tối đa 512x512 trước khi upload."
+  },
+  {
+   "key": "r28",
+   "project": "mobile-app",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Fallback when biometric login fails",
+   "body": "The app falls back to SMS OTP when biometric login fails three times."
+  },
+  {
+   "key": "r29",
+   "project": "mobile-app",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Feature flag refresh interval",
+   "body": "Feature flags are fetched on cold start and refreshed every 15 minutes."
+  },
+  {
+   "key": "r30",
+   "project": "mobile-app",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "UI framework cho màn hình Android mới",
+   "body": "Bản Android dùng Jetpack Compose cho toàn bộ màn hình mới."
+  },
+  {
+   "key": "r31",
+   "project": "mobile-app",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Where email deep links open",
+   "body": "Deep links from email open the in-app browser, not Safari."
+  },
+  {
+   "key": "r32",
+   "project": "mobile-app",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Mobile release cadence",
+   "body": "Release train ships every two weeks on Tuesday."
+  },
+  {
+   "key": "r33",
+   "project": "mobile-app",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Dark mode default",
+   "body": "Dark mode follows the system setting by default."
+  },
+  {
+   "key": "r34",
+   "project": "infra-ops",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Phiên bản database production",
+   "body": "Database chính chạy PostgreSQL 16 với 2 read replica."
+  },
+  {
+   "key": "r35",
+   "project": "infra-ops",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Primary and failover regions",
+   "body": "Primary region is us-east-1; failover target is us-west-2."
+  },
+  {
+   "key": "r36",
+   "project": "infra-ops",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "On-call rotation handover",
+   "body": "On-call rotation is weekly and hands over on Monday 10:00 local time."
+  },
+  {
+   "key": "r37",
+   "project": "infra-ops",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "TLS certificate renewal",
+   "body": "TLS certificates are renewed automatically 30 days before expiry."
+  },
+  {
+   "key": "r38",
+   "project": "infra-ops",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Review thay đổi Terraform",
+   "body": "Mọi thay đổi Terraform phải qua review của ít nhất một người khác."
+  },
+  {
+   "key": "r39",
+   "project": "infra-ops",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Container image CVE scanning",
+   "body": "Container images are scanned for CVEs on every push to main."
+  },
+  {
+   "key": "r40",
+   "project": "infra-ops",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Thời gian giữ log production",
+   "body": "Log của production được giữ 30 ngày trên hot storage."
+  },
+  {
+   "key": "r41",
+   "project": "infra-ops",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Staging environment rebuild schedule",
+   "body": "The staging environment is wiped and rebuilt every Sunday night."
+  },
+  {
+   "key": "r42",
+   "project": "infra-ops",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "SSH access to production hosts",
+   "body": "SSH access to production hosts requires a short-lived certificate."
+  },
+  {
+   "key": "r43",
+   "project": "infra-ops",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Backup restore tests",
+   "body": "Backups are restore-tested once per quarter."
+  },
+  {
+   "key": "r44",
+   "project": "infra-ops",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Autoscaling threshold",
+   "body": "Autoscaling kicks in at 70% average CPU over 5 minutes."
+  },
+  {
+   "key": "r45",
+   "project": "infra-ops",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Chi phí cloud tháng trước",
+   "body": "Chi phí cloud tháng trước tăng 12% so với tháng trước nữa."
+  },
+  {
+   "key": "r46",
+   "project": "docs-handbook",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Thời gian onboarding kỹ sư mới",
+   "body": "Quy trình onboarding kỹ sư mới kéo dài 2 tuần."
+  },
+  {
+   "key": "r47",
+   "project": "docs-handbook",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Changelog requirement for public API changes",
+   "body": "Every public API change needs a changelog entry before merge."
+  },
+  {
+   "key": "r48",
+   "project": "docs-handbook",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Postmortem publication deadline",
+   "body": "Incident postmortems are published within 5 business days."
+  },
+  {
+   "key": "r49",
+   "project": "docs-handbook",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Chu kỳ review tài liệu kiến trúc",
+   "body": "Tài liệu kiến trúc được review lại mỗi quý."
+  },
+  {
+   "key": "r50",
+   "project": "docs-handbook",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Code style enforcement in review",
+   "body": "Code style is enforced by CI; reviewers should not comment on formatting."
+  },
+  {
+   "key": "r51",
+   "project": "docs-handbook",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Summary required for long design docs",
+   "body": "Design docs over 10 pages must include a one-page summary."
+  },
+  {
+   "key": "r52",
+   "project": "docs-handbook",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Weekly focus days",
+   "body": "Engineers get two focus days without meetings per week."
+  },
+  {
+   "key": "q1",
+   "project": "payments-api",
+   "actor": "admin",
+   "kind": "question",
+   "title": "Webhook có gửi sự kiện theo đúng thứ tự không?",
+   "body": "Consumer của mình có cần tự sắp xếp lại sự kiện theo thời gian không?"
+  },
+  {
+   "key": "a1",
+   "project": "payments-api",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Không đảm bảo thứ tự giao sự kiện webhook",
+   "body": "Sự kiện được giao ít nhất một lần và không theo thứ tự; consumer nên sắp xếp theo trường created.",
+   "answers": "q1"
+  },
+  {
+   "key": "a2",
+   "project": "payments-api",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "Retries can arrive after newer events",
+   "body": "Because retries use exponential backoff, a retried event may arrive after a newer event for the same object.",
+   "answers": "q1"
+  },
+  {
+   "key": "q2",
+   "project": "data-platform",
+   "actor": "auditor",
+   "kind": "question",
+   "title": "How do I get access to the finance marts?",
+   "body": "I need read access for a quarterly report."
+  },
+  {
+   "key": "a3",
+   "project": "data-platform",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "Request finance mart access through the access portal",
+   "body": "Access to marts is granted per domain through groups; the finance mart owner approves requests in the access portal.",
+   "answers": "q2"
+  },
+  {
+   "key": "q3",
+   "project": "mobile-app",
+   "actor": "skeptic",
+   "kind": "question",
+   "title": "Which Android versions does the app support?",
+   "body": ""
+  },
+  {
+   "key": "q4",
+   "project": "infra-ops",
+   "actor": "admin",
+   "kind": "question",
+   "title": "Có runbook failover sang us-west-2 không?",
+   "body": "Trước buổi diễn tập quý tới mình muốn đọc trước quy trình."
+  },
+  {
+   "key": "a4",
+   "project": "infra-ops",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Runbook failover nằm trong repo infra-runbooks",
+   "body": "Runbook failover sang us-west-2 nằm trong repo infra-runbooks, mục dr/failover.md.",
+   "answers": "q4"
+  },
+  {
+   "key": "a5",
+   "project": "infra-ops",
+   "actor": "skeptic",
+   "kind": "claim",
+   "title": "The failover runbook is out of date",
+   "body": "The runbook still references the old load balancer; the last exercise had to improvise the DNS step.",
+   "answers": "q4"
+  },
+  {
+   "key": "a6",
+   "project": "infra-ops",
+   "actor": "scout",
+   "kind": "claim",
+   "title": "DNS TTL is lowered to 60 seconds before an exercise",
+   "body": "Before each failover exercise the public DNS TTL is lowered to 60 seconds a day in advance.",
+   "answers": "q4"
+  },
+  {
+   "key": "q5",
+   "project": "docs-handbook",
+   "actor": "scout",
+   "kind": "question",
+   "title": "Who approves exceptions to the focus days rule?",
+   "body": ""
+  },
+  {
+   "key": "a7",
+   "project": "docs-handbook",
+   "actor": "auditor",
+   "kind": "claim",
+   "title": "Engineering managers approve focus-day exceptions",
+   "body": "Exceptions are approved by the engineer's manager and logged in the team calendar.",
+   "answers": "q5"
+  },
+  {
+   "key": "q6",
+   "project": "payments-api",
+   "actor": "auditor",
+   "kind": "question",
+   "title": "Are partial captures supported on /v2/payments?",
+   "body": ""
+  }
+ ],
+ "signals": [
+  {
+   "contribution": "r1",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": "Khớp với cấu hình gateway hiện tại."
+  },
+  {
+   "contribution": "r1",
+   "actor": "admin",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r2",
+   "actor": "skeptic",
+   "kind": "challenge",
+   "stance": "unfavorable",
+   "body": "Cấu hình mới là 10 lần trong 3 ngày, cần kiểm tra lại."
+  },
+  {
+   "contribution": "r2",
+   "actor": "scout",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": "Tài liệu công khai vẫn ghi 8 lần trong 24 giờ."
+  },
+  {
+   "contribution": "r3",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r4",
+   "actor": "skeptic",
+   "kind": "challenge",
+   "stance": "neutral",
+   "body": "Does this also apply to the sandbox?"
+  },
+  {
+   "contribution": "r6",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "unfavorable",
+   "body": "The deprecation was postponed to Q3."
+  },
+  {
+   "contribution": "r7",
+   "actor": "scout",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r8",
+   "actor": "skeptic",
+   "kind": "challenge",
+   "stance": "unfavorable",
+   "body": "Một số đối tác dùng timeout 45 giây."
+  },
+  {
+   "contribution": "r10",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": "Confirmed in the last PCI audit report."
+  },
+  {
+   "contribution": "r10",
+   "actor": "admin",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r13",
+   "actor": "scout",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r14",
+   "actor": "skeptic",
+   "kind": "challenge",
+   "stance": "unfavorable",
+   "body": "Last month it missed 06:00 on 4 of 30 days."
+  },
+  {
+   "contribution": "r16",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r19",
+   "actor": "scout",
+   "kind": "assessment",
+   "stance": "neutral",
+   "body": "Some topics have a 30-day override."
+  },
+  {
+   "contribution": "r20",
+   "actor": "admin",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r23",
+   "actor": "skeptic",
+   "kind": "assessment",
+   "stance": "unfavorable",
+   "body": "Bản gần nhất đã nâng lên iOS 16."
+  },
+  {
+   "contribution": "r23",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": "Store listing vẫn ghi iOS 15."
+  },
+  {
+   "contribution": "r24",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r29",
+   "actor": "scout",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r34",
+   "actor": "skeptic",
+   "kind": "challenge",
+   "stance": "neutral",
+   "body": "Đã có kế hoạch nâng lên 17 chưa?"
+  },
+  {
+   "contribution": "r35",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r37",
+   "actor": "scout",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r40",
+   "actor": "admin",
+   "kind": "assessment",
+   "stance": "unfavorable",
+   "body": "Đã giảm xuống 14 ngày từ tháng trước."
+  },
+  {
+   "contribution": "r44",
+   "actor": "skeptic",
+   "kind": "challenge",
+   "stance": "unfavorable",
+   "body": "The checkout service scales at 60%."
+  },
+  {
+   "contribution": "r44",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r47",
+   "actor": "scout",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r48",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "r52",
+   "actor": "skeptic",
+   "kind": "assessment",
+   "stance": "neutral",
+   "body": ""
+  },
+  {
+   "contribution": "a1",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "a2",
+   "actor": "scout",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "a3",
+   "actor": "admin",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "a4",
+   "actor": "scout",
+   "kind": "assessment",
+   "stance": "favorable",
+   "body": ""
+  },
+  {
+   "contribution": "a5",
+   "actor": "auditor",
+   "kind": "assessment",
+   "stance": "unfavorable",
+   "body": "Updated last week; the DNS step is now documented."
+  },
+  {
+   "contribution": "a7",
+   "actor": "skeptic",
+   "kind": "challenge",
+   "stance": "neutral",
+   "body": "Is this written down anywhere?"
+  }
+ ]
+}

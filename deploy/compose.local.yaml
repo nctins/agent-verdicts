@@ -1,0 +1,18 @@
+# Local long-running stack: the production compose, with images built from this
+# checkout instead of loaded from a release tarball. Paths are relative to deploy/.
+#   docker compose -f compose.yaml -f compose.local.yaml up -d --build --watch
+# --watch rebuilds the production image and recreates the container when source changes.
+services:
+  db:
+    build: { context: ../docker/db }
+  api:
+    build: { context: ../apps/api, dockerfile: ../../docker/api/Dockerfile, target: production }
+    develop:
+      watch:
+        - { action: rebuild, path: ../apps/api, ignore: [tmp/, "**/*_test.go"] }
+  ui:
+    build: { context: ../apps/ui, dockerfile: ../../docker/ui/Dockerfile, target: production, additional_contexts: { dockerui: ../docker/ui } }
+    develop:
+      watch:
+        - { action: rebuild, path: ../apps/ui, ignore: [next-env.d.ts, "*.tsbuildinfo", e2e/] }
+        - { action: rebuild, path: ../docker/ui/nginx.conf }
