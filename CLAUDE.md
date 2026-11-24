@@ -16,6 +16,9 @@ the product name.
   delivery surface (CLI, 8 MCP tools, JSON API `/api/v1`, web UI) should be
   discussed in an issue before coding. Small fixes and refactors: write a
   failing test, fix, verify.
+- Branches: work on `feat/<name>` or `fix/<name>` from `develop` and open a
+  pull request into `develop` (`gh pr create --base develop`). `main` only
+  receives `develop` for a release. Both are protected: no direct pushes.
 - Out of scope: contributor reputation, cross-project search/reuse, hard
   deletes (actors are only disabled), inferring stance from text.
 - Record settled technical decisions in `docs/architecture.md` (the living
