@@ -6,16 +6,21 @@ The images are on Docker Hub for `linux/amd64` and `linux/arm64`.
 
 ## Install
 
+Pick a version from the
+[releases](https://github.com/nctins/agent-verdicts/tags). The files are
+downloaded from that version's tag, so `compose.yaml` always matches the
+images it runs:
+
 ```sh
+VERSION=0.1.0-beta
 mkdir agent-verdicts && cd agent-verdicts
-curl -fsSLO https://raw.githubusercontent.com/nctins/agent-verdicts/main/deploy/compose.yaml
-curl -fsSL -o .env https://raw.githubusercontent.com/nctins/agent-verdicts/main/deploy/.env.example
+base=https://raw.githubusercontent.com/nctins/agent-verdicts/v$VERSION/deploy
+curl -fsSLO "$base/compose.yaml"
+curl -fsSL "$base/.env.example" | sed "s/^VERSION=.*/VERSION=$VERSION/" >.env
 ```
 
-Edit `.env`:
+Edit `.env` (`VERSION` is already set):
 
-- `VERSION`: the version to run, e.g. `0.1.0-beta` (see the tags on Docker
-  Hub).
 - `POSTGRES_PASSWORD`: required; letters and digits only (it goes into a
   connection URL).
 - `PORT`: a free host port for the web UI and `/mcp`.
@@ -61,9 +66,17 @@ and run `docker compose up -d`.
 
 ## Upgrade
 
-Change `VERSION` in `.env`, then run `docker compose pull && docker compose up -d`.
-Migrations run automatically. Release notes say when `compose.yaml` itself
-changed; download it again in that case.
+Download the new version's `compose.yaml`, set `VERSION` in `.env`, and
+restart. Migrations run automatically.
+
+```sh
+VERSION=<new version>
+curl -fsSLO "https://raw.githubusercontent.com/nctins/agent-verdicts/v$VERSION/deploy/compose.yaml"
+sed -i.bak "s/^VERSION=.*/VERSION=$VERSION/" .env
+docker compose pull && docker compose up -d
+```
+
+Compare `.env` with the new version's `.env.example` for added settings.
 
 ## Backup
 

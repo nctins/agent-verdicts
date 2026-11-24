@@ -80,7 +80,7 @@ scripts/release.sh <semver>
 ```
 
 Run `docker login` first. The script needs a clean git tree, an unused tag,
-and the same version in the three files listed in `CLAUDE.md`. It builds
+and the same version in the four files listed in `CLAUDE.md`. It builds
 `nctins/agent-verdicts` and `nctins/agent-verdicts-web` for this machine,
 smoke-tests them with `deploy/compose.yaml`, then builds them for
 `linux/amd64` and `linux/arm64` and pushes them to Docker Hub. Pre-releases

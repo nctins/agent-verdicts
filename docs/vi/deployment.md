@@ -81,7 +81,7 @@ scripts/release.sh <semver>
 ```
 
 Chạy `docker login` trước. Script cần cây git sạch, tag chưa dùng, và cùng một
-version ở ba file liệt kê trong `CLAUDE.md`. Script build
+version ở bốn file liệt kê trong `CLAUDE.md`. Script build
 `nctins/agent-verdicts` và `nctins/agent-verdicts-web` cho máy hiện tại, smoke
 test bằng `deploy/compose.yaml`, rồi build cho `linux/amd64` và `linux/arm64`
 và push lên Docker Hub. Bản pre-release (có `-` trong version) không bao giờ

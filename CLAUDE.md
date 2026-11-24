@@ -48,8 +48,8 @@ Release: `scripts/release.sh <semver>` builds `nctins/agent-verdicts` and
 amd64 and arm64 (needs `docker login`; never creates a git tag). The database
 is the stock `paradedb/paradedb` image. The version (now `0.1.0-beta`) is written in
 `apps/ui/package.json` (and its lockfile), `apps/api/openapi.yaml` and the
-MCP server in `internal/adapter/mcp/server.go`; the script refuses to run
-unless all three match.
+MCP server in `internal/adapter/mcp/server.go`, and the install example in
+`deploy/README.md`; the script refuses to run unless all four match.
 
 ## Layout and architecture
 

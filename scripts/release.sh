@@ -11,9 +11,9 @@ version="${1:-}"
 [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]] || { echo "usage: $0 <semver>" >&2; exit 2; }
 root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
-# The version is written in three places; refuse to release when they disagree.
-for f in apps/ui/package.json apps/api/openapi.yaml apps/api/internal/adapter/mcp/server.go; do
-  grep -qE "[\" ]${version//./\\.}(\"|\$)" "$f" || { echo "$f does not carry version $version" >&2; exit 1; }
+# The version is written in four places; refuse to release when they disagree.
+for f in apps/ui/package.json apps/api/openapi.yaml apps/api/internal/adapter/mcp/server.go deploy/README.md; do
+  grep -qE "[\" =]${version//./\\.}(\"|\$)" "$f" || { echo "$f does not carry version $version" >&2; exit 1; }
 done
 [[ -z "$(git status --porcelain)" ]] || { echo "git tree is not clean" >&2; exit 1; }
 ! git rev-parse -q --verify "refs/tags/v$version" >/dev/null || { echo "tag v$version already exists" >&2; exit 1; }
