@@ -203,8 +203,8 @@ func TestMigrate_Concurrent(t *testing.T) {
 	}
 }
 
-// A database not prepared by docker/db/init.sql (managed ParadeDB, spec 2
-// distribution) has no extensions yet: the first migration creates them.
+// A bare ParadeDB database (the stock image, or a managed one) has no
+// extensions yet: the first migration creates them.
 func TestMigrate_CreatesExtensionsOnBareDatabase(t *testing.T) {
 	url := os.Getenv("AGENTVERDICTS_TEST_DATABASE_URL")
 	if url == "" {

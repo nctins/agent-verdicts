@@ -38,13 +38,15 @@ cd apps/ui && npm ci
 npm run check                   # tsc + eslint + fails if lib/api/schema.d.ts is stale
 npm test                        # vitest; one file: npx vitest run path/to/file.test.tsx
 npm run build                   # static export to out/
-npm run e2e                     # builds the 3 production images, runs Playwright on compose project ave2e (port 18090), tears it down
+npm run e2e                     # builds the 2 production images, runs Playwright on compose project ave2e (port 18090), tears it down
 ```
 
 CLI in dev: `docker compose exec api sh -c "go run ./cmd/agentverdicts <cmd>"`
 (`list`, `show`, `credential bootstrap|password|issue|revoke`, `migrate`).
-Release: `scripts/release.sh <semver>` builds, smoke-tests and packs the
-images (never pushes). The version (now `0.1.0-beta`) is written in
+Release: `scripts/release.sh <semver>` builds `nctins/agent-verdicts` and
+`nctins/agent-verdicts-web`, smoke-tests them, and pushes them to Docker Hub for
+amd64 and arm64 (needs `docker login`; never creates a git tag). The database
+is the stock `paradedb/paradedb` image. The version (now `0.1.0-beta`) is written in
 `apps/ui/package.json` (and its lockfile), `apps/api/openapi.yaml` and the
 MCP server in `internal/adapter/mcp/server.go`; the script refuses to run
 unless all three match.
@@ -65,8 +67,8 @@ unless all three match.
   to the api. No dynamic routes in a static export: `/p/<project>/` and
   `/p/<project>/c/<id>/` are one page (`app/p`) that parses `pathname`;
   nginx and `next.config.ts` rewrites map those paths to it.
-- `docker/` (Dockerfiles, nginx, db image), `deploy/compose.yaml` (production
-  compose used by release and E2E), root `compose.yaml` (dev).
+- `docker/` (Dockerfiles, nginx), `deploy/compose.yaml` (production compose,
+  used by release and E2E), root `compose.yaml` (dev).
 
 Cross-cutting rules that are easy to break:
 

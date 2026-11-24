@@ -1,6 +1,6 @@
 services:
   db:
-    build: { context: ./docker/db }
+    image: paradedb/paradedb:0.27.0-pg18
     environment: { POSTGRES_DB: agentverdicts, POSTGRES_USER: agentverdicts, POSTGRES_PASSWORD: dev }
     volumes:
       - db-data:/var/lib/postgresql

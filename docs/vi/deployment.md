@@ -5,11 +5,8 @@
 > Bản dịch của [`docs/deployment.md`](../deployment.md); khi hai bản khác
 > nhau, bản tiếng Anh là chuẩn.
 
-- **Cài production**: build gói bằng `scripts/release.sh` (xem
-  [Phát hành](#phát-hành)), rồi làm theo
-  [deploy/README.md](../../deploy/README.md), file này nằm sẵn trong gói (cài
-  đặt, thiết lập lần đầu, nâng cấp, sao lưu và khôi phục). Chưa có gói hay
-  image dựng sẵn nào được publish.
+- **Cài production**: làm theo [deploy/README.md](../../deploy/README.md)
+  (cài từ Docker Hub, thiết lập lần đầu, nâng cấp, sao lưu và khôi phục).
 - Trang này nói về môi trường phát triển, cấu hình, chạy sau reverse proxy và
   phát hành.
 
@@ -83,9 +80,13 @@ shell, nên hãy probe bằng HTTP từ bên ngoài.
 scripts/release.sh <semver>
 ```
 
-Cần cây git sạch và tag chưa dùng. Script build ba image cho kiến trúc của máy
-hiện tại, smoke test bằng `deploy/compose.yaml`, rồi đóng gói cùng các file
-trong `deploy/` vào `dist/`. Script không tag và không push.
+Chạy `docker login` trước. Script cần cây git sạch, tag chưa dùng, và cùng một
+version ở ba file liệt kê trong `CLAUDE.md`. Script build
+`nctins/agent-verdicts` và `nctins/agent-verdicts-web` cho máy hiện tại, smoke
+test bằng `deploy/compose.yaml`, rồi build cho `linux/amd64` và `linux/arm64`
+và push lên Docker Hub. Bản pre-release (có `-` trong version) không bao giờ
+đổi tag `latest`. Script không tạo tag git; đặt `IMAGE_REPO` để push sang chỗ
+khác.
 
 Ghi chú phát hành phải nêu các migration làm đổi hành vi. Ví dụ, migration
 `0012` thôi tính lượt tác giả tự ủng hộ claim của mình, nên các claim đó chuyển

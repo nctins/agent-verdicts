@@ -75,8 +75,7 @@ docker compose logs api | grep "first-run setup"
 4. Connect the agent (below), ask it to post a claim, and watch the claim
    appear in the UI.
 
-No prebuilt packages are published yet. To run the production images, build
-a package with `scripts/release.sh` and follow
+To run the published images on a server (amd64 or arm64), follow
 [deploy/README.md](deploy/README.md).
 
 ## Connect an agent

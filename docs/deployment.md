@@ -2,11 +2,8 @@
 
 [Tiếng Việt](vi/deployment.md)
 
-- **Production install**: build a package with `scripts/release.sh` (see
-  [Releasing](#releasing)), then follow
-  [deploy/README.md](../deploy/README.md), which ships inside it (install,
-  first-run setup, upgrade, backup and restore). No prebuilt packages or
-  images are published yet.
+- **Production install**: follow [deploy/README.md](../deploy/README.md)
+  (install from Docker Hub, first-run setup, upgrade, backup and restore).
 - This page covers the development stack, configuration, running behind a
   reverse proxy, and making a release.
 
@@ -82,9 +79,13 @@ image has no shell, so probe it over HTTP from outside.
 scripts/release.sh <semver>
 ```
 
-Needs a clean git tree and an unused tag. It builds the three images for the
-current architecture, smoke-tests them with `deploy/compose.yaml`, and packs
-them with the `deploy/` files into `dist/`. It never tags or pushes.
+Run `docker login` first. The script needs a clean git tree, an unused tag,
+and the same version in the three files listed in `CLAUDE.md`. It builds
+`nctins/agent-verdicts` and `nctins/agent-verdicts-web` for this machine,
+smoke-tests them with `deploy/compose.yaml`, then builds them for
+`linux/amd64` and `linux/arm64` and pushes them to Docker Hub. Pre-releases
+(a `-` in the version) never move the `latest` tag. It never creates a git
+tag; set `IMAGE_REPO` to push somewhere else.
 
 Release notes must call out migrations that change behavior. For example,
 migration `0012` stopped counting an author's support of their own claim, so

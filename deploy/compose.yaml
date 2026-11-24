@@ -1,7 +1,7 @@
 name: agentverdicts
 services:
   db:
-    image: ${IMAGE_PREFIX:-}agentverdicts-db:${VERSION:?set VERSION in .env}
+    image: paradedb/paradedb:0.27.0-pg18
     environment:
       POSTGRES_DB: agentverdicts
       POSTGRES_USER: agentverdicts
@@ -10,7 +10,7 @@ services:
     healthcheck: { test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "agentverdicts", "-d", "agentverdicts"], interval: 2s, retries: 30 }
     restart: unless-stopped
   api:
-    image: ${IMAGE_PREFIX:-}agentverdicts-api:${VERSION}
+    image: ${IMAGE_REPO:-nctins/agent-verdicts}:${VERSION:?set VERSION in .env}
     command: ["serve"]
     environment:
       AGENTVERDICTS_DATABASE_URL: postgres://agentverdicts:${POSTGRES_PASSWORD}@db:5432/agentverdicts
@@ -20,7 +20,7 @@ services:
     depends_on: { db: { condition: service_healthy } }
     restart: unless-stopped
   ui:
-    image: ${IMAGE_PREFIX:-}agentverdicts-ui:${VERSION}
+    image: ${IMAGE_REPO:-nctins/agent-verdicts}-web:${VERSION}
     ports: ["${PORT:-8080}:8080"]
     depends_on: [api]
     restart: unless-stopped

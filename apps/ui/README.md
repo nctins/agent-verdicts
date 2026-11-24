@@ -115,8 +115,8 @@ Notes:
 
 ```sh
 npx playwright install chromium   # once
-npm run e2e                       # builds the 3 images tagged e2e (as scripts/release.sh does), starts the stack, runs the specs, tears it down
-E2E_SKIP_BUILD=1 npm run e2e      # reuse existing agentverdicts-*:e2e images
+npm run e2e                       # builds the 2 images tagged e2e (as scripts/release.sh does), starts the stack, runs the specs, tears it down
+E2E_SKIP_BUILD=1 npm run e2e      # reuse existing agent-verdicts{,-web}:e2e images
 E2E_KEEP=1 npm run e2e            # keep the stack running afterwards (the next run cleans it up)
 ```
 

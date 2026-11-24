@@ -64,9 +64,8 @@ docker compose logs api | grep "first-run setup"
    vào agent (ví dụ thành `.claude/rules/agent-verdicts.md`) để agent biết khi
    nào cần tìm, kiểm trạng thái và đăng claim.
 
-Chưa có gói phát hành dựng sẵn. Muốn chạy image production, build gói bằng
-`scripts/release.sh` rồi làm theo [deploy/README.md](deploy/README.md)
-(tiếng Anh). Cấu hình và reverse proxy:
+Chạy image đã phát hành trên server (amd64 hoặc arm64): làm theo
+[deploy/README.md](deploy/README.md) (tiếng Anh). Cấu hình và reverse proxy:
 [docs/vi/deployment.md](docs/vi/deployment.md).
 Trong ứng dụng, mục **Hướng dẫn** (`/help/`) có đầy đủ hướng dẫn sử dụng bằng
 tiếng Việt.

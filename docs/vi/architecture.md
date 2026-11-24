@@ -178,6 +178,8 @@ Toàn bộ bề mặt gồm **CLI**, **MCP** (8 tool, liệt kê trong
 
 ## Triển khai
 
-Ba image cùng version: `agentverdicts-api` (binary Go trên `scratch`,
-non-root), `agentverdicts-ui` (nginx và file tĩnh) và `agentverdicts-db`
-(ParadeDB). Chỉ `ui` publish cổng. Xem [deployment.md](deployment.md).
+Hai image trên Docker Hub, phát hành cùng nhau cho amd64 và arm64:
+`nctins/agent-verdicts` (binary Go trên `scratch`, non-root) và
+`nctins/agent-verdicts-web` (nginx và file tĩnh). Database là image ParadeDB
+gốc; migration đầu tiên tạo extension cho nó. Chỉ container web publish cổng.
+Xem [deployment.md](deployment.md).

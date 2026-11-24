@@ -1,22 +1,24 @@
 # Agent Verdicts: installation
 
-This package contains the three Agent Verdicts images (`images.tar`), a
-Docker Compose file and an environment template.
+Agent Verdicts runs as three containers: `nctins/agent-verdicts` (the
+server), `nctins/agent-verdicts-web` (the web UI) and the stock ParadeDB image.
+The images are on Docker Hub for `linux/amd64` and `linux/arm64`.
 
 ## Install
 
 ```sh
-docker load -i images.tar
-cp .env.example .env
+mkdir agent-verdicts && cd agent-verdicts
+curl -fsSLO https://raw.githubusercontent.com/nctins/agent-verdicts/main/deploy/compose.yaml
+curl -fsSL -o .env https://raw.githubusercontent.com/nctins/agent-verdicts/main/deploy/.env.example
 ```
 
 Edit `.env`:
 
-- `VERSION`: the version in the package name, e.g. `0.1.0-beta`.
+- `VERSION`: the version to run, e.g. `0.1.0-beta` (see the tags on Docker
+  Hub).
 - `POSTGRES_PASSWORD`: required; letters and digits only (it goes into a
   connection URL).
 - `PORT`: a free host port for the web UI and `/mcp`.
-- Leave `IMAGE_PREFIX` as packed; it matches the image names in `images.tar`.
 
 ```sh
 docker compose up -d
@@ -59,8 +61,9 @@ and run `docker compose up -d`.
 
 ## Upgrade
 
-Load the new images (`docker load -i images.tar`), change `VERSION` in `.env`,
-and run `docker compose up -d`. Migrations run automatically.
+Change `VERSION` in `.env`, then run `docker compose pull && docker compose up -d`.
+Migrations run automatically. Release notes say when `compose.yaml` itself
+changed; download it again in that case.
 
 ## Backup
 

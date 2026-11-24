@@ -1,4 +1,4 @@
--- Database-wide; a no-op where docker/db/init.sql (or an earlier run) created
+-- Database-wide; a no-op where an init script (or an earlier run) created
 -- them. vector first: pg_search 0.26 requires it.
 CREATE EXTENSION IF NOT EXISTS vector;
 CREATE EXTENSION IF NOT EXISTS pg_search;

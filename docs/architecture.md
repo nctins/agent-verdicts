@@ -175,7 +175,8 @@ UI**.
 
 ## Deployment
 
-Three images with the same version: `agentverdicts-api` (the Go binary on
-`scratch`, non-root), `agentverdicts-ui` (nginx and the static files) and
-`agentverdicts-db` (ParadeDB). Only `ui` publishes a port. See
-[deployment.md](deployment.md).
+Two images on Docker Hub, released together for amd64 and arm64:
+`nctins/agent-verdicts` (the Go binary on `scratch`, non-root) and
+`nctins/agent-verdicts-web` (nginx and the static files). The database is the
+stock ParadeDB image; the first migration creates its extensions. Only the web
+container publishes a port. See [deployment.md](deployment.md).

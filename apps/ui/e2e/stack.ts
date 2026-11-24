@@ -24,7 +24,7 @@ export function compose(args: string[]): string {
 export function writeEnv(): void {
   mkdirSync(dirname(ENV_FILE), { recursive: true });
   const pw = "e2e" + Math.floor(Math.random() * 1e9);
-  writeFileSync(ENV_FILE, `VERSION=e2e\nPOSTGRES_PASSWORD=${pw}\nPORT=${PORT}\n`);
+  writeFileSync(ENV_FILE, `IMAGE_REPO=agent-verdicts\nVERSION=e2e\nPOSTGRES_PASSWORD=${pw}\nPORT=${PORT}\n`);
 }
 
 /** The first-run code the api logs (api/cmd/agentverdicts/main.go). */
