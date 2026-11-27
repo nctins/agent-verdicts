@@ -32,6 +32,7 @@ import { useContribution, useProjectInfo, useReads30, useSession, useSetHidden, 
 import { contributionHref, parseRoute, projectHref } from "@/lib/routes";
 import { loginHref } from "@/lib/safe-next";
 import type { ContributionDetail } from "@/lib/stance";
+import { copyText } from "@/lib/clipboard";
 
 function Breadcrumb({ project, kind, question }: { project: string; kind: "claim" | "question"; question?: { id: string; title: string } | null }) {
   const t = useTranslations();
@@ -192,7 +193,7 @@ function ActionsMenu({ project, d }: { project: string; d: ContributionDetail })
   const undoable = !!d.superseded_by && mayEdit;
   const copyLink = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.origin + contributionHref(project, d.id));
+      await copyText(window.location.origin + contributionHref(project, d.id));
       toast.success(t("kit.copied"));
     } catch {
       toast.error(t("admin.once.copy_failed"));

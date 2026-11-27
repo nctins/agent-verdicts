@@ -41,6 +41,7 @@ import { moveRow, useShortcuts } from "@/lib/shortcuts";
 import type { TrustState } from "@/lib/trust";
 import { useDebouncedSearch } from "@/lib/use-debounced-search";
 import { cn } from "@/lib/utils";
+import { copyText } from "@/lib/clipboard";
 
 type Changes = Record<string, string | null>;
 type Compose = (kind: "claim" | "question", title?: string) => void;
@@ -360,7 +361,7 @@ export function ProjectView({ id }: { id: string }) {
   const claims = meta ? Object.values(meta.states).reduce((a, b) => a + b, 0) : 0;
   const copyLink = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.origin + projectHref(id));
+      await copyText(window.location.origin + projectHref(id));
       toast.success(t("kit.copied"));
     } catch {
       toast.error(t("admin.once.copy_failed"));

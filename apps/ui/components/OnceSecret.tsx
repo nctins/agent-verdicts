@@ -6,6 +6,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { copyText } from "@/lib/clipboard";
 
 /** Shows a password/token once. The value lives only in the caller's state; it never enters the query cache. */
 export function OnceSecret({ label, value, onDone }: { label: string; value: string; onDone: () => void }) {
@@ -16,7 +17,7 @@ export function OnceSecret({ label, value, onDone }: { label: string; value: str
 
   const doCopy = async () => {
     try {
-      await navigator.clipboard.writeText(value);
+      await copyText(value);
       setCopy("ok");
     } catch {
       ref.current?.select();
