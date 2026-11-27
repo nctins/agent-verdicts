@@ -12,6 +12,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/compon
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { copyText } from "@/lib/clipboard";
 
 /** Title, one line of context, and the page's main action on the right (spec 2026-11-22-admin-ui-redesign U2). */
 export function PageHeader({ title, description, actions, meta, className }: { title: ReactNode; description?: ReactNode; actions?: ReactNode; meta?: ReactNode; className?: string }) {
@@ -89,7 +90,7 @@ export function CopyButton({ value, label }: { value: string; label?: string }) 
   const copy = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      await navigator.clipboard.writeText(value);
+      await copyText(value);
       setDone(true);
       setTimeout(() => setDone(false), 1500);
     } catch {

@@ -9,13 +9,14 @@ import { HelpLink } from "@/components/HelpArticle";
 import { mcpSetup } from "@/lib/mcp";
 // Copy of docs/instructions/agent-verdicts.md (the Docker build only sees apps/ui); `npm run check` fails if they differ.
 import agentRules from "@/lib/agent-rules.md?raw";
+import { copyText } from "@/lib/clipboard";
 
 function Snippet({ label, text, scroll }: { label: string; text: string; scroll?: boolean }) {
   const t = useTranslations("admin.once");
   const [copy, setCopy] = useState<"idle" | "ok" | "failed">("idle");
   const doCopy = async () => {
     try {
-      await navigator.clipboard.writeText(text);
+      await copyText(text);
       setCopy("ok");
     } catch {
       setCopy("failed");
